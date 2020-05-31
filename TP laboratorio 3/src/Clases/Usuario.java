@@ -1,5 +1,8 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo Usuario
+ *  @author 
+ */
 public class Usuario extends PersonaSistema{
 
 	private ClubUsuario clubUsuario;

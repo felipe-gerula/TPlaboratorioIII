@@ -1,5 +1,8 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo PersonaFutbol
+ *  @author 
+ */
 public abstract class PersonaFutbol {
 	private boolean estado;
 	private String nombreApellido;

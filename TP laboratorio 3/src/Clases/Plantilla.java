@@ -1,5 +1,9 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo Plantilla
+ *  Es un contenedor con todos los jugadores del equipo creado
+ *  @author 
+ */
 import java.util.HashSet;
 
 public class Plantilla {

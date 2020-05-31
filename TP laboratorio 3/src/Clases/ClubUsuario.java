@@ -1,5 +1,9 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo ClubUsuario
+ *  nos permite armar nuestro equipo, ademas de jugar partidos con el mismo
+ *  @author 
+ */
 import Interfaces.IMenu;
 
 public class ClubUsuario implements IMenu{

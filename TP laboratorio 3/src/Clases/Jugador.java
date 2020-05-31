@@ -1,5 +1,8 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo Jugador
+ *  @author 
+ */
 public class Jugador {
 	private static int cantidadJugadores;
 	private int idJugador;

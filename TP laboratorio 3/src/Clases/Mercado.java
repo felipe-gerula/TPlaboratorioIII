@@ -1,5 +1,9 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo Mercado
+ *  Es un contenedor con todos los jugadores y DTs del juego
+ *  @author 
+ */
 import java.util.HashSet;
 
 public class Mercado {

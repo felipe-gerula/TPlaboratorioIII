@@ -1,5 +1,8 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo PersonaSistema
+ *  @author 
+ */
 public abstract class PersonaSistema {
 	private String nombre;
 	private String password;

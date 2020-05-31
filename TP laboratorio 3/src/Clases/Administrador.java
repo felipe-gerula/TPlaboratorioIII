@@ -1,5 +1,9 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo Administrador
+ *  permite la modificacion de jugadores en el mercado 
+ *  @author 
+ */
 public class Administrador extends PersonaSistema{
 
 	public void agregarJugadorMercado() {
