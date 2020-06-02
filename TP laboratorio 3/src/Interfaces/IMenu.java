@@ -4,7 +4,7 @@ package Interfaces;
  *  @author 
  */
 public interface IMenu {
-	public String listadoOpciones();
+	public void listadoOpciones(); ///Optamos por mostrar el listado dentro del método
 	public void ingresarAOpcion();
 	public void regresar();
 }
