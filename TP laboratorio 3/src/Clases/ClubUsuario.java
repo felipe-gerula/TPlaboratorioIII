@@ -27,9 +27,8 @@ public class ClubUsuario implements IMenu{
 	}
 	
 	@Override
-	public String listadoOpciones() {
+	public void listadoOpciones() {
 		// TODO Auto-generated method stub
-		return null;
 	}
 	@Override
 	public void ingresarAOpcion() {

@@ -7,11 +7,21 @@ public abstract class PersonaSistema {
 	private String nombre;
 	private String password;
 	
+	public PersonaSistema(String nombreUsuario, String passUsuario) {
+		this.nombre = nombreUsuario;
+		this.password = passUsuario;
+	}
+
+	public PersonaSistema() {
+		nombre = "";
+		password = "";
+	}
+
 	public boolean cambiarPassword() {
 		return true; //TODO programar funcion
 	}
 	
-	public abstract boolean crearPersona();
+	public abstract PersonaSistema crearPersona();
 	
 	public abstract boolean acceder();
 
@@ -31,5 +41,18 @@ public abstract class PersonaSistema {
 		this.password = password;
 	}
 	
+	@Override
+	public boolean equals(Object obj) { ///Comparamos dos PersonaSistema por su nombre
+		if (obj != null && obj instanceof PersonaSistema) {
+			PersonaSistema personaSistemaRecibida = (PersonaSistema)obj;
+			return personaSistemaRecibida.getNombre().equals(this.getNombre());
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 	
 }

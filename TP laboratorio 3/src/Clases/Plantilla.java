@@ -7,7 +7,7 @@ package Clases;
 import java.util.HashSet;
 
 public class Plantilla {
-	private HashSet<Integer> listadoJugadores; ///TODO capaz que conviene que sea arreglo
+	private HashSet<Integer> listadoJugadores; ///TODO capaz que conviene que sea arreglo o arreglo JSON
 	
 	public boolean agregarJugador (int idJugador) {
 		return true; //TODO programar método

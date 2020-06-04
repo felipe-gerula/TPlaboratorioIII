@@ -1,12 +1,35 @@
 package Clases;
 
+import java.util.Scanner;
+
 import Interfaces.IMenu;
 
 public class Simulador implements IMenu{
 
 	private ContenedorPersonaSistema<Usuario> listadoUsuarios;
 	private ContenedorPersonaSistema<Administrador> listadoAdministradores;
-	public static Mercado mercadoDePases; //TODO ver y preguntar si conviene que sea static
+	private static Mercado mercadoDePases; //TODO hacer get y modificar usuario
+	private static Scanner scan;
+	///TODO scan se crea en constructor y se destruye al salir
+	
+	/// * * * CONSTRUCTORES * * * ///
+	public Simulador() {
+		listadoUsuarios = new ContenedorPersonaSistema<>();
+		listadoAdministradores = new ContenedorPersonaSistema<>();
+		scan = new Scanner(System.in);
+	}
+	/// * * * FIN CONSTRUCTORES * * * ///
+	
+	/// * * * GETTERS * * * ///
+	public static Mercado getMercado() {
+		return mercadoDePases;
+	}
+	
+	public static Scanner getScanner() {
+		return scan;
+	}
+	/// * * * FIN GETTERS * * * ///
+	
 	
 	@Override
 	public void listadoOpciones() {
@@ -21,30 +44,31 @@ public class Simulador implements IMenu{
 
 	@Override
 	public void ingresarAOpcion() {
-		int opcion = 0; //TODO sacar inicialización
+		int opcion; //TODO sacar inicialización
 		System.out.println("  Ingrese el número de opción deseada: ");
-		//scanner (opcion);
-		opcion = 3;
+		opcion = scan.nextInt();
 		while (opcion<1 || opcion>3) {
 			System.out.println("  Por favor ingrese una opción correcta: ");
-			//scanner (opcion);
+			opcion = scan.nextInt();
 		}
 		switch (opcion) {
 			case 1:
 				listadoOpcionesUsuario();
+				listadoOpciones();
 				break;
 			case 2:
 				listadoOpcionesAdministrador();
+				listadoOpciones();
 				break;
 			default:
-				System.out.println("Gracias por usar el Simulador. Esperamos que vuelva pronto.");
+				regresar();
 		}
 	}
 
 	@Override
 	public void regresar() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Gracias por usar el Simulador. Esperamos que vuelva pronto.");
+		scan.close();
 	}
 	
 	public void listadoOpcionesUsuario() {
@@ -61,16 +85,33 @@ public class Simulador implements IMenu{
 	public void ingresarAOpcionUsuario() {
 		int opcion = 0; //TODO sacar inicialización
 		System.out.println("  Ingrese el número de opción deseada: ");
-		//scanner (opcion);
-		opcion = 3;
+		opcion = scan.nextInt();
 		while (opcion<1 || opcion>3) {
 			System.out.println("  Por favor ingrese una opción correcta: ");
-			//scanner (opcion);
+			opcion = scan.nextInt();
 		}
 		switch (opcion) {
 			case 1:
-				Usuario nuevoUsuario = new Usuario(); //TODO crear usuario con los métodos correspondientes
-				listadoUsuarios.agregarElemento(nuevoUsuario); //TODO usar boolean recibido para mostrar mensaje de éxito
+				Usuario nuevoUsuario =  new Usuario();
+				nuevoUsuario = (Usuario)nuevoUsuario.crearPersona();
+				if(listadoUsuarios.agregarElemento(nuevoUsuario)) {
+					System.out.println("    Usuario agregado con éxito.");
+				} else {
+					System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+					char opcionIntentar = Simulador.scan.next().charAt(0);
+					while (opcionIntentar == 's' || opcionIntentar == 'S') {
+						nuevoUsuario = new Usuario(); ///Reseteamos los valores 
+						nuevoUsuario = (Usuario)nuevoUsuario.crearPersona();
+						if(listadoUsuarios.agregarElemento(nuevoUsuario)) {
+							System.out.println("    Usuario agregado con éxito.");
+							opcionIntentar = 'n';
+						} else {
+							System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+							opcionIntentar = Simulador.scan.next().charAt(0);
+						}
+					}
+				}
+				listadoOpcionesUsuario();
 				break;
 			case 2:
 				/**
@@ -85,8 +126,6 @@ public class Simulador implements IMenu{
 				 * }
 				 **/
 				break;
-			default:
-				listadoOpcionesUsuario();
 				
 		}
 	}
@@ -104,16 +143,33 @@ public class Simulador implements IMenu{
 	public void ingresarAOpcionAdministrador() {
 		int opcion = 0; //TODO sacar inicialización
 		System.out.println("  Ingrese el número de opción deseada: ");
-		//scanner (opcion);
-		opcion = 3;
+		opcion = scan.nextInt();
 		while (opcion<1 || opcion>3) {
 			System.out.println("  Por favor ingrese una opción correcta: ");
-			//scanner (opcion);
+			opcion = scan.nextInt();
 		}
 		switch (opcion) {
-			case 1:
-				Administrador nuevoAdministrador = new Administrador(); //TODO crear administrador con los métodos correspondientes
-				listadoAdministradores.agregarElemento(nuevoAdministrador); //TODO usar boolean recibido para mostrar mensaje de éxito
+			case 1: //TODO pedir contraseña de creación para evitar que cualquiera cree admins
+				Administrador nuevoAdministrador =  new Administrador();
+				nuevoAdministrador = (Administrador)nuevoAdministrador.crearPersona();
+				if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
+					System.out.println("    Administrador agregado con éxito.");
+				} else {
+					System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+					char opcionIntentar = Simulador.scan.next().charAt(0);
+					while (opcionIntentar == 's' || opcionIntentar == 'S') {
+						nuevoAdministrador = new Administrador(); ///Reseteamos los valores 
+						nuevoAdministrador = (Administrador)nuevoAdministrador.crearPersona();
+						if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
+							System.out.println("    Administrador agregado con éxito.");
+							opcionIntentar = 'n';
+						} else {
+							System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+							opcionIntentar = Simulador.scan.next().charAt(0);
+						}
+					}
+				}
+				listadoOpcionesAdministrador();
 				break;
 			case 2:
 				/**
@@ -127,15 +183,11 @@ public class Simulador implements IMenu{
 				 * 		}
 				 * }
 				 **/
-				break;
-			default:
 				listadoOpcionesAdministrador();
+				break;
 				
 		}
 	}
 	
-	public Simulador() {
-		
-	}
 
 }
