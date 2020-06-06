@@ -17,14 +17,38 @@ public abstract class PersonaSistema {
 		password = "";
 	}
 
+	public PersonaSistema(String nombreUsuario) {
+		this.nombre = nombreUsuario;
+	}
+
 	public boolean cambiarPassword() {
 		return true; //TODO programar funcion
 	}
 	
 	public abstract PersonaSistema crearPersona();
 	
-	public abstract boolean acceder();
+	public abstract PersonaSistema acceder();
 
+	public boolean comparacionPassword() {
+		int intentos = 3;
+		String passwordLeida;
+		System.out.println("Ingrese la contraseña (3 intentos restantes): ");
+		passwordLeida = Simulador.getScanner().nextLine();
+		if (passwordLeida.equals(this.password)) {
+			return true;
+		} else {
+			while (intentos>1) {
+				intentos--;
+				System.out.println("Contraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
+				passwordLeida = Simulador.getScanner().nextLine();
+				if (passwordLeida.equals(this.password)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

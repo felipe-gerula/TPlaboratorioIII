@@ -7,6 +7,11 @@ public class Vestimenta {
 	private String prendaSuperior;
 	private String prendaInferior;
 	
+	public Vestimenta() {
+		prendaSuperior = "";
+		prendaInferior = "";
+	}
+	
 	public void editarVestimenta() {
 		//TODO programar método
 	}

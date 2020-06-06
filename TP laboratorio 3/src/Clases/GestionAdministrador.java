@@ -1,6 +1,5 @@
 package Clases;
 
-import java.util.Scanner;
 
 import Interfaces.IMenu;
 
@@ -9,19 +8,20 @@ import Interfaces.IMenu;
  *  permite la modificacion de jugadores en el mercado 
  *  @author 
  */
-public class Administrador extends PersonaSistema implements IMenu{
-
-	private Scanner scanLocal;
+public class GestionAdministrador extends PersonaSistema implements IMenu{
 	
-	public Administrador(String nombreAdministrador, String passAdministrador) {
+	public GestionAdministrador(String nombreAdministrador, String passAdministrador) {
 		super(nombreAdministrador, passAdministrador);
 	}
 	
-	public Administrador() {
+	public GestionAdministrador() {
 		super();
-		scanLocal = new Scanner(System.in);
 	}
 	
+	public GestionAdministrador(String nombreAdministrador) {
+		super(nombreAdministrador);
+	}
+
 	public void agregarJugadorMercado() {
 		
 	}
@@ -56,21 +56,27 @@ public class Administrador extends PersonaSistema implements IMenu{
 	
 	@Override
 	public PersonaSistema crearPersona() {
-		Administrador nuevoAdministrador;
+		GestionAdministrador nuevoAdministrador;
 		System.out.println("Bienvenido al menú de creación de Administrador.");
 		System.out.println("  Ingrese el nombre de Administrador:");
-		String nombreAdministrador = scanLocal.nextLine();
+		Simulador.getScanner().nextLine();
+		String nombreAdministrador = Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese la contraseña del Administrador " + nombreAdministrador + ": ");
 		//Simulador.getScanner().nextLine();
-		String passAdministrador = scanLocal.nextLine();
-		nuevoAdministrador = new Administrador(nombreAdministrador, passAdministrador);
+		String passAdministrador = Simulador.getScanner().nextLine();
+		nuevoAdministrador = new GestionAdministrador(nombreAdministrador, passAdministrador);
 		return nuevoAdministrador;
 	}
 
 	@Override
-	public boolean acceder() {
-		// TODO Auto-generated method stub
-		return false;
+	public PersonaSistema acceder() {
+		GestionAdministrador ingresoAdministrador;
+		System.out.println("Bienvenido al menú de ingreso a Administrador.");
+		System.out.println("  Ingrese el nombre de Administrador:");
+		Simulador.getScanner().nextLine();
+		String nombreAdministrador = Simulador.getScanner().nextLine();
+		ingresoAdministrador = new GestionAdministrador(nombreAdministrador);
+		return ingresoAdministrador;
 	}
 
 

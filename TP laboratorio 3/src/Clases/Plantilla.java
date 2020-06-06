@@ -9,6 +9,14 @@ import java.util.HashSet;
 public class Plantilla {
 	private HashSet<Integer> listadoJugadores; ///TODO capaz que conviene que sea arreglo o arreglo JSON
 	
+	public Plantilla() {
+		listadoJugadores = new HashSet<>();
+	}
+	
+	public boolean plantillaVacia() {
+		return listadoJugadores.isEmpty();
+	}
+	
 	public boolean agregarJugador (int idJugador) {
 		return true; //TODO programar método
 	}
@@ -17,8 +25,8 @@ public class Plantilla {
 		return true; //TODO programar método
 	}
 	
-	public int contarJugadores() {
-		return 0; //TODO programar método
+	public int cantidadJugadores() {
+		return listadoJugadores.size(); //TODO programar método
 	}
 	
 	public Double promedioJugadores() {

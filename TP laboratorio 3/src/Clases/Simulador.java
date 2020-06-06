@@ -6,8 +6,8 @@ import Interfaces.IMenu;
 
 public class Simulador implements IMenu{
 
-	private ContenedorPersonaSistema<Usuario> listadoUsuarios;
-	private ContenedorPersonaSistema<Administrador> listadoAdministradores;
+	private ContenedorPersonaSistema<GestionUsuario> listadoUsuarios;
+	private ContenedorPersonaSistema<GestionAdministrador> listadoAdministradores;
 	private static Mercado mercadoDePases; //TODO hacer get y modificar usuario
 	private static Scanner scan;
 	///TODO scan se crea en constructor y se destruye al salir
@@ -16,6 +16,7 @@ public class Simulador implements IMenu{
 	public Simulador() {
 		listadoUsuarios = new ContenedorPersonaSistema<>();
 		listadoAdministradores = new ContenedorPersonaSistema<>();
+		mercadoDePases = new Mercado();
 		scan = new Scanner(System.in);
 	}
 	/// * * * FIN CONSTRUCTORES * * * ///
@@ -62,6 +63,7 @@ public class Simulador implements IMenu{
 				break;
 			default:
 				regresar();
+				break;
 		}
 	}
 
@@ -92,16 +94,16 @@ public class Simulador implements IMenu{
 		}
 		switch (opcion) {
 			case 1:
-				Usuario nuevoUsuario =  new Usuario();
-				nuevoUsuario = (Usuario)nuevoUsuario.crearPersona();
+				GestionUsuario nuevoUsuario = new GestionUsuario();
+				nuevoUsuario = (GestionUsuario)nuevoUsuario.crearPersona();
 				if(listadoUsuarios.agregarElemento(nuevoUsuario)) {
 					System.out.println("    Usuario agregado con éxito.");
 				} else {
 					System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 					char opcionIntentar = Simulador.scan.next().charAt(0);
 					while (opcionIntentar == 's' || opcionIntentar == 'S') {
-						nuevoUsuario = new Usuario(); ///Reseteamos los valores 
-						nuevoUsuario = (Usuario)nuevoUsuario.crearPersona();
+						nuevoUsuario = new GestionUsuario(); ///Reseteamos los valores 
+						nuevoUsuario = (GestionUsuario)nuevoUsuario.crearPersona();
 						if(listadoUsuarios.agregarElemento(nuevoUsuario)) {
 							System.out.println("    Usuario agregado con éxito.");
 							opcionIntentar = 'n';
@@ -114,19 +116,23 @@ public class Simulador implements IMenu{
 				listadoOpcionesUsuario();
 				break;
 			case 2:
-				/**
-				 * leer nombre del usuario;
-				 * usuarioLocal = crar usuario local con el nombre leído;
-				 * usuarioRecibido = listadoUsuarios.buscarElemento(usuarioLocal);
-				 * if (usuarioRecibido != null){ ///TODO analizar uso de excepciones
-				 * 		leer contraseña x veces (intentos)
-				 * 		if contraseñaLocal.equals(usuarioRecibido.getPassword){
-				 * 			usuarioRecibido.listadoOpcionesClub();
-				 * 		}
-				 * }
-				 **/
+				GestionUsuario usuarioLeido = new GestionUsuario();
+				usuarioLeido = (GestionUsuario)usuarioLeido.acceder();
+				GestionUsuario usuarioRecibido = listadoUsuarios.buscarElemento(usuarioLeido);
+				if (usuarioRecibido != null){ ///TODO analizar uso de excepciones
+					if (usuarioRecibido.comparacionPassword()) {
+						if (usuarioRecibido.getClubUsuario() == null) {
+							usuarioRecibido.setClubUsuario(usuarioRecibido.crearClub());
+						}
+						usuarioRecibido.getClubUsuario().listadoOpciones();
+					} else {
+						System.out.println("   Se alcanzó el límite de intentos de ingreso de contraseña.");
+					}
+				} else {
+					System.out.println("   El Usuario ingresado no existe");
+				}
+				listadoOpcionesUsuario();
 				break;
-				
 		}
 	}
 	
@@ -150,16 +156,16 @@ public class Simulador implements IMenu{
 		}
 		switch (opcion) {
 			case 1: //TODO pedir contraseña de creación para evitar que cualquiera cree admins
-				Administrador nuevoAdministrador =  new Administrador();
-				nuevoAdministrador = (Administrador)nuevoAdministrador.crearPersona();
+				GestionAdministrador nuevoAdministrador =  new GestionAdministrador();
+				nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
 				if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
 					System.out.println("    Administrador agregado con éxito.");
 				} else {
 					System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 					char opcionIntentar = Simulador.scan.next().charAt(0);
 					while (opcionIntentar == 's' || opcionIntentar == 'S') {
-						nuevoAdministrador = new Administrador(); ///Reseteamos los valores 
-						nuevoAdministrador = (Administrador)nuevoAdministrador.crearPersona();
+						nuevoAdministrador = new GestionAdministrador(); ///Reseteamos los valores 
+						nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
 						if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
 							System.out.println("    Administrador agregado con éxito.");
 							opcionIntentar = 'n';
@@ -172,17 +178,18 @@ public class Simulador implements IMenu{
 				listadoOpcionesAdministrador();
 				break;
 			case 2:
-				/**
-				 * leer nombre del administrador;
-				 * administradorLocal = crar administrador local con el nombre leído;
-				 * administradorRecibido = listadoAdministradores.buscarElemento(administradorLocal);
-				 * if (administradorRecibido != null){ ///TODO analizar uso de excepciones
-				 * 		leer contraseña x veces (intentos)
-				 * 		if contraseñaLocal.equals(administradorRecibido.getPassword){
-				 * 			administradorRecibido.listadoOpcionesAdministrador
-				 * 		}
-				 * }
-				 **/
+				GestionAdministrador administradorLeido = new GestionAdministrador();
+				administradorLeido = (GestionAdministrador)administradorLeido.acceder();
+				GestionAdministrador administradorRecibido = listadoAdministradores.buscarElemento(administradorLeido);
+				if (administradorRecibido != null){
+					if (administradorRecibido.comparacionPassword()) {
+						//administradorRecibido.listadoOpciones();
+					} else {
+						System.out.println("   Se alcanzó el límite de intentos de ingreso de contraseña.");
+					}
+				} else {
+					System.out.println("   El Administrador ingresado no existe");
+				}
 				listadoOpcionesAdministrador();
 				break;
 				

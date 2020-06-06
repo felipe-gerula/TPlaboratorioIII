@@ -4,12 +4,28 @@ package Clases;
  *  @author 
  */
 public abstract class PersonaFutbol {
-	private boolean estado;
+	private boolean estado; //true si es válido (alta)
 	private String nombreApellido;
-	public String club;
-	public String liga;
-	public String nacionalidad;
-	public int edad;
-	public String tipo;
-	public Double precio;
+	private String club;
+	private String liga;
+	private String nacionalidad;
+	private int edad;
+	private String tipo; //bronce, plata, oro, especial
+	private double precio;
+	
+	public PersonaFutbol(){
+		estado = false;
+		nombreApellido = "";
+		club = "";
+		liga = "";
+		nacionalidad = "";
+		edad = 0;
+		tipo = "";
+		precio = 0;
+	}
+	
+	public boolean getEstado () {
+		return this.estado;
+	}
+	
 }

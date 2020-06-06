@@ -4,7 +4,33 @@ package Clases;
  *  @author 
  */
 public class Estadio {
-	private int capacidad;
 	private String nombre;
+	private int capacidad;
 	private String ubicacion;
+	
+	public Estadio(String nombreEstadio, int capacidadEstadio, String ubicacionEstadio) {
+		nombre = nombreEstadio;
+		capacidad = capacidadEstadio;
+		ubicacion = ubicacionEstadio;
+	}
+
+	public Estadio() {
+	}
+
+	public Estadio crearEstadio() {
+		System.out.println("Bienvenido al menú de creación de Estadio.");
+		System.out.println("  Ingrese el nombre del Estadio:");
+		String nombreEstadio = Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese la capacidad del Estadio (entre 1.000 y 100.000):");
+		int capacidadEstadio = Simulador.getScanner().nextInt();
+		while (capacidadEstadio<1000 || capacidadEstadio>100000) {
+			System.out.println("Por favor, ingrese un valor entre 1.000 y 100.000: ");
+			capacidadEstadio = Simulador.getScanner().nextInt();
+		}
+		System.out.println("  Ingrese la ubicación del Estadio (ciudad, país o continente): ");
+		Simulador.getScanner().nextLine();
+		String ubicacionEstadio = Simulador.getScanner().nextLine();
+		Estadio nuevoEstadio = new Estadio(nombreEstadio, capacidadEstadio, ubicacionEstadio);
+		return nuevoEstadio;
+	}
 }

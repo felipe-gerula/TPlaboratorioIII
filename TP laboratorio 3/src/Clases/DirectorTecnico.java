@@ -8,6 +8,12 @@ public class DirectorTecnico extends PersonaFutbol {
 	private int idTecnico;
 	private Vestimenta vestimentaEquipada;
 	
+	public DirectorTecnico() {
+		super();
+		idTecnico = 0;
+		vestimentaEquipada = new Vestimenta();
+	}
+	
 	public void cambiarVestimenta() {
 		//TODO programar método
 	}
