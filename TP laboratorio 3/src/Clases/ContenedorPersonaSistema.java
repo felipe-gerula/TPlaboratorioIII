@@ -1,5 +1,9 @@
 package Clases;
-
+/** 
+ *  Esta clase nos permite crear objetos de tipo ContenedirPersonaSistema
+ *  Contiene un HashSet con elementos genericos (V) que se extiendan de PersonaSistema
+ *  @author 
+ */
 import java.util.HashSet;
 import java.util.Iterator;
 

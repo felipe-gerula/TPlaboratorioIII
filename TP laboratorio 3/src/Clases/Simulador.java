@@ -1,5 +1,9 @@
 package Clases;
-
+/**
+ * Esta clase nos permite crear objetos de tipo Simulador
+ * simula el funcionamiento del juego FIFA 20
+ * @add "Simulador FIFA 20" <a href=https://www.ea.com/es-es/games/fifa/fifa-20>SimuladorFIFA 20</a> 
+ */
 import java.util.Scanner;
 
 import Interfaces.IMenu;

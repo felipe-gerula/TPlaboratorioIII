@@ -1,6 +1,7 @@
 package Clases;
 /** 
  *  Esta clase nos permite crear objetos de tipo Jugador
+ *  @see "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/> JugadorFIFA 20</a>
  *  @author 
  */
 public class Jugador {

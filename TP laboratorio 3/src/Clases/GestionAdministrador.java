@@ -4,8 +4,8 @@ package Clases;
 import Interfaces.IMenu;
 
 /** 
- *  Esta clase nos permite crear objetos de tipo Administrador
- *  permite la modificacion de jugadores en el mercado 
+ *  Esta clase nos permite crear objetos de tipo GestionAdministracionAdministrador
+ *  permite la modificacion,alta y baja de jugadores  Y DT´s  en el mercado 
  *  @author 
  */
 public class GestionAdministrador extends PersonaSistema implements IMenu{

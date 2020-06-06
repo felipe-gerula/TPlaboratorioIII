@@ -1,6 +1,7 @@
 package Clases;
 /** 
- *  Esta clase nos permite crear objetos de tipo PersonaFutbol
+ *  Esta clase abstracta contiene los atributos de PersonaFutbol
+ *  Clase padre de Jugador y DirectorTecnico
  *  @author 
  */
 public abstract class PersonaFutbol {

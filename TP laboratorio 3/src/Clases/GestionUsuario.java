@@ -4,7 +4,8 @@ package Clases;
 import Interfaces.IMenu;
 
 /** 
- *  Esta clase nos permite crear objetos de tipo Usuario
+ *  Esta clase nos permite crear objetos de tipo GestionUsuario
+ *  permite crear y controlar las opciones del club de cada usuario
  *  @author 
  */
 public class GestionUsuario extends PersonaSistema{ //TODO cambiar a GestionUsuario
@@ -14,7 +15,7 @@ public class GestionUsuario extends PersonaSistema{ //TODO cambiar a GestionUsua
 	public GestionUsuario(String nombreUsuario, String passUsuario) {
 		super(nombreUsuario, passUsuario);
 		clubUsuario = null; //Cuando se ingresa al Usuario, se controla si el club existe o no
-	}
+	}	
 	
 	public GestionUsuario() {
 		super();
@@ -28,6 +29,10 @@ public class GestionUsuario extends PersonaSistema{ //TODO cambiar a GestionUsua
 		this.clubUsuario = clubRecibido;
 	}
 	
+	/**
+	 * Permite al usuario recien ingresado al sistema crear un club
+	 * @return el club creado por el usuario
+	 */
 	public ClubUsuario crearClub () {
 		System.out.println("Bienvenido al menú de creación de Club.");
 		System.out.println("  Ingrese el nombre del Club:");

@@ -1,6 +1,7 @@
 package Clases;
 /** 
- *  Esta clase nos permite crear objetos de tipo PersonaSistema
+ *  Esta clase abstracta contiene los atributos de PersonaSistema
+ *  clase padre de GestionAdministrador y GestionUsuario
  *  @author 
  */
 public abstract class PersonaSistema {
@@ -20,15 +21,30 @@ public abstract class PersonaSistema {
 	public PersonaSistema(String nombreUsuario) {
 		this.nombre = nombreUsuario;
 	}
-
+    /**
+     * Cambia la contraseña del usuario
+     * @return verdadero si la contraseña fue cambiada con exito,false sino
+     */
 	public boolean cambiarPassword() {
 		return true; //TODO programar funcion
 	}
 	
+	/**
+	 * permite crear usuarios nuevos para el sistema
+	 * @return el nuevo usuario creado  
+	 */
 	public abstract PersonaSistema crearPersona();
 	
+	/**
+	 * permite acceder al sistema a un usuario
+	 * @return el usuario ingresado
+	 */
 	public abstract PersonaSistema acceder();
-
+	
+/**
+ * compara la contraseña ingresada por el usuario con la que esta cargada en el sistema
+ * @return si es true la contraseña ingresa es valido, sino retorna false
+ */
 	public boolean comparacionPassword() {
 		int intentos = 3;
 		String passwordLeida;

@@ -1,6 +1,7 @@
 package Clases;
 /** 
  *  Esta clase nos permite crear objetos de tipo Vestimenta
+ *  Utilizada por el DT´s
  *  @author 
  */
 public class Vestimenta {

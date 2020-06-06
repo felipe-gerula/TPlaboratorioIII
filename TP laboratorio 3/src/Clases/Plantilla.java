@@ -2,6 +2,8 @@ package Clases;
 /** 
  *  Esta clase nos permite crear objetos de tipo Plantilla
  *  Es un contenedor con todos los jugadores del equipo creado
+ *  Utiliza un HashSet con los ID´s de los jugadores que conforman la plantilla
+ *  @ass "Plantilla FIFA 20" <a href=https://www.futbin.com/squad-builder>PlantillaFIFA 20</a>
  *  @author 
  */
 import java.util.HashSet;
@@ -13,6 +15,10 @@ public class Plantilla {
 		listadoJugadores = new HashSet<>();
 	}
 	
+	/**
+	 * consulta si la plantilla esta vacia
+	 * @return true si la plantilla esta vacia
+	 */
 	public boolean plantillaVacia() {
 		return listadoJugadores.isEmpty();
 	}
