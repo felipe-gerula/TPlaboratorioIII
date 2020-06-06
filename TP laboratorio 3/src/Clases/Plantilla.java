@@ -35,7 +35,7 @@ public class Plantilla {
 		return listadoJugadores.size(); //TODO programar método
 	}
 	
-	public Double promedioJugadores() {
-		return (Double)0.00; //TODO programar método
+	public double promedioJugadores() {
+		return 0.00; //TODO programar método
 	}
 }

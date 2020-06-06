@@ -43,7 +43,7 @@ public class ClubUsuario implements IMenu{
 		return true; //TODO programar método
 	}
 	
-	public Double jugarPartido () {
+	public double jugarPartido () {
 		return (Double)0.00; //TODO programar método
 	}
 	
