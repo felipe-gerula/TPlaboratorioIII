@@ -23,7 +23,9 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	}
 
 	public void agregarJugadorMercado() {
-		
+		Jugador nuevoJugador = new Jugador();
+		nuevoJugador = nuevoJugador.crearJugador();
+		Simulador.getMercado().agregarJugador(nuevoJugador.getIDJugador());
 	}
 	
 	public void modificarJugadorMercado() {
@@ -142,6 +144,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 9:
 				System.out.println(Simulador.getMercado().verMercado());
+				this.listadoOpciones();
 				break;
 			default:
 				regresar();

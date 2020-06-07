@@ -22,6 +22,7 @@ public class Simulador implements IMenu{
 		listadoAdministradores = new ContenedorPersonaSistema<>();
 		mercadoDePases = new Mercado();
 		scan = new Scanner(System.in);
+		Jugador.setCantidadJugadores(0); //TODO sacar cuando esté el archivo hecho
 	}
 	/// * * * FIN CONSTRUCTORES * * * ///
 	
@@ -187,14 +188,14 @@ public class Simulador implements IMenu{
 				GestionAdministrador administradorRecibido = listadoAdministradores.buscarElemento(administradorLeido);
 				if (administradorRecibido != null){
 					if (administradorRecibido.comparacionPassword()) {
-						//administradorRecibido.listadoOpciones();
+						administradorRecibido.listadoOpciones();
 					} else {
 						System.out.println("   Se alcanzó el límite de intentos de ingreso de contraseña.");
 					}
 				} else {
 					System.out.println("   El Administrador ingresado no existe");
 				}
-				listadoOpcionesAdministrador();
+				
 				break;
 				
 		}

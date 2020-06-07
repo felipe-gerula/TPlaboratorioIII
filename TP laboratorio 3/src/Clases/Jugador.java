@@ -4,7 +4,7 @@ package Clases;
  *  @see "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/> JugadorFIFA 20</a>
  *  @author 
  */
-public class Jugador {
+public class Jugador extends PersonaFutbol{
 	private static int cantidadJugadores;
 	private int idJugador;
 	private int calificacion;
@@ -12,6 +12,22 @@ public class Jugador {
 	private int movHabiles;
 	private String posicion;
 	
+	
+	
+	public Jugador(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int calificacion, char pieHabil, int movHabiles, String posicion) {
+		super(nombreApellido, club, liga, nacionalidad, edad, tipo, precio);
+		this.idJugador = cantidadJugadores;
+		cantidadJugadores++;
+		this.calificacion = calificacion;
+		this.pieHabil = pieHabil;
+		this.movHabiles = movHabiles;
+		this.posicion = posicion;
+	}
+
+	public Jugador() {
+		super();
+	}
+
 	public static int getCantidadJugadores() {
 		return cantidadJugadores;
 	}
@@ -20,11 +36,11 @@ public class Jugador {
 		Jugador.cantidadJugadores = cantidadJugadores;
 	}
 	
-	public int getIdJugador() {
+	public int getIDJugador() {
 		return idJugador;
 	}
 	
-	public void setIdJugador(int idJugador) {
+	public void setIDJugador(int idJugador) {
 		this.idJugador = idJugador;
 	}
 	
@@ -59,6 +75,42 @@ public class Jugador {
 	public void setPosicion(String posicion) {
 		this.posicion = posicion;
 	}
+
+	public String getClub() {
+		return super.getClub();
+	}	
 	
+	public Jugador crearJugador() {
+		System.out.println("Bienvenido al menú de creación de Jugador.");
+		Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese el nombre y apellido del Jugador:");
+		String nombreJugador = Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese el nombre de la liga del Jugador:");
+		String ligaJugador = Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese el nombre del equipo del Jugador:");
+		String equipoJugador = Simulador.getScanner().nextLine();
+		//TODO controlar que no exista, y seguir. Si ya existe devuelve null
+		System.out.println("  Ingrese la nacionalidad del Jugador:");
+		String nacionalidadJugador = Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese la edad del Jugador:");
+		int edadJugador = Simulador.getScanner().nextInt();
+		System.out.println("  Ingrese la calificación del Jugador:");
+		int calificacionJugador = Simulador.getScanner().nextInt();
+		///TODO método que pregunte si es especial, y si no que asigne el nivel de calidad según la calificación
+		Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese el nivel de calidad del Jugador (bronce, plata, oro, o especial):");
+		String calidadJugador = Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese el pie hábil del Jugador (i/d):"); //TODO validación
+		char pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
+		System.out.println("  Ingrese el nivel de movimientos hábiles del Jugador (1-5):"); //TODO validación
+		int movHabilesJugador = Simulador.getScanner().nextInt();
+		Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese la posición del Jugador:"); //TODO hacer menú que muestra las opciones disponibles
+		String posicionJugador = Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese el precio del Jugador:"); //TODO hacer método que limite los precios según si es especial y la calificación del jugador
+		double precioJugador = Simulador.getScanner().nextDouble();
+		Jugador nuevoJugador = new Jugador(nombreJugador, equipoJugador, ligaJugador, nacionalidadJugador, edadJugador, calidadJugador, precioJugador, calificacionJugador, pieHabilJugador, movHabilesJugador, posicionJugador);
+		return nuevoJugador;
+	}
 	
 }

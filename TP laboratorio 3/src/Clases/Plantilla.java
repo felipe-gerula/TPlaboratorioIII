@@ -24,6 +24,7 @@ public class Plantilla {
 	}
 	
 	public boolean agregarJugador (int idJugador) {
+		//La función controla internamente que haya espacio y que el jugador no sea parte de la plantilla. No llamar a cantidadJugadores para agregar
 		return true; //TODO programar método
 	}
 	

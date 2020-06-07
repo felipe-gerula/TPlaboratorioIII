@@ -24,6 +24,10 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		return ""; //TODO programar método, solo jugadores válidos
 	}
 	
+	public void agregarJugador (int nuevoID) { //TODO hace un throws de ID erróneo (suponemos que no debería pasar)
+		listadoJugadores.add((Integer)nuevoID);
+	}
+	
 	public String ingresarAOpcionVerMercado() {
 		String retorno = "";
 		System.out.println("  Ingrese el número de opción deseada: ");

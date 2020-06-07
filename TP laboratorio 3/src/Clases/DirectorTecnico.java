@@ -17,4 +17,8 @@ public class DirectorTecnico extends PersonaFutbol {
 	public void cambiarVestimenta() {
 		//TODO programar método
 	}
+
+	public int getIDDT() {
+		return idTecnico;
+	}
 }

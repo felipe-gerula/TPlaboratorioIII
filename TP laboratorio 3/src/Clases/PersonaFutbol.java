@@ -25,8 +25,30 @@ public abstract class PersonaFutbol {
 		precio = 0;
 	}
 	
+	public PersonaFutbol(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio) {
+		super();
+		this.estado = true;
+		this.nombreApellido = nombreApellido;
+		this.club = club;
+		this.liga = liga;
+		this.nacionalidad = nacionalidad;
+		this.edad = edad;
+		this.tipo = tipo;
+		this.precio = precio;
+	}
+
+
+
 	public boolean getEstado () {
 		return this.estado;
+	}
+	
+	public String getClub () {
+		return club;
+	}
+	
+	public String getLiga () {
+		return liga;
 	}
 	
 }
