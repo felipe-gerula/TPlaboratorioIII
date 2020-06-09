@@ -1,5 +1,8 @@
 package dao;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 public abstract class ArchivoAbstracto <V>{
 	private String nombreArchivo;
 	
@@ -12,6 +15,14 @@ public abstract class ArchivoAbstracto <V>{
 	}
 
 	public boolean guardar(V objetoAGuardar) {
+		try {
+			ObjectOutputStream archivo = new ObjectOutputStream(new FileOutputStream(nombreArchivo));
+			archivo.writeObject(objetoAGuardar);
+			archivo.close();
+		}
+		catch (Exception e){
+			
+		}
 		return true;
 	}
 	

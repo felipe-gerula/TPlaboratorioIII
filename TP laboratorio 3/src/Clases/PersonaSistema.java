@@ -1,10 +1,13 @@
 package Clases;
+
+import java.io.Serializable;
+
 /** 
  *  Esta clase abstracta contiene los atributos de PersonaSistema
  *  clase padre de GestionAdministrador y GestionUsuario
  *  @author 
  */
-public abstract class PersonaSistema {
+public abstract class PersonaSistema implements Serializable{
 	private String nombre;
 	private String password;
 	

@@ -1,10 +1,13 @@
 package Clases;
+
+import java.io.Serializable;
+
 /** 
  *  Esta clase abstracta contiene los atributos de PersonaFutbol
  *  Clase padre de Jugador y DirectorTecnico
  *  @author 
  */
-public abstract class PersonaFutbol {
+public abstract class PersonaFutbol implements Serializable {
 	private boolean estado; //true si es válido (alta)
 	private String nombreApellido;
 	private String club;

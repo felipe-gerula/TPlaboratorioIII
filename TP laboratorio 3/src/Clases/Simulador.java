@@ -31,7 +31,7 @@ public class Simulador implements IMenu{
 		mercadoDePases = new Mercado();
 		scan = new Scanner(System.in);
 		Jugador.setCantidadJugadores(0); //TODO sacar cuando esté el archivo hecho
-		
+		archivoJugadores = new ArchivoJugadores();
 	}
 	/// * * * FIN CONSTRUCTORES * * * ///
 	

@@ -2,6 +2,7 @@ package Clases;
 
 
 import Interfaces.IMenu;
+import dao.ArchivoJugadores;
 
 /** 
  *  Esta clase nos permite crear objetos de tipo GestionAdministracionAdministrador
@@ -28,12 +29,13 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		if (nuevoJugador != null) {
 			System.out.println(nuevoJugador.toString());
 			Simulador.getMercado().agregarJugador(nuevoJugador.getIDJugador());
+			Simulador.getArchivoJugadores().guardar(nuevoJugador);
 			//TODO agregar datos al archivo
 		}
 	}
 	
 	public void modificarJugadorMercado() {
-		
+		System.out.println(Simulador.getArchivoJugadores().consultarID((Integer)Simulador.getScanner().nextInt()).toString());
 	}
 	
 	public void bajaJugadorMercado() {

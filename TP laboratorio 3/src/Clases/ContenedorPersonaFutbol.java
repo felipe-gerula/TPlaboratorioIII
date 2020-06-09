@@ -2,6 +2,8 @@ package Clases;
 
 import java.util.HashSet;
 
+import dao.ArchivoJugadores;
+
 public class ContenedorPersonaFutbol<V> {
 	HashSet<V> listadoPersonaFutbol;
 	
@@ -22,7 +24,12 @@ public class ContenedorPersonaFutbol<V> {
 	}
 
 	public String listado () {
-		return this.toString();
+		StringBuilder retorno = new StringBuilder();
+		for (int i =0; i<Jugador.getCantidadJugadores(); i++) {
+			System.out.println(Simulador.getArchivoJugadores().consultarID((Integer)i).toString());
+			//retorno.append(Simulador.getArchivoJugadores().consultarID((Integer)i).toString());
+		}
+		return retorno.toString();
 	}
 	
 	@Override
