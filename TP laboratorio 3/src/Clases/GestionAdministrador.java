@@ -25,7 +25,11 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public void agregarJugadorMercado() {
 		Jugador nuevoJugador = new Jugador();
 		nuevoJugador = nuevoJugador.crearJugador();
-		Simulador.getMercado().agregarJugador(nuevoJugador.getIDJugador());
+		if (nuevoJugador != null) {
+			System.out.println(nuevoJugador.toString());
+			Simulador.getMercado().agregarJugador(nuevoJugador.getIDJugador());
+			//TODO agregar datos al archivo
+		}
 	}
 	
 	public void modificarJugadorMercado() {
@@ -41,7 +45,13 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	}
 	
 	public void agregarDTMercado() {
-		
+		DirectorTecnico nuevoDT = new DirectorTecnico();
+		nuevoDT = nuevoDT.crearDirectorTecnico();
+		if (nuevoDT != null) {
+			System.out.println(nuevoDT.toString());
+			Simulador.getMercado().agregarDirectorTecnico((Integer)nuevoDT.getIDDT());
+			//TODO agregar datos al archivo
+		}
 	}
 	
 	public void modificarDTMercado() {
@@ -102,7 +112,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 
 	@Override
 	public void ingresarAOpcion() {
-		int opcion = 0; //TODO sacar inicialización
+		int opcion;
 		System.out.println("  Ingrese el número de opción deseada: ");
 		opcion = Simulador.getScanner().nextInt();
 		while (opcion<1 || opcion>10) {

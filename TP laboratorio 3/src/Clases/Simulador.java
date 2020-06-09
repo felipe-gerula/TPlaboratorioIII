@@ -7,11 +7,19 @@ package Clases;
 import java.util.Scanner;
 
 import Interfaces.IMenu;
+import dao.ArchivoAdministradores;
+import dao.ArchivoDTs;
+import dao.ArchivoJugadores;
+import dao.ArchivoUsuarios;
 
 public class Simulador implements IMenu{
 
 	private ContenedorPersonaSistema<GestionUsuario> listadoUsuarios;
 	private ContenedorPersonaSistema<GestionAdministrador> listadoAdministradores;
+	private static ArchivoUsuarios archivoUsuarios;
+	private static ArchivoAdministradores archivoAdministradores;
+	private static ArchivoJugadores archivoJugadores;
+	private static ArchivoDTs archivoDTs;
 	private static Mercado mercadoDePases; //TODO hacer get y modificar usuario
 	private static Scanner scan;
 	///TODO scan se crea en constructor y se destruye al salir
@@ -23,12 +31,29 @@ public class Simulador implements IMenu{
 		mercadoDePases = new Mercado();
 		scan = new Scanner(System.in);
 		Jugador.setCantidadJugadores(0); //TODO sacar cuando esté el archivo hecho
+		
 	}
 	/// * * * FIN CONSTRUCTORES * * * ///
 	
 	/// * * * GETTERS * * * ///
 	public static Mercado getMercado() {
 		return mercadoDePases;
+	}
+	
+	public static ArchivoAdministradores getArchivoAdministradores() {
+		return archivoAdministradores;
+	}
+	
+	public static ArchivoUsuarios getArchivoUsuarios() {
+		return archivoUsuarios;
+	}
+	
+	public static ArchivoJugadores getArchivoJugadores() {
+		return archivoJugadores;
+	}
+	
+	public static ArchivoDTs getArchivoDTs() {
+		return archivoDTs;
 	}
 	
 	public static Scanner getScanner() {

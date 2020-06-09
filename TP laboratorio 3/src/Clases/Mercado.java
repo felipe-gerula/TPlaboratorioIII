@@ -5,27 +5,35 @@ package Clases;
  *  Utiliza un HashSet con enteros que almacenan los ID´s de los jugadores y DT´s
  *  @author 
  */
-import java.util.HashSet;
 
 public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes de Mercado tienen parámetro
-	private HashSet<Integer> listadoJugadores;
-	private HashSet<Integer> listadoDTs;
+	private ContenedorPersonaFutbol<Integer> listadoJugadores;
+	private ContenedorPersonaFutbol<Integer> listadoDTs;
 	
 	public Mercado() {
-		listadoJugadores = new HashSet<>();
-		listadoDTs = new HashSet<>();
+		listadoJugadores = new ContenedorPersonaFutbol<>(); //TODO cambiar por carga desde archivo
+		listadoDTs = new ContenedorPersonaFutbol<>(); //TODO cambiar por carga desde archivo
+		//Simulador.getArchivoJugadores().cargarListadoJugadores(listadoJugadores);
+		//Simulador.getArchivoDTs().cargarListadoDTs(listadoDTs);
 	}
 	
-	public String listarJugadores() {
-		return ""; //TODO programar método, solo DTs válidos
+	
+	/**
+	 * Este método es usado desde clases externas (GestionAdministrador) para agregar un jugador al Mercado y evitar el acceso a los atributos privados
+	 * 
+	 * @param idJugador ID del jugador a agregar
+	 */
+	public void agregarJugador(Integer idJugador) {
+		listadoJugadores.agregar(idJugador);
 	}
 	
-	public String listarDTs() {
-		return ""; //TODO programar método, solo jugadores válidos
-	}
-	
-	public void agregarJugador (int nuevoID) { //TODO hace un throws de ID erróneo (suponemos que no debería pasar)
-		listadoJugadores.add((Integer)nuevoID);
+	/**
+	 * Este método es usado desde clases externas (GestionAdministrador) para agregar un DT al Mercado y evitar el acceso a los atributos privados
+	 * 
+	 * @param idDT ID del DT a agregar
+	 */
+	public void agregarDirectorTecnico(Integer idDT) {
+		listadoDTs.agregar(idDT);
 	}
 	
 	public String ingresarAOpcionVerMercado() {
@@ -38,15 +46,15 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		}
 		switch (opcion) {
 			case 1:
-				if (!listadoJugadores.isEmpty()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
-					retorno = listarJugadores(); //TODO lista jugadores válidos
+				if (!listadoJugadores.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
+					retorno = listadoJugadores.listado(); //TODO lista jugadores válidos
 				} else {
 					retorno = "No hay jugadores en el Mercado.";
 				}
 				break;
 			case 2:
-				if (!listadoDTs.isEmpty()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
-					retorno = listarDTs(); //TODO lista DTs válidos
+				if (!listadoDTs.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
+					retorno = listadoDTs.listado(); //TODO lista DTs válidos
 				} else {
 					retorno = "No hay DTs en el Mercado.";
 				}
@@ -64,7 +72,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	
 	public void listadoOpcionesMercado(ClubUsuario clubRecibido) {
 		System.out.println("\n\nBienvenido al Mercado, " + clubRecibido.getNombre());
-		if(this.listadoJugadores.isEmpty() && this.listadoDTs.isEmpty()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
+		if(this.listadoJugadores.estaVacio() && this.listadoDTs.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
 			System.out.println(clubRecibido.getNombre() + ", lamentamos informarte que el Mercado está vacío. Un Administrador debe cargar datos.");
 		} else {
 			System.out.println("  A continuación están las opciones:");
@@ -95,7 +103,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 					break;
 				case 2: //Comprar Jugador
 					if (clubRecibido.getPlantillaClub().cantidadJugadores()<11) {
-						if (!listadoJugadores.isEmpty()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
+						if (!listadoJugadores.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
 							///System.out.println(comprarJugador()); ///TODO crear función que agrega a la plantilla, el ID ingresado, si es que es válido en el archivo
 						} else {
 							System.out.println("No hay jugadores en el Mercado");
@@ -107,7 +115,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 					break;
 				case 3: //Comprar DT
 					if (!clubRecibido.getDTClub().getEstado()) {
-						if (!listadoDTs.isEmpty()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
+						if (!listadoDTs.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
 							///System.out.println(comprarDT()); ///TODO crear función que agrega al Club el DT con el ID ingresado, y si es que es válido en el archivo
 						} else {
 							System.out.println("No hay DTs en el Mercado.");

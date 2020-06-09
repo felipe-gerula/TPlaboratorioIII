@@ -113,4 +113,9 @@ public class Jugador extends PersonaFutbol{
 		return nuevoJugador;
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString() + " Calificación: " + this.calificacion + ".\n Pie hábil: "+ this.pieHabil + ".\n Estrellas movimientos hábiles: " + this.movHabiles + ".\n Posición: " + this.posicion + ".\n ID: " + this.idJugador + "."; //TODO que meustre estrellas en vez de número
+	}
+	
 }

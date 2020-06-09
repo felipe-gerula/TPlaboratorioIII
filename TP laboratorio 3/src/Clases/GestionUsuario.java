@@ -8,7 +8,7 @@ import Interfaces.IMenu;
  *  permite crear y controlar las opciones del club de cada usuario
  *  @author 
  */
-public class GestionUsuario extends PersonaSistema{ //TODO cambiar a GestionUsuario
+public class GestionUsuario extends PersonaSistema{
 
 	private ClubUsuario clubUsuario;
 	

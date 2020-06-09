@@ -50,5 +50,14 @@ public abstract class PersonaFutbol {
 	public String getLiga () {
 		return liga;
 	}
+
+	
+	//No muestra el estado por si lo llama el Usuario desde ver Mercado
+	@Override
+	public String toString() {
+		return "Datos de " + nombreApellido + ":\n Liga: " + liga + ".\n Club: " + club + ".\n Nacionalidad: " + nacionalidad + ".\n Edad: " + edad + ".\n Tipo: " + tipo + ".\n Precio: $" + precio + ".\n";
+	}
+	
+	
 	
 }

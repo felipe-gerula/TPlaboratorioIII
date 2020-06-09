@@ -13,7 +13,15 @@ public class Vestimenta {
 		prendaInferior = "";
 	}
 	
-	public void editarVestimenta() {
-		//TODO programar método
+	public void setVestimenta(String nuevaParteSuperior, String nuevaParteInferior) {
+		this.prendaSuperior = nuevaParteSuperior;
+		this.prendaInferior = nuevaParteInferior;
 	}
+
+	@Override
+	public String toString() {
+		return " Vestimenta equipada: \n  Prenda Superior: " + prendaSuperior + ".\n  Prenda Inferior: " + prendaInferior + ".";
+	}
+	
+	
 }
