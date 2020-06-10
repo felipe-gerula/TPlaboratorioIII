@@ -1,24 +1,30 @@
 package Clases;
+
+import java.util.ArrayList;
+//import java.util.Collections;
+
 /** 
  *  Esta clase nos permite crear objetos de tipo DirectorTecnico
  *  @author 
  */
-public class DirectorTecnico extends PersonaFutbol {
+public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
+	private static final long serialVersionUID = 1L;
 	private static int cantidadTecnicos;
-	private int idTecnico;
 	private Vestimenta vestimentaEquipada;
 	
 	public DirectorTecnico() {
 		super();
-		idTecnico = 0;
 		vestimentaEquipada = new Vestimenta();
 	}
 	
 	public DirectorTecnico(String nombreDT, String equipoDT, String ligaDT, String nacionalidadDT, int edadDT, String calidadDT, double precioDT) {
-		super(nombreDT, equipoDT, ligaDT, nacionalidadDT, edadDT, calidadDT, precioDT);
-		this.idTecnico = cantidadTecnicos;
+		super(nombreDT, equipoDT, ligaDT, nacionalidadDT, edadDT, calidadDT, precioDT, cantidadTecnicos);
 		cantidadTecnicos++;
 		this.vestimentaEquipada = new Vestimenta();
+	}
+
+	public static void setCantidadDTs(int cantidad) {
+		cantidadTecnicos = cantidad;
 	}
 
 	public DirectorTecnico crearDirectorTecnico() {
@@ -110,15 +116,46 @@ public class DirectorTecnico extends PersonaFutbol {
 		}
 		this.vestimentaEquipada.setVestimenta(opcionSuperior, opcionInferior);
 	}
-
-	public int getIDDT() {
-		return idTecnico;
+	
+	public static String opcionesListado (ArrayList<DirectorTecnico> listadoDTs) {
+		System.out.println("  A continuación están los criterios de ordenación:");
+		System.out.println("    1. Por nombre.");
+		System.out.println("    2. Por liga.");
+		System.out.println("    3. Por club.");
+		System.out.println("    4. Por tipo.");
+		System.out.println("    5. Por precio.");
+		System.out.println("");
+		return ingresarAOpcionesListado(listadoDTs);
+	}
+	
+	public static String ingresarAOpcionesListado(ArrayList<DirectorTecnico> listadoDTs) {
+		System.out.println("  Ingrese el número de opción deseada: ");
+		int opcion = Simulador.getScanner().nextInt();
+		while (opcion<1 || opcion>5) {
+			System.out.println("  Por favor ingrese una opción correcta: ");
+			opcion = Simulador.getScanner().nextInt();
+		}
+		switch (opcion) {
+			case 1: //Por nombre
+				//Collections.sort(listadoDTs);
+				break;
+			default:
+				System.out.println("Gracias por usar el Listado.");
+				break;
+		}
+		return listadoDTs.toString();
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + vestimentaEquipada.toString() + "\n ID: " + idTecnico + ".";
+		return super.toString() + vestimentaEquipada.toString() + "\n ID: " + super.getID() + ".";
 	}
 	
+
+	/*@Override
+	public int compareTo(Object o) {
+		DirectorTecnico recibido = (DirectorTecnico)o;
+		return recibido.getNombre().compareTo(this.getNombre());
+	}*/
 	
 }

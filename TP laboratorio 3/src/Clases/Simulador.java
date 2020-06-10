@@ -28,10 +28,14 @@ public class Simulador implements IMenu{
 	public Simulador() {
 		listadoUsuarios = new ContenedorPersonaSistema<>();
 		listadoAdministradores = new ContenedorPersonaSistema<>();
+		archivoJugadores = new ArchivoJugadores();
+		archivoDTs = new ArchivoDTs();
+		archivoAdministradores = new ArchivoAdministradores();
+		archivoUsuarios = new ArchivoUsuarios();
+		archivoUsuarios.cargarListadoUsuarios(listadoUsuarios);
+		archivoAdministradores.cargarListadoAdministradores(listadoAdministradores);
 		mercadoDePases = new Mercado();
 		scan = new Scanner(System.in);
-		Jugador.setCantidadJugadores(0); //TODO sacar cuando esté el archivo hecho
-		archivoJugadores = new ArchivoJugadores();
 	}
 	/// * * * FIN CONSTRUCTORES * * * ///
 	
@@ -59,6 +63,7 @@ public class Simulador implements IMenu{
 	public static Scanner getScanner() {
 		return scan;
 	}
+	
 	/// * * * FIN GETTERS * * * ///
 	
 	
@@ -127,7 +132,8 @@ public class Simulador implements IMenu{
 				GestionUsuario nuevoUsuario = new GestionUsuario();
 				nuevoUsuario = (GestionUsuario)nuevoUsuario.crearPersona();
 				if(listadoUsuarios.agregarElemento(nuevoUsuario)) {
-					System.out.println("    Usuario agregado con éxito.");
+					archivoUsuarios.guardar(listadoUsuarios);
+					System.out.println("    Usuario agregado y guardado con éxito.");
 				} else {
 					System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 					char opcionIntentar = Simulador.scan.next().charAt(0);
@@ -189,6 +195,7 @@ public class Simulador implements IMenu{
 				GestionAdministrador nuevoAdministrador =  new GestionAdministrador();
 				nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
 				if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
+					archivoAdministradores.guardar(listadoAdministradores);
 					System.out.println("    Administrador agregado con éxito.");
 				} else {
 					System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
@@ -221,8 +228,7 @@ public class Simulador implements IMenu{
 					System.out.println("   El Administrador ingresado no existe");
 				}
 				
-				break;
-				
+				break;	
 		}
 	}
 	

@@ -1,49 +1,70 @@
 package dao;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Iterator;
 
 import Clases.ContenedorPersonaFutbol;
 import Clases.Jugador;
 
-public class ArchivoJugadores extends ArchivoAbstracto<Jugador>{
+public class ArchivoJugadores extends ArchivoAbstracto<ContenedorPersonaFutbol<Jugador>>{
+	
 	public ArchivoJugadores () {
 		super ("Jugadores.dat");
 	}
 	
-	public boolean guardar(Jugador jugadorAGuardar) {
-		return super.guardar(jugadorAGuardar);
+	public void cargarListadoJugadores (ContenedorPersonaFutbol<Jugador> listadoJugadoresRecibido) {
+		leer(listadoJugadoresRecibido);
+		Jugador.setCantidadJugadores(listadoJugadoresRecibido.cantidad());
 	}
-	
-	public boolean modificar (Jugador jugadorAModificar) {
-		return super.modificar(jugadorAModificar);
-	}
-	
-	public void cargarListadoJugadores (ContenedorPersonaFutbol<Integer> listadoJugadoresRecibido) {
-		String archivo = super.getNombreArchivo();
-		// While !EOF cargar IDs al listado
-	}
-	
-	public Jugador consultarID (Integer idRecibido) {
-		System.out.println("id: "+(int)idRecibido);
-		Jugador auxiliar = new Jugador();
+
+	@Override
+	public boolean guardar(ContenedorPersonaFutbol<Jugador> objetoAGuardar) {
 		try {
-			ObjectInputStream archivo = new ObjectInputStream(new FileInputStream(super.getNombreArchivo()));
-			System.out.println("id(try): "+(int)idRecibido);
-			if (idRecibido==0) {
-				auxiliar = (Jugador) archivo.readObject();
-			} else {
-				for (int i = 0; i<(int)idRecibido+1; i++) {
-					System.out.println("id(for): "+(int)idRecibido);
-					auxiliar = (Jugador) archivo.readObject();
-					System.out.println(auxiliar.toString());
-				}
+			ObjectOutputStream archivo = new ObjectOutputStream(new FileOutputStream(super.getNombreArchivo()));
+			Iterator<Jugador> it = objetoAGuardar.getIterator();
+			while (it.hasNext()) {
+				archivo.writeObject(it.next());
 			}
 			archivo.close();
 		}
-		catch (Exception e) {
-			
+		catch (Exception e){
+			e.printStackTrace();
 		}
-		return auxiliar; //TODO programar método que devuelve el jugador correspondiente al ID
+		return true;
 	}
+
+	@Override
+	public boolean leer(ContenedorPersonaFutbol<Jugador> contenedorRecibido)  {
+		try {
+			Jugador aux;
+			FileInputStream fileInputStream = new FileInputStream(super.getNombreArchivo());
+			ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
+			while ((aux = (Jugador) inputStream.readObject()) != null) {
+				contenedorRecibido.agregar(aux);
+			}
+			inputStream.close();
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Archivo '" + super.getNombreArchivo() + "' no encontrado.");
+		}
+		catch (EOFException e) {
+			System.out.println("Fin de carga desde el archivo '" + super.getNombreArchivo() + "'.");
+		}
+		catch (IOException e) {
+			System.out.println("IOException..");
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	
+	
 }

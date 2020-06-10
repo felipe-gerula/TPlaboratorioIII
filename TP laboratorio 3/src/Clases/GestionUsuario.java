@@ -1,8 +1,5 @@
 package Clases;
 
-
-import Interfaces.IMenu;
-
 /** 
  *  Esta clase nos permite crear objetos de tipo GestionUsuario
  *  permite crear y controlar las opciones del club de cada usuario
@@ -10,6 +7,7 @@ import Interfaces.IMenu;
  */
 public class GestionUsuario extends PersonaSistema{
 
+	private static final long serialVersionUID = 1L;
 	private ClubUsuario clubUsuario;
 	
 	public GestionUsuario(String nombreUsuario, String passUsuario) {

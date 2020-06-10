@@ -1,22 +1,26 @@
 package Clases;
+
+import java.util.ArrayList;
+/*import java.util.Collections;*/
+
 /** 
  *  Esta clase nos permite crear objetos de tipo Jugador
  *  @see "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/> JugadorFIFA 20</a>
  *  @author 
  */
-public class Jugador extends PersonaFutbol{
+public class Jugador extends PersonaFutbol /*implements Comparable*/{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1017025389533618303L;
 	private static int cantidadJugadores;
-	private int idJugador;
 	private int calificacion;
 	private char pieHabil;
 	private int movHabiles;
 	private String posicion;
 	
-	
-	
 	public Jugador(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int calificacion, char pieHabil, int movHabiles, String posicion) {
-		super(nombreApellido, club, liga, nacionalidad, edad, tipo, precio);
-		this.idJugador = cantidadJugadores;
+		super(nombreApellido, club, liga, nacionalidad, edad, tipo, precio, cantidadJugadores);
 		cantidadJugadores++;
 		this.calificacion = calificacion;
 		this.pieHabil = pieHabil;
@@ -32,20 +36,16 @@ public class Jugador extends PersonaFutbol{
 		return cantidadJugadores;
 	}
 	
-	public static void setCantidadJugadores(int cantidadJugadores) {
-		Jugador.cantidadJugadores = cantidadJugadores;
-	}
-	
 	public int getIDJugador() {
-		return idJugador;
-	}
-	
-	public void setIDJugador(int idJugador) {
-		this.idJugador = idJugador;
+		return super.getID();
 	}
 	
 	public int getCalificacion() {
 		return calificacion;
+	}
+	
+	public static void setCantidadJugadores(int cantidad) {
+		cantidadJugadores = cantidad;
 	}
 	
 	public void setCalificacion(int calificacion) {
@@ -113,9 +113,47 @@ public class Jugador extends PersonaFutbol{
 		return nuevoJugador;
 	}
 	
+	public static String opcionesListado (ArrayList<Jugador> listadoJugadores) {
+		System.out.println("  A continuación están los criterios de ordenación:");
+		System.out.println("    1. Por nombre.");
+		System.out.println("    2. Por liga.");
+		System.out.println("    3. Por club.");
+		System.out.println("    4. Por calificación.");
+		System.out.println("    5. Por movimientos hábiles.");
+		System.out.println("    6. Por tipo.");
+		System.out.println("    7. Por posición.");
+		System.out.println("    8. Por precio.");
+		System.out.println("");
+		return ingresarAOpcionesListado(listadoJugadores);
+	}
+	
+	public static String ingresarAOpcionesListado(ArrayList<Jugador> listadoJugadores) {
+		System.out.println("  Ingrese el número de opción deseada: ");
+		int opcion = Simulador.getScanner().nextInt();
+		while (opcion<1 || opcion>8) {
+			System.out.println("  Por favor ingrese una opción correcta: ");
+			opcion = Simulador.getScanner().nextInt();
+		}
+		switch (opcion) {
+			case 1: //Por nombre
+				/*Collections.sort(listadoJugadores);*/
+				break;
+			default:
+				System.out.println("Gracias por usar el Listado.");
+				break;
+		}
+		return listadoJugadores.toString();
+	}
+	
 	@Override
 	public String toString() {
-		return super.toString() + " Calificación: " + this.calificacion + ".\n Pie hábil: "+ this.pieHabil + ".\n Estrellas movimientos hábiles: " + this.movHabiles + ".\n Posición: " + this.posicion + ".\n ID: " + this.idJugador + "."; //TODO que meustre estrellas en vez de número
+		return super.toString() + " Calificación: " + this.calificacion + ".\n Pie hábil: "+ this.pieHabil + ".\n Estrellas movimientos hábiles: " + this.movHabiles + ".\n Posición: " + this.posicion + ".\n ID: " + super.getID() + "."; //TODO que meustre estrellas en vez de número
 	}
+
+	/*@Override
+	public int compareTo(Object o) {
+		Jugador recibido = (Jugador)o;
+		return recibido.getNombre().compareTo(this.getNombre());
+	}*/
 	
 }

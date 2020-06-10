@@ -8,6 +8,7 @@ import java.io.Serializable;
  *  @author 
  */
 public abstract class PersonaFutbol implements Serializable {
+	private static final long serialVersionUID = -7236000706191418574L;
 	private boolean estado; //true si es válido (alta)
 	private String nombreApellido;
 	private String club;
@@ -16,6 +17,7 @@ public abstract class PersonaFutbol implements Serializable {
 	private int edad;
 	private String tipo; //bronce, plata, oro, especial
 	private double precio;
+	private int id;
 	
 	public PersonaFutbol(){
 		estado = false;
@@ -28,7 +30,7 @@ public abstract class PersonaFutbol implements Serializable {
 		precio = 0;
 	}
 	
-	public PersonaFutbol(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio) {
+	public PersonaFutbol(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int id) {
 		super();
 		this.estado = true;
 		this.nombreApellido = nombreApellido;
@@ -38,6 +40,7 @@ public abstract class PersonaFutbol implements Serializable {
 		this.edad = edad;
 		this.tipo = tipo;
 		this.precio = precio;
+		this.id = id;
 	}
 
 
@@ -52,6 +55,14 @@ public abstract class PersonaFutbol implements Serializable {
 	
 	public String getLiga () {
 		return liga;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public String getNombre() {
+		return this.nombreApellido;
 	}
 
 	

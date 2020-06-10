@@ -8,6 +8,7 @@ import java.io.Serializable;
  *  @author 
  */
 public abstract class PersonaSistema implements Serializable{
+	private static final long serialVersionUID = -6734207281855156759L;
 	private String nombre;
 	private String password;
 	

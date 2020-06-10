@@ -1,4 +1,5 @@
 package Clases;
+
 /** 
  *  Esta clase nos permite crear objetos de tipo Mercado
  *  Es un contenedor con todos los jugadores y DTs del juego
@@ -7,24 +8,27 @@ package Clases;
  */
 
 public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes de Mercado tienen parámetro
-	private ContenedorPersonaFutbol<Integer> listadoJugadores;
-	private ContenedorPersonaFutbol<Integer> listadoDTs;
+	private ContenedorPersonaFutbol<Jugador> listadoJugadores;
+	private ContenedorPersonaFutbol<DirectorTecnico> listadoDTs;
 	
 	public Mercado() {
 		listadoJugadores = new ContenedorPersonaFutbol<>(); //TODO cambiar por carga desde archivo
 		listadoDTs = new ContenedorPersonaFutbol<>(); //TODO cambiar por carga desde archivo
-		//Simulador.getArchivoJugadores().cargarListadoJugadores(listadoJugadores);
-		//Simulador.getArchivoDTs().cargarListadoDTs(listadoDTs);
+		Simulador.getArchivoJugadores().cargarListadoJugadores(listadoJugadores);
+		Simulador.getArchivoDTs().cargarListadoDTs(listadoDTs);
 	}
 	
+	public ContenedorPersonaFutbol<Jugador> getListadoJugadores(){
+		return listadoJugadores;
+	}
 	
 	/**
 	 * Este método es usado desde clases externas (GestionAdministrador) para agregar un jugador al Mercado y evitar el acceso a los atributos privados
 	 * 
 	 * @param idJugador ID del jugador a agregar
 	 */
-	public void agregarJugador(Integer idJugador) {
-		listadoJugadores.agregar(idJugador);
+	public void agregarJugador(Jugador nuevoJugador) {
+		listadoJugadores.agregar(nuevoJugador);
 	}
 	
 	/**
@@ -32,8 +36,8 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 * 
 	 * @param idDT ID del DT a agregar
 	 */
-	public void agregarDirectorTecnico(Integer idDT) {
-		listadoDTs.agregar(idDT);
+	public void agregarDirectorTecnico(DirectorTecnico nuevoDT) {
+		listadoDTs.agregar(nuevoDT);
 	}
 	
 	public String ingresarAOpcionVerMercado() {
@@ -47,14 +51,14 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		switch (opcion) {
 			case 1:
 				if (!listadoJugadores.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
-					retorno = listadoJugadores.listado(); //TODO lista jugadores válidos
+					retorno = listadoJugadores.opcionesListado(); //TODO lista jugadores válidos
 				} else {
 					retorno = "No hay jugadores en el Mercado.";
 				}
 				break;
 			case 2:
 				if (!listadoDTs.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
-					retorno = listadoDTs.listado(); //TODO lista DTs válidos
+					retorno = listadoDTs.opcionesListado(); //TODO lista DTs válidos
 				} else {
 					retorno = "No hay DTs en el Mercado.";
 				}

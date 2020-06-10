@@ -23,6 +23,11 @@ public class ContenedorPersonaSistema <V extends PersonaSistema>{
 		return hashSetElementos.remove(valor);
 	}
 	
+	public Iterator<V> getIterator () {
+		Iterator<V> it = hashSetElementos.iterator();
+		return it;
+	}
+	
 	
 	/**
 	 * 

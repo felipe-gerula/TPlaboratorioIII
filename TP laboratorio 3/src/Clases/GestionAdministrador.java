@@ -2,7 +2,6 @@ package Clases;
 
 
 import Interfaces.IMenu;
-import dao.ArchivoJugadores;
 
 /** 
  *  Esta clase nos permite crear objetos de tipo GestionAdministracionAdministrador
@@ -11,6 +10,8 @@ import dao.ArchivoJugadores;
  */
 public class GestionAdministrador extends PersonaSistema implements IMenu{
 	
+	private static final long serialVersionUID = 1L;
+
 	public GestionAdministrador(String nombreAdministrador, String passAdministrador) {
 		super(nombreAdministrador, passAdministrador);
 	}
@@ -28,14 +29,14 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		nuevoJugador = nuevoJugador.crearJugador();
 		if (nuevoJugador != null) {
 			System.out.println(nuevoJugador.toString());
-			Simulador.getMercado().agregarJugador(nuevoJugador.getIDJugador());
-			Simulador.getArchivoJugadores().guardar(nuevoJugador);
+			Simulador.getMercado().agregarJugador(nuevoJugador);
+			Simulador.getArchivoJugadores().guardar(Simulador.getMercado().getListadoJugadores());
 			//TODO agregar datos al archivo
 		}
 	}
 	
 	public void modificarJugadorMercado() {
-		System.out.println(Simulador.getArchivoJugadores().consultarID((Integer)Simulador.getScanner().nextInt()).toString());
+		System.out.println(Simulador.getMercado().getListadoJugadores().buscar(Simulador.getScanner().nextInt()).toString());
 	}
 	
 	public void bajaJugadorMercado() {
@@ -51,7 +52,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		nuevoDT = nuevoDT.crearDirectorTecnico();
 		if (nuevoDT != null) {
 			System.out.println(nuevoDT.toString());
-			Simulador.getMercado().agregarDirectorTecnico((Integer)nuevoDT.getIDDT());
+			Simulador.getMercado().agregarDirectorTecnico(nuevoDT);
 			//TODO agregar datos al archivo
 		}
 	}

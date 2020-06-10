@@ -1,8 +1,5 @@
 package dao;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
 public abstract class ArchivoAbstracto <V>{
 	private String nombreArchivo;
 	
@@ -14,23 +11,8 @@ public abstract class ArchivoAbstracto <V>{
 		this.nombreArchivo = nombreArchivo;
 	}
 
-	public boolean guardar(V objetoAGuardar) {
-		try {
-			ObjectOutputStream archivo = new ObjectOutputStream(new FileOutputStream(nombreArchivo));
-			archivo.writeObject(objetoAGuardar);
-			archivo.close();
-		}
-		catch (Exception e){
-			
-		}
-		return true;
-	}
-	
-	public boolean modificar(V objetoAModificar) {
-		//TODO programar método
-		//Usamos el equals, tanto para DTs y Jugadores (equals de Integer por los ID) como para Usuarios y Admins (equals por nombre)
-		//Una vez encontrado, se sobreescribe el objeto
-		return true;
-	}
+	public abstract boolean guardar(V objetoAGuardar);
+
+	public abstract boolean leer(V objetoALeer);
 	
 }

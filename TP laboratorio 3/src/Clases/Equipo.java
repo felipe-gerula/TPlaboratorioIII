@@ -3,6 +3,22 @@ package Clases;
 public class Equipo {
 	private String nombreEquipo;
 	private String nombreLiga;
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
+	}
+
+	public String getNombreLiga() {
+		return nombreLiga;
+	}
+
+	public void setNombreLiga(String nombreLiga) {
+		this.nombreLiga = nombreLiga;
+	}
+
 	private Plantilla plantillaEquipo;
 	private DirectorTecnico DTEquipo;
 	
