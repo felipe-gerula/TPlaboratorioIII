@@ -21,8 +21,23 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return listadoPersonaFutbol.size();
 	}
 	
+	/**
+	 * 
+	 * @return true si el listado está vacío, false si contiene al menos un válido
+	 * 
+	 */
 	public boolean estaVacio () {
-		return listadoPersonaFutbol.isEmpty();
+		if (listadoPersonaFutbol.isEmpty()) {
+			return true; //Si el listado está vacío
+		} else {
+			Iterator<V> it = listadoPersonaFutbol.iterator();
+			while (it.hasNext()) {
+				if (it.next().getEstado() == true) {
+					return false; //Si hay alguno válido
+				}
+			}
+		}
+		return true; //Si no hay ningún válido
 	}
 	
 	public boolean agregar (V nuevoElemento) { //TODO hace un throws de ID erróneo (suponemos que no debería pasar)

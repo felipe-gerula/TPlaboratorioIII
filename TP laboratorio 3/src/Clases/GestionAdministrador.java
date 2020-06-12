@@ -1,6 +1,8 @@
 package Clases;
 
 
+import java.util.Scanner;
+
 import Interfaces.IMenu;
 
 /** 
@@ -35,9 +37,113 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	}
 	
 	public void modificarJugadorMercado() {
-		System.out.println(Simulador.getMercado().getListadoJugadores().buscar(Simulador.getScanner().nextInt()).toString());
+		System.out.println("Bienvenido al menú de modificación de Jugador.");
+		System.out.println("  Ingrese el ID del Jugador que desea modificar: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(Jugador.getCantidadJugadores()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (Jugador.getCantidadJugadores()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
+		listadoOpcionesModificacionJugador(jugadorAModificar);
 	}
 	
+	public void listadoOpcionesModificacionJugador(Jugador jugadorAModificar) {
+		System.out.println(jugadorAModificar.toString());
+		System.out.println("  A continuación están las opciones:");
+		System.out.println("    1. Modificar Nombre y Apellido.");
+		System.out.println("    2. Modificar Club y Liga.");
+		System.out.println("    3. Modificar Nacionalidad.");
+		System.out.println("    4. Modificar Edad.");
+		System.out.println("    5. Modificar Calificación.");
+		System.out.println("    6. Modificar Pie Hábil.");
+		System.out.println("    7. Modificar Movimientos Hábiles.");
+		System.out.println("    8. Modificar Posición.");
+		System.out.println("    9. Modificar Precio.");
+		System.out.println("    10. Regresar al Menú Principal.");
+		System.out.println("");
+		ingresarAOpcionModificacionJugador(jugadorAModificar);
+	}
+	
+	private void ingresarAOpcionModificacionJugador(Jugador jugadorAModificar) {
+		int opcion;
+		System.out.println("  Ingrese el número de opción deseada: ");
+		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
+		opcion = scanner.nextInt();
+		while (opcion<1 || opcion>10) {
+			System.out.println("  Por favor ingrese una opción correcta: ");
+			opcion = scanner.nextInt();
+		}
+		switch (opcion) {
+			case 1: //nombre apellido
+				System.out.println("  Ingrese el nuevo nombre y apellido: ");
+				jugadorAModificar.setNombreApellido(scanner.nextLine());
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 2: //club y liga
+				//TODO hacer un listado con las ligas ya existentes (opciones con número).
+				//El admin elige y se muestran los clubes dentro de la liga
+				//Vuelve a elegir y se modifica el jugador
+				//Si quiere crear una liga y/o club se le da la opción
+				/*System.out.println("  Ingrese el nuevo club: ");
+				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
+				System.out.println("  Ingrese la nueva liga: ");
+				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
+				Simulador.guardarArchivoJugadores();*/
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 3: //nacionalidad
+				System.out.println("  Ingrese la nueva nacionalidad: ");
+				jugadorAModificar.setNacionalidad(scanner.nextLine());
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 4: //edad
+				System.out.println("  Ingrese la nueva edad: ");
+				jugadorAModificar.setEdad(scanner.nextInt());
+				//TODO controlar que no sea negativo
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 5: //calificación
+				System.out.println("  Ingrese la nueva calificación: ");
+				jugadorAModificar.setCalificacion(scanner.nextInt());
+				//TODO controlar que no sea negativa y menor a 99
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 6: //pie hábil
+				jugadorAModificar.setPieHabil();
+				System.out.println("  Nuevo pie hábil de " + jugadorAModificar.getNombre() + ": " + jugadorAModificar.getPieHabil() + ".");
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 7: //movimientos hábiles
+				System.out.println("  Ingrese la nueva calificación de movimientos hábiles: ");
+				jugadorAModificar.setMovHabiles(scanner.nextInt());
+				//TODO controlar que esté entre 1 y 5
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 8: //posición //TODO hacer listado
+				System.out.println("  Ingrese la nueva posición: ");
+				jugadorAModificar.setPosicion(scanner.nextLine());
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			case 9: //precio
+				System.out.println("  Ingrese el nuevo precio: ");
+				jugadorAModificar.setPrecio(scanner.nextDouble());
+				//TODO controlar que sea positivo y dentro del rango de la calificación
+				Simulador.guardarArchivoJugadores();
+				this.listadoOpcionesModificacionJugador(jugadorAModificar);
+				break;
+			default:
+				regresar();
+		}
+	}
+
 	public void bajaJugadorMercado() {
 		
 	}

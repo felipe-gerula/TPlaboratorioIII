@@ -8,6 +8,7 @@ import java.io.Serializable;
  *  @author 
  */
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Plantilla implements Serializable{
 	private static final long serialVersionUID = 3139014270633585868L;
@@ -25,12 +26,12 @@ public class Plantilla implements Serializable{
 		return listadoJugadores.isEmpty();
 	}
 	
-	public boolean agregarJugador (int idJugador) {
-		return listadoJugadores.add((Integer)idJugador);
+	public void agregarJugador (int idJugador) {
+		listadoJugadores.add((Integer)idJugador);
 	}
 	
-	public boolean eliminarJugador (int idJugador) {
-		return true; //TODO programar método
+	public void eliminarJugador (int idJugador) {
+		listadoJugadores.remove((Integer)idJugador);
 	}
 	
 	public int cantidadJugadores() {
@@ -43,6 +44,20 @@ public class Plantilla implements Serializable{
 	
 	public boolean jugadorEncontrado(int idBuscado) {
 		return listadoJugadores.contains((Integer)idBuscado);
+	}
+
+	private String listadoJugadores() {
+		StringBuilder retorno = new StringBuilder();
+		Iterator<Integer> it = listadoJugadores.iterator();
+		while (it.hasNext()) {
+			retorno.append(Simulador.getMercado().getListadoJugadores().buscar(it.next()) + "\n\n");
+		}
+		return retorno.toString();
+	}
+	
+	@Override
+	public String toString() {
+		return listadoJugadores();
 	}
 	
 }

@@ -29,8 +29,8 @@ public class Equipo {
 		this.DTEquipo = null;
 	}
 	
-	public boolean agregarJugador (int IDJugador) {
-		return plantillaEquipo.agregarJugador(IDJugador);
+	public void agregarJugador (int IDJugador) {
+		plantillaEquipo.agregarJugador(IDJugador);
 	}
 
 	public boolean agregarDT(DirectorTecnico nuevoDT) {

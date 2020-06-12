@@ -27,6 +27,8 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		this.movHabiles = movHabiles;
 		this.posicion = posicion;
 	}
+	
+	
 
 	public Jugador() {
 		super();
@@ -56,8 +58,12 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		return pieHabil;
 	}
 	
-	public void setPieHabil(char pieHabil) {
-		this.pieHabil = pieHabil;
+	public void setPieHabil() {
+		if (pieHabil == 'd' || pieHabil == 'D') {
+			this.pieHabil = 'I';
+		} else {
+			this.pieHabil = 'D';
+		}
 	}
 	
 	public int getMovHabiles() {

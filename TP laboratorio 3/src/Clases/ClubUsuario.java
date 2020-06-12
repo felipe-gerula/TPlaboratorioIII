@@ -56,13 +56,13 @@ public class ClubUsuario implements IMenu, Serializable{
 	public void agregarJugadorPlantilla (int nuevoID) {
 		this.plantillaClub.agregarJugador(nuevoID);
 	}
+
+	public void eliminarJugadorPlantilla (int idAEliminar) {
+		this.plantillaClub.eliminarJugador(idAEliminar);
+	}
 	
 	public boolean jugadorExistentePlantilla (int idBuscado) {
 		return plantillaClub.jugadorEncontrado(idBuscado);
-	}
-
-	public boolean venderJugador (int idJugador) {
-		return true; //TODO programar método
 	}
 	
 	public double jugarPartido () {
@@ -109,7 +109,7 @@ public class ClubUsuario implements IMenu, Serializable{
 				listadoOpciones();
 				break;
 			case 5:
-				//ver plantilla y DT;
+				verPlantilla();
 				listadoOpciones();
 				break;
 			default:
@@ -119,6 +119,17 @@ public class ClubUsuario implements IMenu, Serializable{
 		
 	}
 	
+	private void verPlantilla() {
+		if (this.dtClub.getEstado()) {
+			System.out.println("\n\nInformación del Director Técnico: ");
+			System.out.println(this.dtClub.toString());
+		} else {
+			System.out.println("\n\nNo hay un Director Técnico en el Club.");
+		}
+		System.out.println("\n\nInformación de Plantilla: ");
+		System.out.println(plantillaClub.toString());
+	}
+
 	@Override
 	public void regresar() {
 		System.out.println("Regresando al Menú de Usuario.");
@@ -126,7 +137,6 @@ public class ClubUsuario implements IMenu, Serializable{
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n  Información del Estadio: " + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
 	}
 

@@ -31,10 +31,10 @@ public class ContenedorLigasEquipos {
 		}
 	}
 	
-	public boolean agregarJugador (Jugador nuevoJugador) {
+	public void agregarJugador (Jugador nuevoJugador) {
 		agregarEquipo (nuevoJugador.getClub(), nuevoJugador.getLiga());
 		Equipo copia = hashMapLigasEquipos.get(nuevoJugador.getLiga()).get(nuevoJugador.getClub());
-		return copia.agregarJugador(nuevoJugador.getIDJugador());
+		copia.agregarJugador(nuevoJugador.getIDJugador());
 	}
 	
 	public boolean agregarDT (DirectorTecnico nuevoDT) {

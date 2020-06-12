@@ -43,7 +43,37 @@ public abstract class PersonaFutbol implements Serializable {
 		this.id = id;
 	}
 
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
 
+	public void setNombreApellido(String nombreApellido) {
+		this.nombreApellido = nombreApellido;
+	}
+
+	public void setClub(String club) {
+		this.club = club;
+	}
+
+	public void setLiga(String liga) {
+		this.liga = liga;
+	}
+
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
 
 	public boolean getEstado () {
 		return this.estado;
