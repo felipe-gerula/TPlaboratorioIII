@@ -57,16 +57,48 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		}
 		return retorno;
 	}
+
+	public String opcionesListado() {
+		System.out.println("  A continuación están las opciones:");
+		System.out.println("    1. Ver todos.");
+		System.out.println("    2. Opcion 2.");
+		System.out.println("    3. Opcion 3.");
+		System.out.println("    4. Opcion 4.");
+		// TODO hacer funciones
+		return ingresarAOpcionesListado();
+	}
+	
+	public String ingresarAOpcionesListado() {
+		System.out.println("  Ingrese el número de opción deseada: ");
+		int opcion = Simulador.getScanner().nextInt();
+		while (opcion<1 || opcion>4) {
+			System.out.println("  Por favor ingrese una opción correcta: ");
+			opcion = Simulador.getScanner().nextInt();
+		}
+		switch (opcion) {
+			case 1: //Ver Todos
+				return this.toString();
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			default:
+				System.out.println("Gracias por ver el Mercado.");
+				break;
+		}
+		return "";
+	}
 	
 	@Override
 	public String toString() {
-		//TODO programar, que devuelva solamente los que no están dados de baja
-		return "";
-	}
-
-	public String opcionesListado() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder retorno = new StringBuilder();
+		Iterator<V> it = getIterator();
+		while (it.hasNext()) {
+			retorno.append(it.next().toString() + "\n\n");
+		}
+		return retorno.toString();
 	}
 	
 }

@@ -14,8 +14,8 @@ import dao.ArchivoUsuarios;
 
 public class Simulador implements IMenu{
 
-	private ContenedorPersonaSistema<GestionUsuario> listadoUsuarios;
-	private ContenedorPersonaSistema<GestionAdministrador> listadoAdministradores;
+	private static ContenedorPersonaSistema<GestionUsuario> listadoUsuarios;
+	private static ContenedorPersonaSistema<GestionAdministrador> listadoAdministradores;
 	private static ArchivoUsuarios archivoUsuarios;
 	private static ArchivoAdministradores archivoAdministradores;
 	private static ArchivoJugadores archivoJugadores;
@@ -66,6 +66,22 @@ public class Simulador implements IMenu{
 	
 	/// * * * FIN GETTERS * * * ///
 	
+	
+	public static void guardarArchivoAdministradores() {
+		archivoAdministradores.guardar(listadoAdministradores);
+	}
+	
+	public static void guardarArchivoUsuarios() {
+		archivoUsuarios.guardar(listadoUsuarios);
+	}
+	
+	public static void guardarArchivoJugadores() {
+		archivoJugadores.guardar(mercadoDePases.getListadoJugadores());
+	}
+	
+	public static void guardarArchivoDTs() {
+		archivoDTs.guardar(mercadoDePases.getListadoDTs());
+	}
 	
 	@Override
 	public void listadoOpciones() {
@@ -132,7 +148,7 @@ public class Simulador implements IMenu{
 				GestionUsuario nuevoUsuario = new GestionUsuario();
 				nuevoUsuario = (GestionUsuario)nuevoUsuario.crearPersona();
 				if(listadoUsuarios.agregarElemento(nuevoUsuario)) {
-					archivoUsuarios.guardar(listadoUsuarios);
+					guardarArchivoUsuarios();
 					System.out.println("    Usuario agregado y guardado con éxito.");
 				} else {
 					System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
@@ -159,6 +175,7 @@ public class Simulador implements IMenu{
 					if (usuarioRecibido.comparacionPassword()) {
 						if (usuarioRecibido.getClubUsuario() == null) {
 							usuarioRecibido.setClubUsuario(usuarioRecibido.crearClub());
+							guardarArchivoUsuarios();
 						}
 						usuarioRecibido.getClubUsuario().listadoOpciones();
 					} else {

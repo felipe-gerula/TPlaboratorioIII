@@ -33,8 +33,14 @@ public class ArchivoJugadores extends ArchivoAbstracto<ContenedorPersonaFutbol<J
 			}
 			archivo.close();
 		}
-		catch (Exception e){
-			e.printStackTrace();
+		catch (EOFException e){
+			System.out.println("EOF exception.");
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Archivo '" + super.getNombreArchivo() + "' no encontrado.");
+		}
+		catch (IOException e) {
+			System.out.println("IOException.");
 		}
 		return true;
 	}
@@ -60,7 +66,7 @@ public class ArchivoJugadores extends ArchivoAbstracto<ContenedorPersonaFutbol<J
 			System.out.println("IOException..");
 		}
 		catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("ClassNotFoundException.");
 		}
 		return true;
 	}

@@ -32,8 +32,14 @@ public class ArchivoUsuarios extends ArchivoAbstracto<ContenedorPersonaSistema<G
 			}
 			archivo.close();
 		}
-		catch (Exception e){
-			
+		catch (EOFException e){
+			System.out.println("EOF exception.");
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("Archivo '" + super.getNombreArchivo() + "' no encontrado.");
+		}
+		catch (IOException e) {
+			System.out.println("IOException.");
 		}
 		return true;
 	}
@@ -56,10 +62,10 @@ public class ArchivoUsuarios extends ArchivoAbstracto<ContenedorPersonaSistema<G
 			System.out.println("Archivo '" + super.getNombreArchivo() + "' no encontrado.");
 		}
 		catch (IOException e) {
-			System.out.println("IOException..");
+			System.out.println("IOException.");
 		}
 		catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("ClassNotFoundException.");
 		}
 		return true;
 	}

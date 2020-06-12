@@ -64,6 +64,10 @@ public abstract class PersonaFutbol implements Serializable {
 	public String getNombre() {
 		return this.nombreApellido;
 	}
+	
+	public double getPrecio() {
+		return this.precio;
+	}
 
 	
 	//No muestra el estado por si lo llama el Usuario desde ver Mercado

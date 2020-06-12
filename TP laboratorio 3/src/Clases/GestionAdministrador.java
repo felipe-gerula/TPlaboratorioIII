@@ -30,8 +30,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		if (nuevoJugador != null) {
 			System.out.println(nuevoJugador.toString());
 			Simulador.getMercado().agregarJugador(nuevoJugador);
-			Simulador.getArchivoJugadores().guardar(Simulador.getMercado().getListadoJugadores());
-			//TODO agregar datos al archivo
+			Simulador.guardarArchivoJugadores();
 		}
 	}
 	
@@ -53,7 +52,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		if (nuevoDT != null) {
 			System.out.println(nuevoDT.toString());
 			Simulador.getMercado().agregarDirectorTecnico(nuevoDT);
-			//TODO agregar datos al archivo
+			Simulador.guardarArchivoDTs();
 		}
 	}
 	

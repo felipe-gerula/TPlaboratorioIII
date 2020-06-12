@@ -1,4 +1,5 @@
 package Clases;
+import java.io.Serializable;
 /** 
  *  Esta clase nos permite crear objetos de tipo Plantilla
  *  Es un contenedor con todos los jugadores del equipo creado
@@ -8,7 +9,8 @@ package Clases;
  */
 import java.util.HashSet;
 
-public class Plantilla {
+public class Plantilla implements Serializable{
+	private static final long serialVersionUID = 3139014270633585868L;
 	private HashSet<Integer> listadoJugadores; ///TODO capaz que conviene que sea arreglo o arreglo JSON
 	
 	public Plantilla() {
@@ -24,8 +26,7 @@ public class Plantilla {
 	}
 	
 	public boolean agregarJugador (int idJugador) {
-		//La función controla internamente que haya espacio y que el jugador no sea parte de la plantilla. No llamar a cantidadJugadores para agregar
-		return true; //TODO programar método
+		return listadoJugadores.add((Integer)idJugador);
 	}
 	
 	public boolean eliminarJugador (int idJugador) {
@@ -39,4 +40,9 @@ public class Plantilla {
 	public double promedioJugadores() {
 		return 0.00; //TODO programar método
 	}
+	
+	public boolean jugadorEncontrado(int idBuscado) {
+		return listadoJugadores.contains((Integer)idBuscado);
+	}
+	
 }

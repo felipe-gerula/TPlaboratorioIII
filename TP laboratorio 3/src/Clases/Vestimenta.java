@@ -1,10 +1,14 @@
 package Clases;
+
+import java.io.Serializable;
+
 /** 
  *  Esta clase nos permite crear objetos de tipo Vestimenta
  *  Utilizada por el DT´s
  *  @author 
  */
-public class Vestimenta {
+public class Vestimenta implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String prendaSuperior;
 	private String prendaInferior;
 	

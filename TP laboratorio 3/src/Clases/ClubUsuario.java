@@ -1,4 +1,6 @@
 package Clases;
+import java.io.Serializable;
+
 /** 
  *  Esta clase nos permite crear objetos de tipo ClubUsuario
  *  nos permite armar nuestro equipo, ademas de jugar partidos con el mismo
@@ -6,7 +8,8 @@ package Clases;
  */
 import Interfaces.IMenu;
 
-public class ClubUsuario implements IMenu{
+public class ClubUsuario implements IMenu, Serializable{
+	private static final long serialVersionUID = 8888764086344279621L;
 	private String nombreClub;
 	private Plantilla plantillaClub;
 	private double fondos;
@@ -23,6 +26,21 @@ public class ClubUsuario implements IMenu{
 		dtClub = new DirectorTecnico();
 	}
 	
+	public double getFondos() {
+		return fondos;
+	}
+	public void setFondos(double fondos) {
+		this.fondos = fondos;
+	}
+
+	public Estadio getEstadio() {
+		return estadio;
+	}
+
+	public String getCamiseta() {
+		return camiseta;
+	}
+
 	public DirectorTecnico getDTClub () {
 		return dtClub;
 	}
@@ -35,10 +53,14 @@ public class ClubUsuario implements IMenu{
 		return nombreClub;
 	}
 
-	public boolean comprarJugador (int idJugador) {
-		return true; //TODO programar método
+	public void agregarJugadorPlantilla (int nuevoID) {
+		this.plantillaClub.agregarJugador(nuevoID);
 	}
 	
+	public boolean jugadorExistentePlantilla (int idBuscado) {
+		return plantillaClub.jugadorEncontrado(idBuscado);
+	}
+
 	public boolean venderJugador (int idJugador) {
 		return true; //TODO programar método
 	}
@@ -55,7 +77,7 @@ public class ClubUsuario implements IMenu{
 		System.out.println("    2. Jugar Partido.");
 		System.out.println("    3. Modificar información de Club.");
 		System.out.println("    4. Listado de información de Club.");
-		System.out.println("    5. Ver Plantilla.");
+		System.out.println("    5. Ver Plantilla y Director Técnico.");
 		System.out.println("    6. Regresar al Menú de Usuario.");
 		System.out.println("");
 		ingresarAOpcion();
@@ -83,11 +105,11 @@ public class ClubUsuario implements IMenu{
 				listadoOpciones();
 				break;
 			case 4:
-				//listado info club;
+				System.out.println(this.toString());
 				listadoOpciones();
 				break;
 			case 5:
-				//ver plantilla;
+				//ver plantilla y DT;
 				listadoOpciones();
 				break;
 			default:
@@ -96,9 +118,20 @@ public class ClubUsuario implements IMenu{
 		}
 		
 	}
+	
 	@Override
 	public void regresar() {
 		System.out.println("Regresando al Menú de Usuario.");
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n  Información del Estadio: " + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
+	}
+
+	public void setDT(DirectorTecnico nuevoDT) {
+		dtClub = nuevoDT;
 	}
 	
 }

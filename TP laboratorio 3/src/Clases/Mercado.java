@@ -22,6 +22,10 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		return listadoJugadores;
 	}
 	
+	public ContenedorPersonaFutbol<DirectorTecnico> getListadoDTs(){
+		return listadoDTs;
+	}
+	
 	/**
 	 * Este método es usado desde clases externas (GestionAdministrador) para agregar un jugador al Mercado y evitar el acceso a los atributos privados
 	 * 
@@ -92,13 +96,11 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	}
 	
 	public void ingresarAOpcionMercado(ClubUsuario clubRecibido) { //TODO usar scan
-			int opcion = 0; //TODO sacar inicialización
 			System.out.println("  Ingrese el número de opción deseada: ");
-			//scanner (opcion);
-			opcion = 3;
+			int opcion = Simulador.getScanner().nextInt();
 			while (opcion<1 || opcion>6) {
 				System.out.println("  Por favor ingrese una opción correcta: ");
-				//scanner (opcion);
+				opcion = Simulador.getScanner().nextInt();
 			}
 			switch (opcion) {
 				case 1: //Ver Mercado
@@ -108,7 +110,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 				case 2: //Comprar Jugador
 					if (clubRecibido.getPlantillaClub().cantidadJugadores()<11) {
 						if (!listadoJugadores.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
-							///System.out.println(comprarJugador()); ///TODO crear función que agrega a la plantilla, el ID ingresado, si es que es válido en el archivo
+							comprarJugador(clubRecibido);
 						} else {
 							System.out.println("No hay jugadores en el Mercado");
 						}
@@ -120,7 +122,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 				case 3: //Comprar DT
 					if (!clubRecibido.getDTClub().getEstado()) {
 						if (!listadoDTs.estaVacio()) { ///TODO cambiar por análisis de alta y baja en vez de isEmpty
-							///System.out.println(comprarDT()); ///TODO crear función que agrega al Club el DT con el ID ingresado, y si es que es válido en el archivo
+							comprarDT(clubRecibido); ///TODO crear función que agrega al Club el DT con el ID ingresado, y si es que es válido en el archivo
 						} else {
 							System.out.println("No hay DTs en el Mercado.");
 						}
@@ -143,13 +145,62 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 					} else {
 						System.out.println("No hay jugadores en el Club");
 					}
-					///System.out.println(venderDT()); ///TODO crear función que elimina el DT, si es que hay uno en el Club, y agrega al Club las monedas
+					///System.out.println(venderDT()); ///TODO crear función que elimina el DT (crea uno nuevo vacío), si es que hay uno en el Club, y agrega al Club las monedas
 					listadoOpcionesMercado(clubRecibido);
 					break;
 				default:
 					System.out.println("Gracias por usar el Mercado.");
 					break;
 			}
+	}
+
+	private void comprarDT(ClubUsuario clubRecibido) {
+		System.out.println("  Ingrese el ID del DT que desea comprar: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(listadoDTs.cantidad()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (listadoDTs.cantidad()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		DirectorTecnico dtBuscado = listadoDTs.buscar(idBuscado);
+		if (dtBuscado.getEstado()) {
+			if (dtBuscado.getPrecio() < clubRecibido.getFondos()) {
+				clubRecibido.setDT(dtBuscado);
+				clubRecibido.setFondos(clubRecibido.getFondos() - dtBuscado.getPrecio());
+				Simulador.guardarArchivoUsuarios();
+				System.out.println(dtBuscado.getNombre() + " comprado con éxito. Fondos restantes: $" + clubRecibido.getFondos() + ".");
+			} else {
+				System.out.println("Fondos insuficientes. Faltan $" + (dtBuscado.getPrecio() - clubRecibido.getFondos()) + ".");
+			}
+		} else {
+			System.out.println("El DT seleccionado no puede utilizarse.");
+		}
+	}
+
+	private void comprarJugador(ClubUsuario clubRecibido) {
+		System.out.println("  Ingrese el ID del Jugador que desea comprar: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(listadoJugadores.cantidad()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (listadoJugadores.cantidad()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		Jugador jugadorBuscado = listadoJugadores.buscar(idBuscado);
+		if (jugadorBuscado.getEstado()) {
+			if (!clubRecibido.jugadorExistentePlantilla(idBuscado)) {
+				if (jugadorBuscado.getPrecio() < clubRecibido.getFondos()) {
+					clubRecibido.agregarJugadorPlantilla(idBuscado);
+					clubRecibido.setFondos(clubRecibido.getFondos() - jugadorBuscado.getPrecio());
+					Simulador.guardarArchivoUsuarios();
+					System.out.println(jugadorBuscado.getNombre() + " comprado con éxito. Fondos restantes: $" + clubRecibido.getFondos() + ".");
+				} else {
+					System.out.println("Fondos insuficientes. Faltan $" + (jugadorBuscado.getPrecio() - clubRecibido.getFondos()) + ".");
+				}
+			} else {
+				System.out.println("El jugador seleccionado ya forma parte de su plantilla.");
+			}
+		} else {
+			System.out.println("El jugador seleccionado no puede utilizarse.");
+		}
+		
 	}
 	
 }

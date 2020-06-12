@@ -80,6 +80,10 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		return super.getClub();
 	}	
 	
+	public double getPrecio() {
+		return super.getPrecio();
+	}
+	
 	public Jugador crearJugador() {
 		System.out.println("Bienvenido al menú de creación de Jugador.");
 		Simulador.getScanner().nextLine();

@@ -1,9 +1,13 @@
 package Clases;
+
+import java.io.Serializable;
+
 /** 
  *  Esta clase nos permite crear objetos de tipo Estadio
  *  @author 
  */
-public class Estadio {
+public class Estadio implements Serializable{
+	private static final long serialVersionUID = 7254005285483003940L;
 	private String nombre;
 	private int capacidad;
 	private String ubicacion;
@@ -17,7 +21,6 @@ public class Estadio {
 	public Estadio() {
 	}
 	
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -57,5 +60,10 @@ public class Estadio {
 		String ubicacionEstadio = Simulador.getScanner().nextLine();
 		Estadio nuevoEstadio = new Estadio(nombreEstadio, capacidadEstadio, ubicacionEstadio);
 		return nuevoEstadio;
+	}
+	
+	@Override
+	public String toString() {
+		return ("Información del Estadio:\n  Nombre: " + getNombre() +".\n  Ubicación: " + getUbicacion() + ".\n  Capacidad: " + getCapacidad());
 	}
 }
