@@ -13,7 +13,8 @@ import Interfaces.IMenu;
 public class GestionAdministrador extends PersonaSistema implements IMenu{
 	
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	public GestionAdministrador(String nombreAdministrador, String passAdministrador) {
 		super(nombreAdministrador, passAdministrador);
 	}
@@ -24,6 +25,28 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	
 	public GestionAdministrador(String nombreAdministrador) {
 		super(nombreAdministrador);
+	}
+	
+	public static boolean comparacionPasswordCreacionAdmin() {
+		String password = "123";
+		int intentos = 3;
+		String passwordLeida;
+		Simulador.getScanner().nextLine();
+		System.out.println("Ingrese la contraseña de creación de Administrador (3 intentos restantes): ");
+		passwordLeida = Simulador.getScanner().nextLine();
+		if (passwordLeida.equals(password)) {
+			return true;
+		} else {
+			while (intentos>1) {
+				intentos--;
+				System.out.println("Contraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
+				passwordLeida = Simulador.getScanner().nextLine();
+				if (passwordLeida.equals(password)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void agregarJugadorMercado() {
@@ -60,7 +83,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		System.out.println("    7. Modificar Movimientos Hábiles.");
 		System.out.println("    8. Modificar Posición.");
 		System.out.println("    9. Modificar Precio.");
-		System.out.println("    10. Regresar al Menú Principal.");
+		System.out.println("    10. Regresar al Menú de Administrador.");
 		System.out.println("");
 		ingresarAOpcionModificacionJugador(jugadorAModificar);
 	}
@@ -77,6 +100,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		switch (opcion) {
 			case 1: //nombre apellido
 				System.out.println("  Ingrese el nuevo nombre y apellido: ");
+				scanner.nextLine();
 				jugadorAModificar.setNombreApellido(scanner.nextLine());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
@@ -95,6 +119,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 3: //nacionalidad
 				System.out.println("  Ingrese la nueva nacionalidad: ");
+				scanner.nextLine();
 				jugadorAModificar.setNacionalidad(scanner.nextLine());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
@@ -128,6 +153,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 8: //posición //TODO hacer listado
 				System.out.println("  Ingrese la nueva posición: ");
+				scanner.nextLine();
 				jugadorAModificar.setPosicion(scanner.nextLine());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
@@ -140,16 +166,56 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			default:
-				regresar();
+				System.out.println("Regresando al Menú de Administrador.");
 		}
 	}
 
 	public void bajaJugadorMercado() {
-		
+		System.out.println("Bienvenido al menú de baja de de Jugador.");
+		System.out.println("  Ingrese el ID del Jugador que desea dar de baja: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(Jugador.getCantidadJugadores()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (Jugador.getCantidadJugadores()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
+		if (jugadorAModificar.getEstado()) {
+			System.out.println(jugadorAModificar.toString());
+			System.out.println("¿Está seguro de que desea darlo de baja? (s para confirmar): ");
+			Simulador.getScanner().nextLine();
+			char opcion = Simulador.getScanner().nextLine().charAt(0);
+			if (opcion == 's' || opcion == 'S') {
+				jugadorAModificar.setEstado(false);
+				System.out.println("\n\n  Jugador " + jugadorAModificar.getNombre() + " dado de baja con éxito.");
+				Simulador.guardarArchivoJugadores();
+			}
+		} else {
+			System.out.println("\n\n  El jugador " + jugadorAModificar.getNombre() + " ya se encontraba dado de baja.");
+		}
 	}
 	
 	public void altaJugadorMercado() {
-		
+		System.out.println("Bienvenido al menú de alta de Jugador.");
+		System.out.println("  Ingrese el ID del Jugador que desea dar de alta: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(Jugador.getCantidadJugadores()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (Jugador.getCantidadJugadores()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
+		if (!jugadorAModificar.getEstado()) {
+			System.out.println(jugadorAModificar.toString());
+			System.out.println("¿Está seguro de que desea darlo de alta? (s para confirmar): ");
+			Simulador.getScanner().nextLine();
+			char opcion = Simulador.getScanner().nextLine().charAt(0);
+			if (opcion == 's' || opcion == 'S') {
+				jugadorAModificar.setEstado(true);
+				System.out.println("\n\n  Jugador " + jugadorAModificar.getNombre() + " dado de alta con éxito.");
+				Simulador.guardarArchivoJugadores();
+			}
+		} else {
+			System.out.println("\n\n  El jugador " + jugadorAModificar.getNombre() + " ya se encontraba dado de alta.");
+		}
 	}
 	
 	public void agregarDTMercado() {
@@ -163,15 +229,137 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	}
 	
 	public void modificarDTMercado() {
-		
+		System.out.println("Bienvenido al menú de modificación de Director Técnico.");
+		System.out.println("  Ingrese el ID del Director Técnico que desea modificar: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(DirectorTecnico.getCantidadDTs()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (DirectorTecnico.getCantidadDTs()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
+		listadoOpcionesModificacionDT(dtAModificar);
+	}
+	
+	public void listadoOpcionesModificacionDT(DirectorTecnico dtAModificar) {
+		System.out.println(dtAModificar.toString());
+		System.out.println("  A continuación están las opciones:");
+		System.out.println("    1. Modificar Nombre y Apellido.");
+		System.out.println("    2. Modificar Club y Liga.");
+		System.out.println("    3. Modificar Nacionalidad.");
+		System.out.println("    4. Modificar Edad.");
+		System.out.println("    5. Modificar Precio.");
+		System.out.println("    6. Modificar Vestimenta.");
+		System.out.println("    7. Regresar al Menú de Administrador.");
+		System.out.println("");
+		ingresarAOpcionModificacionDT(dtAModificar);
+	}
+	
+	private void ingresarAOpcionModificacionDT(DirectorTecnico dtAModificar) {
+		int opcion;
+		System.out.println("  Ingrese el número de opción deseada: ");
+		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
+		opcion = scanner.nextInt();
+		while (opcion<1 || opcion>7) {
+			System.out.println("  Por favor ingrese una opción correcta: ");
+			opcion = scanner.nextInt();
+		}
+		switch (opcion) {
+			case 1: //nombre apellido
+				System.out.println("  Ingrese el nuevo nombre y apellido: ");
+				scanner.nextLine();
+				dtAModificar.setNombreApellido(scanner.nextLine());
+				Simulador.guardarArchivoDTs();
+				this.listadoOpcionesModificacionDT(dtAModificar);
+				break;
+			case 2: //club y liga
+				//TODO hacer un listado con las ligas ya existentes (opciones con número).
+				//El admin elige y se muestran los clubes dentro de la liga
+				//Vuelve a elegir y se modifica el jugador
+				//Si quiere crear una liga y/o club se le da la opción
+				/*System.out.println("  Ingrese el nuevo club: ");
+				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
+				System.out.println("  Ingrese la nueva liga: ");
+				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
+				Simulador.guardarArchivoJugadores();*/
+				this.listadoOpcionesModificacionDT(dtAModificar);
+				break;
+			case 3: //nacionalidad
+				System.out.println("  Ingrese la nueva nacionalidad: ");
+				scanner.nextLine();
+				dtAModificar.setNacionalidad(scanner.nextLine());
+				Simulador.guardarArchivoDTs();
+				this.listadoOpcionesModificacionDT(dtAModificar);
+				break;
+			case 4: //edad
+				System.out.println("  Ingrese la nueva edad: ");
+				dtAModificar.setEdad(scanner.nextInt());
+				//TODO controlar que no sea negativo
+				Simulador.guardarArchivoDTs();
+				this.listadoOpcionesModificacionDT(dtAModificar);
+				break;
+			case 5: //precio
+				System.out.println("  Ingrese el nuevo precio: ");
+				dtAModificar.setPrecio(scanner.nextDouble());
+				//TODO controlar que sea positivo y dentro del rango de la calificación
+				Simulador.guardarArchivoDTs();
+				this.listadoOpcionesModificacionDT(dtAModificar);
+				break;
+			case 6: //vestimenta
+				dtAModificar.cambiarVestimenta();
+				Simulador.guardarArchivoDTs();
+				this.listadoOpcionesModificacionDT(dtAModificar);
+				break;
+			default:
+				System.out.println("Regresando al Menú de Administrador.");
+		}
 	}
 	
 	public void bajaDTMercado() {
-		
+		System.out.println("Bienvenido al menú de baja de de Director Técnico.");
+		System.out.println("  Ingrese el ID del DT que desea dar de baja: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(DirectorTecnico.getCantidadDTs()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (DirectorTecnico.getCantidadDTs()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
+		System.out.println(dtAModificar.toString());
+		if (dtAModificar.getEstado()) {
+			System.out.println("¿Está seguro de que desea darlo de baja? (s para confirmar): ");
+			Simulador.getScanner().nextLine();
+			char opcion = Simulador.getScanner().nextLine().charAt(0);
+			if (opcion == 's' || opcion == 'S') {
+				dtAModificar.setEstado(false);
+				System.out.println("\n\n  Director técnico " + dtAModificar.getNombre() + " dado de baja con éxito.");
+				Simulador.guardarArchivoDTs();
+			}
+		} else {
+			System.out.println("\n\n  El director técnico " + dtAModificar.getNombre() + " ya se encontraba dado de baja.");
+		}
 	}
 	
 	public void altaDTMercado() {
-		
+		System.out.println("Bienvenido al menú de alta de de Director Técnico.");
+		System.out.println("  Ingrese el ID del DT que desea dar de alta: ");
+		int idBuscado = Simulador.getScanner().nextInt();
+		while (idBuscado<0 || idBuscado>(DirectorTecnico.getCantidadDTs()-1)) {
+			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (DirectorTecnico.getCantidadDTs()-1) + "): ");
+			idBuscado = Simulador.getScanner().nextInt();
+		}
+		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
+		System.out.println(dtAModificar.toString());
+		if (!dtAModificar.getEstado()) {
+			System.out.println("¿Está seguro de que desea darlo de alta? (s para confirmar): ");
+			Simulador.getScanner().nextLine();
+			char opcion = Simulador.getScanner().nextLine().charAt(0);
+			if (opcion == 's' || opcion == 'S') {
+				dtAModificar.setEstado(true);
+				System.out.println("\n\n  Director técnico " + dtAModificar.getNombre() + " dado de alta con éxito.");
+				Simulador.guardarArchivoDTs();
+			}
+		} else {
+			System.out.println("\n\n  El director técnico " + dtAModificar.getNombre() + " ya se encontraba dado de alta.");
+		}
 	}
 	
 	@Override
@@ -273,7 +461,6 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	@Override
 	public void regresar() {
 		System.out.println("Regresando al Menú Principal del Simulador.");
-		
 	}
 
 }

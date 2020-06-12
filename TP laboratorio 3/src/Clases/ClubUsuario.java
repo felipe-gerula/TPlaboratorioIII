@@ -71,6 +71,8 @@ public class ClubUsuario implements IMenu, Serializable{
 	
 	@Override
 	public void listadoOpciones() {
+		//TODO controlar que los jugadores de la plantilla estén dados de alta. Si no, dar las monedas y elminar el id
+		//TODO sincronizar la información del DT: cambiar todo menos la vestimenta, y ver que esté dado de alta.
 		System.out.println("\n\nBienvenido al Club " /*+ nombreClub*/);
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Acceder al Mercado.");

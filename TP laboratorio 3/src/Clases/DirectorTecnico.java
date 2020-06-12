@@ -23,8 +23,8 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		this.vestimentaEquipada = new Vestimenta();
 	}
 
-	public static void setCantidadDTs(int cantidad) {
-		cantidadTecnicos = cantidad;
+	public static int getCantidadDTs() {
+		return cantidadTecnicos;
 	}
 
 	public DirectorTecnico crearDirectorTecnico() {
@@ -149,6 +149,10 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	@Override
 	public String toString() {
 		return super.toString() + vestimentaEquipada.toString() + "\n ID: " + super.getID() + ".";
+	}
+
+	public static void setCantidadDTs(int cantidad) {
+		cantidadTecnicos = cantidad;		
 	}
 	
 

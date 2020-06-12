@@ -37,7 +37,7 @@ public class ContenedorLigasEquipos {
 		copia.agregarJugador(nuevoJugador.getIDJugador());
 	}
 	
-	public boolean agregarDT (DirectorTecnico nuevoDT) {
+	public boolean agregarDT (DirectorTecnico nuevoDT) { //TODO solamente un DT
 		agregarEquipo (nuevoDT.getClub(), nuevoDT.getLiga());
 		Equipo copia = hashMapLigasEquipos.get(nuevoDT.getLiga()).get(nuevoDT.getClub());
 		return copia.agregarDT(nuevoDT);

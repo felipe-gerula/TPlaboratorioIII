@@ -209,25 +209,29 @@ public class Simulador implements IMenu{
 		}
 		switch (opcion) {
 			case 1: //TODO pedir contraseña de creación para evitar que cualquiera cree admins
-				GestionAdministrador nuevoAdministrador =  new GestionAdministrador();
-				nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
-				if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
-					archivoAdministradores.guardar(listadoAdministradores);
-					System.out.println("    Administrador agregado con éxito.");
-				} else {
-					System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
-					char opcionIntentar = Simulador.scan.next().charAt(0);
-					while (opcionIntentar == 's' || opcionIntentar == 'S') {
-						nuevoAdministrador = new GestionAdministrador(); ///Reseteamos los valores 
-						nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
-						if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
-							System.out.println("    Administrador agregado con éxito.");
-							opcionIntentar = 'n';
-						} else {
-							System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
-							opcionIntentar = Simulador.scan.next().charAt(0);
+				if (GestionAdministrador.comparacionPasswordCreacionAdmin()) {
+					GestionAdministrador nuevoAdministrador =  new GestionAdministrador();
+					nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
+					if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
+						archivoAdministradores.guardar(listadoAdministradores);
+						System.out.println("    Administrador agregado con éxito.");
+					} else {
+						System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+						char opcionIntentar = Simulador.scan.next().charAt(0);
+						while (opcionIntentar == 's' || opcionIntentar == 'S') {
+							nuevoAdministrador = new GestionAdministrador(); ///Reseteamos los valores 
+							nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();
+							if(listadoAdministradores.agregarElemento(nuevoAdministrador)) {
+								System.out.println("    Administrador agregado con éxito.");
+								opcionIntentar = 'n';
+							} else {
+								System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+								opcionIntentar = Simulador.scan.next().charAt(0);
+							}
 						}
 					}
+				} else {
+					System.out.println("    La contraseña de Creación fue incorrecta demasiadas veces.");
 				}
 				listadoOpcionesAdministrador();
 				break;
