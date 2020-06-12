@@ -26,6 +26,10 @@ public class Plantilla implements Serializable{
 		return listadoJugadores.isEmpty();
 	}
 	
+	public boolean jugadorYaCargado (String nombreApellidoRecibido) {
+		
+	}
+	
 	public void agregarJugador (int idJugador) {
 		listadoJugadores.add((Integer)idJugador);
 	}

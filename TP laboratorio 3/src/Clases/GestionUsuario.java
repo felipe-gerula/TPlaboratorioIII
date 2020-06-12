@@ -46,6 +46,29 @@ public class GestionUsuario extends PersonaSistema{
 	public GestionUsuario(String nombreUsuario) {
 		super (nombreUsuario);
 	}
+	
+	/**
+     * Cambia el nombre del usuario
+     */
+	public boolean cambiarNombre(ContenedorPersonaSistema<GestionUsuario> listadoRecibido) {
+		Simulador.getScanner().nextLine();
+		char opcion = 's';
+		while (opcion == 's' || opcion == 'S') {
+			System.out.println("  Ingrese el nuevo nombre deseado: ");
+			String nuevoNombre = Simulador.getScanner().nextLine();
+			GestionUsuario buscado = new GestionUsuario(nuevoNombre);
+			if (listadoRecibido.buscarElemento(buscado) == null) {
+				this.setNombre(nuevoNombre);
+				System.out.println("  Nombre de usuario cambiado a " + nuevoNombre + " con éxito.");
+				return true;
+			} else {
+				System.out.println("  El nombre de usuario " + nuevoNombre + " ya está siendo utilizado.");
+				System.out.println("  ¿Desea intentar con otro nombre? (s para confirmar): ");
+				opcion = Simulador.getScanner().nextLine().charAt(0);
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public PersonaSistema crearPersona() {

@@ -1,5 +1,7 @@
 package Clases;
 
+import java.util.Iterator;
+
 /** 
  *  Esta clase nos permite crear objetos de tipo Mercado
  *  Es un contenedor con todos los jugadores y DTs del juego
@@ -42,6 +44,18 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 */
 	public void agregarDirectorTecnico(DirectorTecnico nuevoDT) {
 		listadoDTs.agregar(nuevoDT);
+	}
+	
+	public void cargarLigasEquipos(ContenedorLigasEquipos listadoRecibido) {
+		Iterator<Jugador> itJugadores = listadoJugadores.getIterator();
+		while (itJugadores.hasNext()) {
+			listadoRecibido.agregarJugador(itJugadores.next());
+		}
+		Iterator<DirectorTecnico> itDTs = listadoDTs.getIterator();
+		while (itDTs.hasNext()) {
+			listadoRecibido.agregarDT(itDTs.next());
+		}
+		System.out.println(listadoRecibido.toString());
 	}
 	
 	public String ingresarAOpcionVerMercado() {

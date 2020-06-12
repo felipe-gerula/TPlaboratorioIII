@@ -25,12 +25,15 @@ public abstract class PersonaSistema implements Serializable{
 	public PersonaSistema(String nombreUsuario) {
 		this.nombre = nombreUsuario;
 	}
+	
     /**
      * Cambia la contraseña del usuario
-     * @return verdadero si la contraseña fue cambiada con exito,false sino
      */
-	public boolean cambiarPassword() {
-		return true; //TODO programar funcion
+	public void cambiarPassword() {
+		Simulador.getScanner().nextLine();
+		System.out.println("  Ingrese la nueva contraseña deseada: ");
+		setPassword(Simulador.getScanner().nextLine());
+		System.out.println("  Contraseña cambiada con éxito.");
 	}
 	
 	/**

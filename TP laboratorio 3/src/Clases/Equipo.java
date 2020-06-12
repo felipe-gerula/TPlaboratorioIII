@@ -3,6 +3,16 @@ package Clases;
 public class Equipo {
 	private String nombreEquipo;
 	private String nombreLiga;
+	private Plantilla plantillaEquipo;
+	private int DTEquipo;
+	
+	public Equipo (String nombreEquipo, String nombreLiga) {
+		this.nombreEquipo = nombreEquipo;
+		this.nombreLiga = nombreLiga;
+		this.plantillaEquipo = new Plantilla();
+		this.DTEquipo = -1;
+	}
+	
 	public String getNombreEquipo() {
 		return nombreEquipo;
 	}
@@ -17,28 +27,38 @@ public class Equipo {
 
 	public void setNombreLiga(String nombreLiga) {
 		this.nombreLiga = nombreLiga;
-	}
-
-	private Plantilla plantillaEquipo;
-	private DirectorTecnico DTEquipo;
-	
-	public Equipo (String nombreEquipo, String nombreLiga) {
-		this.nombreEquipo = nombreEquipo;
-		this.nombreLiga = nombreLiga;
-		this.plantillaEquipo = new Plantilla();
-		this.DTEquipo = null;
-	}
+	}	
 	
 	public void agregarJugador (int IDJugador) {
 		plantillaEquipo.agregarJugador(IDJugador);
 	}
+	
+	public boolean hayEspacioEnPlantilla () {
+		return plantillaEquipo.cantidadJugadores()<11;
+	}
 
-	public boolean agregarDT(DirectorTecnico nuevoDT) {
-		if (DTEquipo == null) {
+	public boolean agregarDT(int nuevoDT) {
+		if (DTEquipo == -1) {
 			DTEquipo = nuevoDT;
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder retorno = new StringBuilder();
+		if (DTEquipo != -1) {
+			retorno.append("\n\nInformación del Director Técnico: \n" + Simulador.getMercado().getListadoDTs().buscar(DTEquipo).toString());
+		} else {
+			retorno.append("\n\nNo hay un Director Técnico en el Equipo.");
+		}
+		if (!plantillaEquipo.plantillaVacia()) {
+			retorno.append("\n\nInformación de Plantilla: " + plantillaEquipo.toString());
+		} else {
+			retorno.append("\n\nNo hay Jugadores en el Equipo.");
+		}
+		return retorno.toString();
 	}
 	
 }

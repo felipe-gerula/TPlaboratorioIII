@@ -99,7 +99,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		String ligaJugador = Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese el nombre del equipo del Jugador:");
 		String equipoJugador = Simulador.getScanner().nextLine();
-		//TODO controlar que no exista, y seguir. Si ya existe devuelve null
+		//TODO controlar que haya lugar y no exista, y seguir. Si ya existe devuelve null
 		System.out.println("  Ingrese la nacionalidad del Jugador:");
 		String nacionalidadJugador = Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese la edad del Jugador:");

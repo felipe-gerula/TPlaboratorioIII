@@ -20,7 +20,8 @@ public class Simulador implements IMenu{
 	private static ArchivoAdministradores archivoAdministradores;
 	private static ArchivoJugadores archivoJugadores;
 	private static ArchivoDTs archivoDTs;
-	private static Mercado mercadoDePases; //TODO hacer get y modificar usuario
+	private static Mercado mercadoDePases;
+	private static ContenedorLigasEquipos listadoLigasEquipos;
 	private static Scanner scan;
 	///TODO scan se crea en constructor y se destruye al salir
 	
@@ -35,11 +36,17 @@ public class Simulador implements IMenu{
 		archivoUsuarios.cargarListadoUsuarios(listadoUsuarios);
 		archivoAdministradores.cargarListadoAdministradores(listadoAdministradores);
 		mercadoDePases = new Mercado();
+		listadoLigasEquipos = new ContenedorLigasEquipos();
+		mercadoDePases.cargarLigasEquipos(listadoLigasEquipos);
 		scan = new Scanner(System.in);
 	}
 	/// * * * FIN CONSTRUCTORES * * * ///
 	
 	/// * * * GETTERS * * * ///
+	public static ContenedorLigasEquipos getListadoLigasEquipos() {
+		return listadoLigasEquipos;
+	}
+	
 	public static Mercado getMercado() {
 		return mercadoDePases;
 	}
@@ -177,7 +184,30 @@ public class Simulador implements IMenu{
 							usuarioRecibido.setClubUsuario(usuarioRecibido.crearClub());
 							guardarArchivoUsuarios();
 						}
-						usuarioRecibido.getClubUsuario().listadoOpciones();
+						System.out.println("  A continuación están las opciones:");
+						System.out.println("    1. Ingresar a club.");
+						System.out.println("    2. Cambiar nombre de usuario.");
+						System.out.println("    3. Cambiar contraseña de usuario.");
+						System.out.println("  Ingrese el número de opción deseada: ");
+						opcion = scan.nextInt();
+						while (opcion<1 || opcion>3) {
+							System.out.println("  Por favor ingrese una opción correcta: ");
+							opcion = scan.nextInt();
+						}
+						switch (opcion) {
+							case 1:
+								usuarioRecibido.getClubUsuario().listadoOpciones();
+								break;
+							case 2:
+								if (usuarioRecibido.cambiarNombre(listadoUsuarios)) {
+									guardarArchivoUsuarios();
+								}
+								break;
+							case 3:
+								usuarioRecibido.cambiarPassword();
+								guardarArchivoUsuarios();
+								break;
+						}
 					} else {
 						System.out.println("   Se alcanzó el límite de intentos de ingreso de contraseña.");
 					}
