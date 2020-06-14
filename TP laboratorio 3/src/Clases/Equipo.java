@@ -52,6 +52,10 @@ public class Equipo {
 	public boolean jugadorYaCargado (String nombreApellidoRecibido) {
 		return plantillaEquipo.jugadorYaCargado(nombreApellidoRecibido);
 	}
+	
+	public boolean hayEspacioEnPosicion(String posicionJugador) {
+		return plantillaEquipo.hayEspacioEnPosicion(posicionJugador);
+	}
 
 	public boolean agregarDT(int nuevoDT) {
 		if (DTEquipo == -1) {

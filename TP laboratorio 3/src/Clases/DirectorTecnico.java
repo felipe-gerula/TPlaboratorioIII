@@ -31,18 +31,20 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		System.out.println("Bienvenido al menú de creación de DT.");
 		Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese el nombre y apellido del DT:");
-		String nombreDT = Simulador.getScanner().nextLine();
+		String nombreDT = Simulador.getScanner().nextLine().toUpperCase();
 		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
 		if (equipoSeleccionado.hayEspacioParaDT()) {
 				System.out.println("  Ingrese la nacionalidad del DT:");
-				String nacionalidadDT = Simulador.getScanner().nextLine();
+				String nacionalidadDT = Simulador.getScanner().nextLine().toUpperCase();
 				System.out.println("  Ingrese la edad del DT:");
 				int edadDT = Simulador.getScanner().nextInt();
+				while (edadDT<35 || edadDT>75) {
+					System.out.println("  Por favor ingrese una edad correcta (entre 35 y 75): ");
+					edadDT = Simulador.getScanner().nextInt();
+				}
 				Simulador.getScanner().nextLine();
-				System.out.println("  Ingrese el nivel de calidad del DT (bronce, plata, oro, o especial):");
-				String calidadDT = Simulador.getScanner().nextLine();
-				System.out.println("  Ingrese el precio del DT:"); //TODO hacer método que limite los precios según si es especial y la calificación del jugador
-				double precioDT = Simulador.getScanner().nextDouble();
+				String calidadDT = seleccionDeCalidad();
+				double precioDT =seleccionDePrecio(calidadDT);
 				DirectorTecnico nuevoDT = new DirectorTecnico(nombreDT, equipoSeleccionado.getNombreEquipo(), equipoSeleccionado.getNombreLiga(), nacionalidadDT, edadDT, calidadDT, precioDT);
 				nuevoDT.cambiarVestimenta();
 				return nuevoDT;
@@ -50,6 +52,60 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 			System.out.println("  Ya hay un DT cargado en el equipo seleccionado. Intente modificar sus datos.");
 		}		
 		return null;
+	}
+	
+	private double seleccionDePrecio(String calidadDT) {
+		double retorno;
+		if (calidadDT.equals("BRONCE")) {
+			System.out.println(" Ingrese un precio entre $200 y $700.");
+			retorno = Simulador.getScanner().nextDouble();
+			while (retorno<200 || retorno>700) {
+				System.out.println("  Por favor ingrese un precio correcto (entre $200 y $700): ");
+				retorno = Simulador.getScanner().nextDouble();
+			}
+			return retorno;
+		} else {
+			if (calidadDT.equals("PLATA")) {
+				System.out.println(" Ingrese un precio entre $400 y $2000.");
+				retorno = Simulador.getScanner().nextDouble();
+				while (retorno<400 || retorno>2000) {
+					System.out.println("  Por favor ingrese un precio correcto (entre $400 y $2000): ");
+					retorno = Simulador.getScanner().nextDouble();
+				}
+				return retorno;
+			} else {
+				System.out.println(" Ingrese un precio entre $700 y $5000.");
+				retorno = Simulador.getScanner().nextDouble();
+				while (retorno<700 || retorno>5000) {
+					System.out.println("  Por favor ingrese un precio correcto (entre $700 y $5000): ");
+					retorno = Simulador.getScanner().nextDouble();
+				}
+				return retorno;
+			}
+		}
+	}
+	
+	private String seleccionDeCalidad() {
+		System.out.println("  A continuación están las posiciones disponibles:");
+		System.out.println("    1. BRONCE.");
+		System.out.println("    2. PLATA.");
+		System.out.println("    3. ORO.");
+		System.out.println("  Ingrese la posición deseada: ");
+		int opcion = Simulador.getScanner().nextInt();
+		while (opcion<1 || opcion>3) {
+			System.out.println("  Por favor ingrese una opción correcta (entre 1 y 3): ");
+			opcion = Simulador.getScanner().nextInt();
+		}
+		switch (opcion) {
+			case 1:
+				return "BRONCE";
+			case 2:
+				return "PLATA";
+			case 3:
+				return "ORO";
+			default:
+				return "";
+		}
 	}
 	
 	public void cambiarVestimenta() {

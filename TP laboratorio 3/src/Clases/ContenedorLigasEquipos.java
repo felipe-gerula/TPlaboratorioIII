@@ -83,8 +83,10 @@ public class ContenedorLigasEquipos {
 			System.out.println("  Ingrese el nombre de la nueva liga: ");
 			Simulador.getScanner().nextLine();
 			String nuevaLiga = Simulador.getScanner().nextLine();
+			nuevaLiga = nuevaLiga.toUpperCase();
 			System.out.println("  Ingrese el nombre del nuevo equipo: ");
 			String nuevoEquipo = Simulador.getScanner().nextLine();
+			nuevoEquipo = nuevoEquipo.toUpperCase();
 			return new Equipo(nuevoEquipo, nuevaLiga);
 		} else { //Opción de liga existente
 			HashMap<String, Equipo> auxB = hashMapLigasEquipos.get(nombresLigas.get(opcion-1)); //Usamos la opción como índice para buscar la clave
@@ -113,6 +115,7 @@ public class ContenedorLigasEquipos {
 				Simulador.getScanner().nextLine();
 				System.out.println("  Ingrese el nombre del nuevo equipo: ");
 				String nuevoEquipo = Simulador.getScanner().nextLine();
+				nuevoEquipo = nuevoEquipo.toUpperCase();
 				return new Equipo(nuevoEquipo, nombresLigas.get(opcion-1));
 			} else {
 				Simulador.getScanner().nextLine();

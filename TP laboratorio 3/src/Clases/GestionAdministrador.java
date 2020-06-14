@@ -79,7 +79,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		System.out.println("    2. Modificar Club y Liga.");
 		System.out.println("    3. Modificar Nacionalidad.");
 		System.out.println("    4. Modificar Edad.");
-		System.out.println("    5. Modificar Calificación.");
+		System.out.println("    5. Modificar Calificación."); //TODO modificar calificacion, tipo y precio juntos
 		System.out.println("    6. Modificar Pie Hábil.");
 		System.out.println("    7. Modificar Movimientos Hábiles.");
 		System.out.println("    8. Modificar Posición.");
@@ -102,7 +102,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 			case 1: //nombre apellido
 				System.out.println("  Ingrese el nuevo nombre y apellido: ");
 				scanner.nextLine();
-				jugadorAModificar.setNombreApellido(scanner.nextLine());
+				jugadorAModificar.setNombreApellido(scanner.nextLine().toUpperCase());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
@@ -110,14 +110,18 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				System.out.println("  A continuación se mostrarán las ligas y equipos disponibles. Puede elegir o agregar nuevos.");
 				Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
 				if (equipoSeleccionado.hayEspacioEnPlantilla()) {
-					if (!equipoSeleccionado.jugadorYaCargado(jugadorAModificar.getNombre())) {
-						Simulador.getListadoLigasEquipos().eliminarJugador(jugadorAModificar);
-						jugadorAModificar.setClub(equipoSeleccionado.getNombreEquipo());
-						jugadorAModificar.setLiga(equipoSeleccionado.getNombreLiga());
-						Simulador.getListadoLigasEquipos().agregarJugador(jugadorAModificar);
-						Simulador.guardarArchivoJugadores();
+					if (equipoSeleccionado.hayEspacioEnPosicion(jugadorAModificar.getPosicion())) {
+						if (!equipoSeleccionado.jugadorYaCargado(jugadorAModificar.getNombre())) {
+							Simulador.getListadoLigasEquipos().eliminarJugador(jugadorAModificar);
+							jugadorAModificar.setClub(equipoSeleccionado.getNombreEquipo());
+							jugadorAModificar.setLiga(equipoSeleccionado.getNombreLiga());
+							Simulador.getListadoLigasEquipos().agregarJugador(jugadorAModificar);
+							Simulador.guardarArchivoJugadores();
+						} else {
+							System.out.println("  Ya hay un jugador con el nombre " + jugadorAModificar.getNombre() + " cargado en el equipo.");
+						}
 					} else {
-						System.out.println("  Ya hay un jugador con el nombre " + jugadorAModificar.getNombre() + " cargado en el equipo.");
+						System.out.println("  No hay espacio para la posición del jugador en el equipo seleccionado.");
 					}
 				} else {
 					System.out.println("  No hay espacio en el equipo seleccionado. Intente modificar uno de los jugadores ya existentes.");
@@ -127,7 +131,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 			case 3: //nacionalidad
 				System.out.println("  Ingrese la nueva nacionalidad: ");
 				scanner.nextLine();
-				jugadorAModificar.setNacionalidad(scanner.nextLine());
+				jugadorAModificar.setNacionalidad(scanner.nextLine().toUpperCase());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
