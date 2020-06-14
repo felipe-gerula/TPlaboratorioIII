@@ -27,7 +27,17 @@ public class Plantilla implements Serializable{
 	}
 	
 	public boolean jugadorYaCargado (String nombreApellidoRecibido) {
-		
+		if (listadoJugadores.isEmpty()) {
+			return false;
+		} else {
+			Iterator<Integer> it = listadoJugadores.iterator();
+			while (it.hasNext()) {
+				if (Simulador.getMercado().getListadoJugadores().buscar((int)it.next()).getNombre().equals(nombreApellidoRecibido)) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 	
 	public void agregarJugador (int idJugador) {
@@ -57,6 +67,10 @@ public class Plantilla implements Serializable{
 			retorno.append(Simulador.getMercado().getListadoJugadores().buscar(it.next()) + "\n\n");
 		}
 		return retorno.toString();
+	}
+
+	public Iterator<Integer> getIterator() {
+		return listadoJugadores.iterator();
 	}
 	
 	@Override

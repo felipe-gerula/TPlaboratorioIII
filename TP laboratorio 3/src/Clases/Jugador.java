@@ -95,32 +95,38 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese el nombre y apellido del Jugador:");
 		String nombreJugador = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre de la liga del Jugador:");
-		String ligaJugador = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre del equipo del Jugador:");
-		String equipoJugador = Simulador.getScanner().nextLine();
-		//TODO controlar que haya lugar y no exista, y seguir. Si ya existe devuelve null
-		System.out.println("  Ingrese la nacionalidad del Jugador:");
-		String nacionalidadJugador = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese la edad del Jugador:");
-		int edadJugador = Simulador.getScanner().nextInt();
-		System.out.println("  Ingrese la calificación del Jugador:");
-		int calificacionJugador = Simulador.getScanner().nextInt();
-		///TODO método que pregunte si es especial, y si no que asigne el nivel de calidad según la calificación
-		Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nivel de calidad del Jugador (bronce, plata, oro, o especial):");
-		String calidadJugador = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el pie hábil del Jugador (i/d):"); //TODO validación
-		char pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
-		System.out.println("  Ingrese el nivel de movimientos hábiles del Jugador (1-5):"); //TODO validación
-		int movHabilesJugador = Simulador.getScanner().nextInt();
-		Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese la posición del Jugador:"); //TODO hacer menú que muestra las opciones disponibles
-		String posicionJugador = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el precio del Jugador:"); //TODO hacer método que limite los precios según si es especial y la calificación del jugador
-		double precioJugador = Simulador.getScanner().nextDouble();
-		Jugador nuevoJugador = new Jugador(nombreJugador, equipoJugador, ligaJugador, nacionalidadJugador, edadJugador, calidadJugador, precioJugador, calificacionJugador, pieHabilJugador, movHabilesJugador, posicionJugador);
-		return nuevoJugador;
+		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
+		if (equipoSeleccionado.hayEspacioEnPlantilla()) {
+			if (!equipoSeleccionado.jugadorYaCargado(nombreJugador)) {
+				//Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese la nacionalidad del Jugador:");
+				String nacionalidadJugador = Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese la edad del Jugador:");
+				int edadJugador = Simulador.getScanner().nextInt();
+				System.out.println("  Ingrese la calificación del Jugador:");
+				int calificacionJugador = Simulador.getScanner().nextInt();
+				///TODO método que pregunte si es especial, y si no que asigne el nivel de calidad según la calificación
+				Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese el nivel de calidad del Jugador (bronce, plata, oro, o especial):");
+				String calidadJugador = Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese el pie hábil del Jugador (i/d):"); //TODO validación
+				char pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
+				System.out.println("  Ingrese el nivel de movimientos hábiles del Jugador (1-5):"); //TODO validación
+				int movHabilesJugador = Simulador.getScanner().nextInt();
+				Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese la posición del Jugador:"); //TODO hacer menú que muestra las opciones disponibles
+				String posicionJugador = Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese el precio del Jugador:"); //TODO hacer método que limite los precios según si es especial y la calificación del jugador
+				double precioJugador = Simulador.getScanner().nextDouble();
+				Jugador nuevoJugador = new Jugador(nombreJugador, equipoSeleccionado.getNombreEquipo(), equipoSeleccionado.getNombreLiga(), nacionalidadJugador, edadJugador, calidadJugador, precioJugador, calificacionJugador, pieHabilJugador, movHabilesJugador, posicionJugador);
+				return nuevoJugador;
+			} else {
+				System.out.println("  Ya hay un jugador con el nombre " + nombreJugador + " cargado en el equipo.");
+			}
+		} else {
+			System.out.println("  No hay espacio en el equipo seleccionado. Intente modificar uno de los jugadores ya existentes.");
+		}
+		return null;
 	}
 	
 	public static String opcionesListado (ArrayList<Jugador> listadoJugadores) {

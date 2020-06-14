@@ -28,6 +28,7 @@ public abstract class PersonaFutbol implements Serializable {
 		edad = 0;
 		tipo = "";
 		precio = 0;
+		id = -1;
 	}
 	
 	public PersonaFutbol(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int id) {
@@ -99,12 +100,26 @@ public abstract class PersonaFutbol implements Serializable {
 		return this.precio;
 	}
 
+	public int getEdad() {
+		return edad;
+	}
+
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
 	
 	//No muestra el estado por si lo llama el Usuario desde ver Mercado
 	@Override
 	public String toString() {
 		return "Datos de " + nombreApellido + ":\n Liga: " + liga + ".\n Club: " + club + ".\n Nacionalidad: " + nacionalidad + ".\n Edad: " + edad + ".\n Tipo: " + tipo + ".\n Precio: $" + precio + ".\n";
 	}
+
+
+
 	
 	
 	

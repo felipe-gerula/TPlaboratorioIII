@@ -55,7 +55,6 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		while (itDTs.hasNext()) {
 			listadoRecibido.agregarDT(itDTs.next());
 		}
-		System.out.println(listadoRecibido.toString());
 	}
 	
 	public String ingresarAOpcionVerMercado() {

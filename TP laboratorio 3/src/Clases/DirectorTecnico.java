@@ -32,23 +32,24 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese el nombre y apellido del DT:");
 		String nombreDT = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre de la liga del DT:");
-		String ligaDT = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre del equipo del DT:");
-		String equipoDT = Simulador.getScanner().nextLine();
-		//TODO controlar que no exista, y seguir. Si ya existe devuelve null
-		System.out.println("  Ingrese la nacionalidad del DT:");
-		String nacionalidadDT = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese la edad del DT:");
-		int edadDT = Simulador.getScanner().nextInt();
-		Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nivel de calidad del DT (bronce, plata, oro, o especial):");
-		String calidadDT = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el precio del DT:"); //TODO hacer método que limite los precios según si es especial y la calificación del jugador
-		double precioDT = Simulador.getScanner().nextDouble();
-		DirectorTecnico nuevoDT = new DirectorTecnico(nombreDT, equipoDT, ligaDT, nacionalidadDT, edadDT, calidadDT, precioDT);
-		nuevoDT.cambiarVestimenta();
-		return nuevoDT;
+		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
+		if (equipoSeleccionado.hayEspacioParaDT()) {
+				System.out.println("  Ingrese la nacionalidad del DT:");
+				String nacionalidadDT = Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese la edad del DT:");
+				int edadDT = Simulador.getScanner().nextInt();
+				Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese el nivel de calidad del DT (bronce, plata, oro, o especial):");
+				String calidadDT = Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese el precio del DT:"); //TODO hacer método que limite los precios según si es especial y la calificación del jugador
+				double precioDT = Simulador.getScanner().nextDouble();
+				DirectorTecnico nuevoDT = new DirectorTecnico(nombreDT, equipoSeleccionado.getNombreEquipo(), equipoSeleccionado.getNombreLiga(), nacionalidadDT, edadDT, calidadDT, precioDT);
+				nuevoDT.cambiarVestimenta();
+				return nuevoDT;
+		} else {
+			System.out.println("  Ya hay un DT cargado en el equipo seleccionado. Intente modificar sus datos.");
+		}		
+		return null;
 	}
 	
 	public void cambiarVestimenta() {
@@ -145,15 +146,38 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		}
 		return listadoDTs.toString();
 	}
+	
+	public static void setCantidadDTs(int cantidad) {
+		cantidadTecnicos = cantidad;		
+	}
+
+	public void sincronizarDatos(DirectorTecnico aux) {
+		this.setClub(aux.getClub());
+		this.setEdad(aux.getEdad());
+		this.setLiga(aux.getLiga());
+		this.setNacionalidad(aux.getNacionalidad());
+		this.setNombreApellido(aux.getNombre());
+		this.setPrecio(aux.getPrecio());
+		this.setTipo(aux.getTipo());
+	}
+
+	public String getTipo() {
+		return super.getTipo();
+	}
+
+	public int getEdad() {
+		return super.getEdad();
+	}
+	
+	public String getNacionalidad() {
+		return super.getNacionalidad();
+	}
 
 	@Override
 	public String toString() {
 		return super.toString() + vestimentaEquipada.toString() + "\n ID: " + super.getID() + ".";
 	}
 
-	public static void setCantidadDTs(int cantidad) {
-		cantidadTecnicos = cantidad;		
-	}
 	
 
 	/*@Override

@@ -1,5 +1,6 @@
 package Clases;
 import java.io.Serializable;
+import java.util.Iterator;
 
 /** 
  *  Esta clase nos permite crear objetos de tipo ClubUsuario
@@ -71,8 +72,7 @@ public class ClubUsuario implements IMenu, Serializable{
 	
 	@Override
 	public void listadoOpciones() {
-		//TODO controlar que los jugadores de la plantilla estén dados de alta. Si no, dar las monedas y elminar el id
-		//TODO sincronizar la información del DT: cambiar todo menos la vestimenta, y ver que esté dado de alta.
+		sincronizarClub ();
 		System.out.println("\n\nBienvenido al Club " /*+ nombreClub*/);
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Acceder al Mercado.");
@@ -84,6 +84,42 @@ public class ClubUsuario implements IMenu, Serializable{
 		System.out.println("");
 		ingresarAOpcion();
 	}
+	
+	private void sincronizarClub() {
+		setFondos(sincronizarJugadores());
+		if (dtClub.getID()!=-1) {
+			setFondos(sincronizarDT());
+		}
+		Simulador.guardarArchivoUsuarios();
+	}
+
+	private double sincronizarJugadores() {
+		double retorno = fondos;
+		Iterator<Integer> it = plantillaClub.getIterator();
+		Jugador jugAux;
+		while (it.hasNext()) {
+			jugAux = Simulador.getMercado().getListadoJugadores().buscar(it.next());
+			if (!jugAux.getEstado()) {
+				System.out.println("  El jugador " + jugAux.getNombre() + " fue dado de baja por el Administrador. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
+				retorno += jugAux.getPrecio();
+				plantillaClub.eliminarJugador(jugAux.getID());
+			}
+		}
+		return retorno;
+	}
+	
+	private double sincronizarDT() {
+		double retorno = fondos;
+		DirectorTecnico aux = Simulador.getMercado().getListadoDTs().buscar(dtClub.getID());
+		dtClub.sincronizarDatos(aux);
+		if (!aux.getEstado()) {
+			System.out.println("  El Director Técnico " + aux.getNombre() + " fue dado de baja por el Administrador. Se le agregaron a tu Club $" + aux.getPrecio() + " monedas.");
+			retorno += aux.getPrecio();
+			dtClub = new DirectorTecnico(); //Elimina los datos del DT y pone el ID = -1
+		}
+		return retorno;
+	}
+
 	@Override
 	public void ingresarAOpcion() {
 		int opcion = 0; //TODO sacar inicialización

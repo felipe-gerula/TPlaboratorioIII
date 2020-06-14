@@ -32,9 +32,25 @@ public class Equipo {
 	public void agregarJugador (int IDJugador) {
 		plantillaEquipo.agregarJugador(IDJugador);
 	}
+
+	public void eliminarJugador(int idJugador) {
+		plantillaEquipo.eliminarJugador(idJugador);
+	}
+	
+	public void elimiarDT() {
+		this.DTEquipo = -1;
+	}
 	
 	public boolean hayEspacioEnPlantilla () {
 		return plantillaEquipo.cantidadJugadores()<11;
+	}
+
+	public boolean hayEspacioParaDT() {
+		return this.DTEquipo == -1;
+	}
+	
+	public boolean jugadorYaCargado (String nombreApellidoRecibido) {
+		return plantillaEquipo.jugadorYaCargado(nombreApellidoRecibido);
 	}
 
 	public boolean agregarDT(int nuevoDT) {
@@ -60,5 +76,6 @@ public class Equipo {
 		}
 		return retorno.toString();
 	}
+
 	
 }

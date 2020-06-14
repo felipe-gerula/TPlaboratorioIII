@@ -55,6 +55,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		if (nuevoJugador != null) {
 			System.out.println(nuevoJugador.toString());
 			Simulador.getMercado().agregarJugador(nuevoJugador);
+			Simulador.getListadoLigasEquipos().agregarJugador(nuevoJugador);
 			Simulador.guardarArchivoJugadores();
 		}
 	}
@@ -106,15 +107,21 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 2: //club y liga
-				//TODO hacer un listado con las ligas ya existentes (opciones con número).
-				//El admin elige y se muestran los clubes dentro de la liga
-				//Vuelve a elegir y se modifica el jugador
-				//Si quiere crear una liga y/o club se le da la opción
-				/*System.out.println("  Ingrese el nuevo club: ");
-				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
-				System.out.println("  Ingrese la nueva liga: ");
-				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
-				Simulador.guardarArchivoJugadores();*/
+				System.out.println("  A continuación se mostrarán las ligas y equipos disponibles. Puede elegir o agregar nuevos.");
+				Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
+				if (equipoSeleccionado.hayEspacioEnPlantilla()) {
+					if (!equipoSeleccionado.jugadorYaCargado(jugadorAModificar.getNombre())) {
+						Simulador.getListadoLigasEquipos().eliminarJugador(jugadorAModificar);
+						jugadorAModificar.setClub(equipoSeleccionado.getNombreEquipo());
+						jugadorAModificar.setLiga(equipoSeleccionado.getNombreLiga());
+						Simulador.getListadoLigasEquipos().agregarJugador(jugadorAModificar);
+						Simulador.guardarArchivoJugadores();
+					} else {
+						System.out.println("  Ya hay un jugador con el nombre " + jugadorAModificar.getNombre() + " cargado en el equipo.");
+					}
+				} else {
+					System.out.println("  No hay espacio en el equipo seleccionado. Intente modificar uno de los jugadores ya existentes.");
+				}
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 3: //nacionalidad
@@ -224,6 +231,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		if (nuevoDT != null) {
 			System.out.println(nuevoDT.toString());
 			Simulador.getMercado().agregarDirectorTecnico(nuevoDT);
+			Simulador.getListadoLigasEquipos().agregarDT(nuevoDT);
 			Simulador.guardarArchivoDTs();
 		}
 	}
@@ -272,15 +280,16 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
 			case 2: //club y liga
-				//TODO hacer un listado con las ligas ya existentes (opciones con número).
-				//El admin elige y se muestran los clubes dentro de la liga
-				//Vuelve a elegir y se modifica el jugador
-				//Si quiere crear una liga y/o club se le da la opción
-				/*System.out.println("  Ingrese el nuevo club: ");
-				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
-				System.out.println("  Ingrese la nueva liga: ");
-				jugadorAModificar.setClub(Simulador.getScanner().nextLine());
-				Simulador.guardarArchivoJugadores();*/
+				Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
+				if (equipoSeleccionado.hayEspacioParaDT()) {
+					Simulador.getListadoLigasEquipos().eliminarDT(dtAModificar);
+					dtAModificar.setClub(equipoSeleccionado.getNombreEquipo());
+					dtAModificar.setLiga(equipoSeleccionado.getNombreLiga());
+					Simulador.getListadoLigasEquipos().agregarDT(dtAModificar);
+					Simulador.guardarArchivoDTs();
+				} else {
+					System.out.println("  Ya hay un DT cargado en el equipo seleccionado. Intente modificar sus datos.");
+				}		
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
 			case 3: //nacionalidad
@@ -421,7 +430,11 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpciones();
 				break;
 			case 2:
-				this.modificarJugadorMercado();
+				if (Jugador.getCantidadJugadores()>0) {
+					this.modificarJugadorMercado();
+				} else {
+					System.out.println("No hay Jugadores cargados.");
+				}
 				this.listadoOpciones();
 				break;
 			case 3:
@@ -437,7 +450,11 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpciones();
 				break;
 			case 6:
-				this.modificarDTMercado();
+				if (DirectorTecnico.getCantidadDTs()>0) {
+					this.modificarDTMercado();
+				} else {
+					System.out.println("No hay Directores Técnicos cargados.");
+				}
 				this.listadoOpciones();
 				break;
 			case 7:

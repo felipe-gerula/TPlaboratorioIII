@@ -36,20 +36,26 @@ public class ContenedorLigasEquipos {
 		}
 	}
 	
-	public boolean agregarJugador (Jugador nuevoJugador) {
+	public void agregarJugador (Jugador nuevoJugador) {
 		agregarEquipo (nuevoJugador.getClub(), nuevoJugador.getLiga());
 		Equipo copia = hashMapLigasEquipos.get(nuevoJugador.getLiga()).get(nuevoJugador.getClub());
-		if (copia.hayEspacioEnPlantilla()) {
-			copia.agregarJugador(nuevoJugador.getIDJugador());
-			return true;
-		}
-		return false;
+		copia.agregarJugador(nuevoJugador.getIDJugador());
+	}
+
+	public void eliminarJugador(Jugador jugadorAEliminar) {
+		Equipo copia = hashMapLigasEquipos.get(jugadorAEliminar.getLiga()).get(jugadorAEliminar.getClub());
+		copia.eliminarJugador(jugadorAEliminar.getIDJugador());
 	}
 	
-	public boolean agregarDT (DirectorTecnico nuevoDT) { //TODO solamente un DT
+	public boolean agregarDT (DirectorTecnico nuevoDT) {
 		agregarEquipo (nuevoDT.getClub(), nuevoDT.getLiga());
 		Equipo copia = hashMapLigasEquipos.get(nuevoDT.getLiga()).get(nuevoDT.getClub());
 		return copia.agregarDT(nuevoDT.getID());
+	}
+
+	public void eliminarDT(DirectorTecnico dtAEliminar) {
+		Equipo copia = hashMapLigasEquipos.get(dtAEliminar.getLiga()).get(dtAEliminar.getClub());
+		copia.elimiarDT();
 	}
 	
 	public Equipo seleccionLigasEquipos () {
@@ -61,6 +67,7 @@ public class ContenedorLigasEquipos {
 			nombresLigas.add(auxA.getKey());
 		}
 		Collections.sort(nombresLigas);
+		System.out.println("  Ligas disponibles: ");
 		for (int i=0; i<nombresLigas.size(); i++){
 			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
 		}
@@ -69,17 +76,50 @@ public class ContenedorLigasEquipos {
 		int opcion = Simulador.getScanner().nextInt();
 		while (opcion<0 || opcion>(nombresLigas.size()+1)) {
 			System.out.println("  Por favor ingrese una opción correcta (entre 0 y " + (nombresLigas.size()+1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
+			opcion = Simulador.getScanner().nextInt();
 		}
-			HashMap<String, Equipo> auxB = auxA.getValue();
-			System.out.println("Equipos de la Liga " + auxA.getKey() + ": \n");
+		if (opcion == (nombresLigas.size()+1)) { //Opción de agregar liga
+			System.out.println("  Eligió la opción de agregar una liga.\n");
+			System.out.println("  Ingrese el nombre de la nueva liga: ");
+			Simulador.getScanner().nextLine();
+			String nuevaLiga = Simulador.getScanner().nextLine();
+			System.out.println("  Ingrese el nombre del nuevo equipo: ");
+			String nuevoEquipo = Simulador.getScanner().nextLine();
+			return new Equipo(nuevoEquipo, nuevaLiga);
+		} else { //Opción de liga existente
+			HashMap<String, Equipo> auxB = hashMapLigasEquipos.get(nombresLigas.get(opcion-1)); //Usamos la opción como índice para buscar la clave
+			System.out.println("Equipos de la Liga " + nombresLigas.get(opcion-1) + ": \n");
+			ArrayList<String> nombresEquipos = new ArrayList<>();
 			Set<Entry<String, Equipo>> varSet2 = auxB.entrySet();
-			Iterator<Entry<String, Equipo>> it2 = varSet2.iterator();
+			Iterator<Entry<String, Equipo>> it2 = varSet2.iterator(); 
 			while (it2.hasNext()) {
-				Equipo equipoAux = it2.next().getValue();
-				retorno.append("Datos del equipo " + equipoAux.getNombreEquipo() + ": \n\n" + equipoAux.toString());
-			
+				Entry<String, Equipo> auxC = it2.next();
+				nombresEquipos.add(auxC.getKey());
+			}
+			Collections.sort(nombresEquipos);
+			System.out.println("  Equipos disponibles: ");
+			for (int i=0; i<nombresEquipos.size(); i++){
+				System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".\n");
+			}
+			System.out.println((nombresEquipos.size()+1) + ". Agregar equipo.");
+			System.out.println("  Ingrese la opción que desea utilizar: ");
+			int opcion2 = Simulador.getScanner().nextInt();
+			while (opcion2<0 || opcion2>(nombresEquipos.size()+1)) {
+				System.out.println("  Por favor ingrese una opción correcta (entre 0 y " + (nombresEquipos.size()+1) + "): ");
+				opcion2 = Simulador.getScanner().nextInt();
+			}
+			if (opcion2 == (nombresEquipos.size()+1)) { //Opción de agregar equipo
+				System.out.println("  Eligió la opción de agregar un equipo.\n");
+				Simulador.getScanner().nextLine();
+				System.out.println("  Ingrese el nombre del nuevo equipo: ");
+				String nuevoEquipo = Simulador.getScanner().nextLine();
+				return new Equipo(nuevoEquipo, nombresLigas.get(opcion-1));
+			} else {
+				Simulador.getScanner().nextLine();
+				return auxB.get(nombresEquipos.get(opcion2-1));
+			}
 		}
+		
 	}
 	
 	@Override
