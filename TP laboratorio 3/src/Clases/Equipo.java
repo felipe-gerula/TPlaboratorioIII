@@ -64,6 +64,10 @@ public class Equipo {
 		}
 		return false;
 	}
+
+	public void modificacionPosiciones(String posicionAnterior, String nuevaPosicionJugador) {
+		this.plantillaEquipo.modificacionPosiciones(posicionAnterior, nuevaPosicionJugador);
+	}
 	
 	@Override
 	public String toString() {
@@ -80,6 +84,5 @@ public class Equipo {
 		}
 		return retorno.toString();
 	}
-
 	
 }

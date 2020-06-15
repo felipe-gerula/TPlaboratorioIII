@@ -27,8 +27,6 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		this.movHabiles = movHabiles;
 		this.posicion = posicion;
 	}
-	
-	
 
 	public Jugador() {
 		super();
@@ -98,7 +96,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
 		if (equipoSeleccionado.hayEspacioEnPlantilla()) {
 			if (!equipoSeleccionado.jugadorYaCargado(nombreJugador)) {
-				System.out.println("  Ingrese la posición del Jugador:"); //TODO hacer menú que muestra las opciones disponibles
+				System.out.println("  Ingrese la posición del Jugador:");
 				String posicionJugador = seleccionDePosicion();
 				if (equipoSeleccionado.hayEspacioEnPosicion(posicionJugador)) {
 					Simulador.getScanner().nextLine();
@@ -117,7 +115,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 						calificacionJugador = Simulador.getScanner().nextInt();
 					}
 					String calidadJugador = seleccionDeCalidad(calificacionJugador);
-					System.out.println("  Ingrese el pie hábil del Jugador (i/d):"); //TODO validación
+					System.out.println("  Ingrese el pie hábil del Jugador (i/d):");
 					char pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
 					while (pieHabilJugador != 'i' && pieHabilJugador != 'I' && pieHabilJugador != 'd' && pieHabilJugador != 'D') {
 						System.out.println("  Por favor ingrese un valor correcto (i/d): ");
@@ -130,7 +128,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 							pieHabilJugador = 'D';
 						}
 					}
-					System.out.println("  Ingrese el nivel de movimientos hábiles del Jugador (1-5):"); //TODO validación
+					System.out.println("  Ingrese el nivel de movimientos hábiles del Jugador (1-5):");
 					int movHabilesJugador = Simulador.getScanner().nextInt();
 					while (movHabilesJugador<1 || movHabilesJugador>5) {
 						System.out.println("  Por favor ingrese un nivel de movimientos hábiles correcto (entre 1 y 5): ");
@@ -153,7 +151,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		return null;
 	}
 	
-	private double seleccionDePrecio(int calificacionJugador, String calidadJugador) {
+	public double seleccionDePrecio(int calificacionJugador, String calidadJugador) {
 		double retorno;
 		if (calificacionJugador<65) {
 			if (calidadJugador.equals("ESPECIAL")) { //Bronce especial
@@ -227,7 +225,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 
 
 
-	private String seleccionDeCalidad(int calificacionDeJugador) {
+	public String seleccionDeCalidad(int calificacionDeJugador) {
 		System.out.println("¿El jugador es de calidad especial? (s para confirmar): ");
 		Simulador.getScanner().nextLine();
 		char opcion = Simulador.getScanner().nextLine().charAt(0);
@@ -252,7 +250,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 
 
 
-	private String seleccionDePosicion() {
+	public String seleccionDePosicion() {
 		System.out.println("  A continuación están las posiciones disponibles:");
 		System.out.println("    1. Portero.");
 		System.out.println("    2. Defensor.");
@@ -292,7 +290,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 				System.out.println("    1. Mediocampista Central (MC).");
 				System.out.println("    2. Mediocampista Izquierdo (MI).");
 				System.out.println("    3. Mediocampista Derecho (MD).");
-				System.out.println("    4. Mediocampista Ofensico (MCO).");
+				System.out.println("    4. Mediocampista Ofensivo (MCO).");
 				System.out.println("  Ingrese la posición deseada: ");
 				opcion = Simulador.getScanner().nextInt();
 				while (opcion<1 || opcion>(4)) {

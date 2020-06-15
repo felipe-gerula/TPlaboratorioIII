@@ -48,6 +48,42 @@ public class Plantilla implements Serializable{
 		}
 	}
 	
+	
+	/**
+	 * Método que actualiza los valores de posiciones en la plantilla al cambiar un jugador de posición.
+	 * 
+	 * @param posicionAnterior posición que tenía el jugador. Se resta uno en esta posición.
+	 * @param posicionNueva posición que tendrá el jugador. Se suma uno en esta posición.
+	 */
+	public void modificacionPosiciones (String posicionAnterior, String posicionNueva) {
+		if (posicionAnterior.equals("PO")) {
+			cantidadPorteros--;
+		} else {
+			if (posicionAnterior.equals("DFC") || posicionAnterior.equals("LI") || posicionAnterior.equals("LD")) {
+				cantidadDefensores--;
+			} else {
+				if (posicionAnterior.equals("MC") || posicionAnterior.equals("MI") || posicionAnterior.equals("MD") || posicionAnterior.equals("MCO")) {
+					cantidadMediocampistas--;
+				} else {
+					cantidadDelanteros--;
+				}
+			}
+		}
+		if (posicionNueva.equals("PO")) {
+			cantidadPorteros++;
+		} else {
+			if (posicionNueva.equals("DFC") || posicionNueva.equals("LI") || posicionNueva.equals("LD")) {
+				cantidadDefensores++;
+			} else {
+				if (posicionNueva.equals("MC") || posicionNueva.equals("MI") || posicionNueva.equals("MD") || posicionNueva.equals("MCO")) {
+					cantidadMediocampistas++;
+				} else {
+					cantidadDelanteros++;
+				}
+			}
+		}
+	}
+	
 	public void agregarJugador (int idJugador) {
 		listadoJugadores.add((Integer)idJugador);
 		String posicionJugador = Simulador.getMercado().getListadoJugadores().buscar(idJugador).getPosicion();
@@ -70,15 +106,19 @@ public class Plantilla implements Serializable{
 		listadoJugadores.remove((Integer)idJugador);
 		String posicionJugador = Simulador.getMercado().getListadoJugadores().buscar(idJugador).getPosicion();
 		if (posicionJugador.equals("PO")) {
-			cantidadPorteros--;
+			if (cantidadPorteros > 0 ) //Puede ser que un club termine con cantidades negativas si se producen muchos cambios de posición desde el administrador. De esta forma limitamos el piso a 0
+				cantidadPorteros--;
 		} else {
 			if (posicionJugador.equals("DFC") || posicionJugador.equals("LI") || posicionJugador.equals("LD")) {
-				cantidadDefensores--;
+				if (cantidadDefensores > 0)
+					cantidadDefensores--;
 			} else {
 				if (posicionJugador.equals("MC") || posicionJugador.equals("MI") || posicionJugador.equals("MD") || posicionJugador.equals("MCO")) {
-					cantidadMediocampistas--;
+					if (cantidadMediocampistas > 0)
+						cantidadMediocampistas--;
 				} else {
-					cantidadDelanteros--;
+					if (cantidadDelanteros > 0)
+						cantidadDelanteros--;
 				}
 			}
 		}

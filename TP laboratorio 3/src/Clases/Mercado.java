@@ -68,14 +68,14 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		switch (opcion) {
 			case 1:
 				if (!listadoJugadores.estaVacio()) {
-					retorno = listadoJugadores.opcionesListado();
+					retorno = listadoJugadores.opcionesListadoJugador();
 				} else {
 					retorno = "No hay jugadores en el Mercado.";
 				}
 				break;
 			case 2:
 				if (!listadoDTs.estaVacio()) {
-					retorno = listadoDTs.opcionesListado();
+					retorno = listadoDTs.opcionesListadoDT();
 				} else {
 					retorno = "No hay DTs en el Mercado.";
 				}
@@ -205,13 +205,17 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		Jugador jugadorBuscado = listadoJugadores.buscar(idBuscado);
 		if (jugadorBuscado.getEstado()) {
 			if (!clubRecibido.jugadorExistentePlantilla(idBuscado)) {
-				if (jugadorBuscado.getPrecio() < clubRecibido.getFondos()) {
-					clubRecibido.agregarJugadorPlantilla(idBuscado);
-					clubRecibido.setFondos(clubRecibido.getFondos() - jugadorBuscado.getPrecio());
-					Simulador.guardarArchivoUsuarios();
-					System.out.println(jugadorBuscado.getNombre() + " comprado con éxito. Fondos restantes: $" + clubRecibido.getFondos() + ".");
+				if (clubRecibido.getPlantillaClub().hayEspacioEnPosicion(jugadorBuscado.getPosicion())) {
+					if (jugadorBuscado.getPrecio() < clubRecibido.getFondos()) {
+						clubRecibido.agregarJugadorPlantilla(idBuscado);
+						clubRecibido.setFondos(clubRecibido.getFondos() - jugadorBuscado.getPrecio());
+						Simulador.guardarArchivoUsuarios();
+						System.out.println(jugadorBuscado.getNombre() + " comprado con éxito. Fondos restantes: $" + clubRecibido.getFondos() + ".");
+					} else {
+						System.out.println("Fondos insuficientes. Faltan $" + (jugadorBuscado.getPrecio() - clubRecibido.getFondos()) + ".");
+					}
 				} else {
-					System.out.println("Fondos insuficientes. Faltan $" + (jugadorBuscado.getPrecio() - clubRecibido.getFondos()) + ".");
+					System.out.println("  No hay más espacios para la posición de " + jugadorBuscado.getPosicion() + " en tu club.");
 				}
 			} else {
 				System.out.println("El jugador seleccionado ya forma parte de su plantilla.");

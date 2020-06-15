@@ -6,11 +6,11 @@ package Clases;
  */
 import java.util.Scanner;
 
-import Interfaces.IMenu;
 import dao.ArchivoAdministradores;
 import dao.ArchivoDTs;
 import dao.ArchivoJugadores;
 import dao.ArchivoUsuarios;
+import interfaces.IMenu;
 
 public class Simulador implements IMenu{
 

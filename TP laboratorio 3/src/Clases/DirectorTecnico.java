@@ -44,7 +44,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 				}
 				Simulador.getScanner().nextLine();
 				String calidadDT = seleccionDeCalidad();
-				double precioDT =seleccionDePrecio(calidadDT);
+				double precioDT = seleccionDePrecio(calidadDT);
 				DirectorTecnico nuevoDT = new DirectorTecnico(nombreDT, equipoSeleccionado.getNombreEquipo(), equipoSeleccionado.getNombreLiga(), nacionalidadDT, edadDT, calidadDT, precioDT);
 				nuevoDT.cambiarVestimenta();
 				return nuevoDT;
@@ -54,7 +54,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		return null;
 	}
 	
-	private double seleccionDePrecio(String calidadDT) {
+	public double seleccionDePrecio(String calidadDT) {
 		double retorno;
 		if (calidadDT.equals("BRONCE")) {
 			System.out.println(" Ingrese un precio entre $200 y $700.");
@@ -74,26 +74,37 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 				}
 				return retorno;
 			} else {
-				System.out.println(" Ingrese un precio entre $700 y $5000.");
-				retorno = Simulador.getScanner().nextDouble();
-				while (retorno<700 || retorno>5000) {
-					System.out.println("  Por favor ingrese un precio correcto (entre $700 y $5000): ");
+				if (calidadDT.contentEquals("ORO")) {
+					System.out.println(" Ingrese un precio entre $700 y $5000.");
 					retorno = Simulador.getScanner().nextDouble();
+					while (retorno<700 || retorno>5000) {
+						System.out.println("  Por favor ingrese un precio correcto (entre $700 y $5000): ");
+						retorno = Simulador.getScanner().nextDouble();
+					}
+					return retorno;
+				} else {
+					System.out.println(" Ingrese un precio entre $6000 y $20000.");
+					retorno = Simulador.getScanner().nextDouble();
+					while (retorno<6000 || retorno>20000) {
+						System.out.println("  Por favor ingrese un precio correcto (entre $6000 y $20000): ");
+						retorno = Simulador.getScanner().nextDouble();
+					}
+					return retorno;
 				}
-				return retorno;
 			}
 		}
 	}
 	
-	private String seleccionDeCalidad() {
-		System.out.println("  A continuación están las posiciones disponibles:");
+	public String seleccionDeCalidad() {
+		System.out.println("  A continuación están las calidades disponibles:");
 		System.out.println("    1. BRONCE.");
 		System.out.println("    2. PLATA.");
 		System.out.println("    3. ORO.");
+		System.out.println("    4. ESPECIAL.");
 		System.out.println("  Ingrese la posición deseada: ");
 		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>3) {
-			System.out.println("  Por favor ingrese una opción correcta (entre 1 y 3): ");
+		while (opcion<1 || opcion>4) {
+			System.out.println("  Por favor ingrese una opción correcta (entre 1 y 4): ");
 			opcion = Simulador.getScanner().nextInt();
 		}
 		switch (opcion) {
@@ -104,7 +115,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 			case 3:
 				return "ORO";
 			default:
-				return "";
+				return "ESPECIAL";
 		}
 	}
 	

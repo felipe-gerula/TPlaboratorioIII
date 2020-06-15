@@ -14,6 +14,11 @@ public class ContenedorLigasEquipos {
 		hashMapLigasEquipos = new HashMap<>();
 	}
 	
+	public Equipo getEquipo (String ligaEquipo, String nombreEquipo) {
+		HashMap<String, Equipo> aux = hashMapLigasEquipos.get(ligaEquipo);
+		return aux.get(nombreEquipo);
+	}
+	
 	public boolean agregarLiga(String nuevaLiga) {
 		if (hashMapLigasEquipos.containsKey(nuevaLiga)) {
 			return false;

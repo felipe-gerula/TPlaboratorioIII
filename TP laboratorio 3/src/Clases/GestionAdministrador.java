@@ -3,7 +3,7 @@ package Clases;
 
 import java.util.Scanner;
 
-import Interfaces.IMenu;
+import interfaces.IMenu;
 
 /** 
  *  Esta clase nos permite crear objetos de tipo GestionAdministracionAdministrador
@@ -79,12 +79,11 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		System.out.println("    2. Modificar Club y Liga.");
 		System.out.println("    3. Modificar Nacionalidad.");
 		System.out.println("    4. Modificar Edad.");
-		System.out.println("    5. Modificar Calificación."); //TODO modificar calificacion, tipo y precio juntos
+		System.out.println("    5. Modificar Calificación, Tipo y Precio."); //TODO modificar calificacion, tipo y precio juntos
 		System.out.println("    6. Modificar Pie Hábil.");
 		System.out.println("    7. Modificar Movimientos Hábiles.");
 		System.out.println("    8. Modificar Posición.");
-		System.out.println("    9. Modificar Precio.");
-		System.out.println("    10. Regresar al Menú de Administrador.");
+		System.out.println("    9. Regresar al Menú de Administrador.");
 		System.out.println("");
 		ingresarAOpcionModificacionJugador(jugadorAModificar);
 	}
@@ -94,7 +93,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		System.out.println("  Ingrese el número de opción deseada: ");
 		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
 		opcion = scanner.nextInt();
-		while (opcion<1 || opcion>10) {
+		while (opcion<1 || opcion>9) {
 			System.out.println("  Por favor ingrese una opción correcta: ");
 			opcion = scanner.nextInt();
 		}
@@ -137,43 +136,56 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 4: //edad
 				System.out.println("  Ingrese la nueva edad: ");
-				jugadorAModificar.setEdad(scanner.nextInt());
-				//TODO controlar que no sea negativo
+				int edadJugador = Simulador.getScanner().nextInt();
+				while (edadJugador<15 || edadJugador>40) {
+					System.out.println("  Por favor ingrese una edad correcta (entre 15 y 40): ");
+					edadJugador = Simulador.getScanner().nextInt();
+				}
+				jugadorAModificar.setEdad(edadJugador);
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
-			case 5: //calificación
-				System.out.println("  Ingrese la nueva calificación: ");
-				jugadorAModificar.setCalificacion(scanner.nextInt());
-				//TODO controlar que no sea negativa y menor a 99
+			case 5: //calificación, tipo y precio
+				System.out.println("  Ingrese la nueva calificación del Jugador:");
+				int calificacionJugador = Simulador.getScanner().nextInt();
+				while (calificacionJugador<49 || calificacionJugador>99) {
+					System.out.println("  Por favor ingrese una calificación correcta (entre 49 y 99): ");
+					calificacionJugador = Simulador.getScanner().nextInt();
+				}
+				jugadorAModificar.setTipo(jugadorAModificar.seleccionDeCalidad(calificacionJugador));
+				jugadorAModificar.setPrecio(jugadorAModificar.seleccionDePrecio(calificacionJugador, jugadorAModificar.getTipo()));
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 6: //pie hábil
-				jugadorAModificar.setPieHabil();
+				jugadorAModificar.setPieHabil(); //Asigna automáticamente el otro pie al pie hábil
 				System.out.println("  Nuevo pie hábil de " + jugadorAModificar.getNombre() + ": " + jugadorAModificar.getPieHabil() + ".");
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 7: //movimientos hábiles
-				System.out.println("  Ingrese la nueva calificación de movimientos hábiles: ");
-				jugadorAModificar.setMovHabiles(scanner.nextInt());
-				//TODO controlar que esté entre 1 y 5
+				System.out.println("  Ingrese el nuevo nivel de movimientos hábiles del Jugador (1-5):");
+				int movHabilesJugador = Simulador.getScanner().nextInt();
+				while (movHabilesJugador<1 || movHabilesJugador>5) {
+					System.out.println("  Por favor ingrese un nivel de movimientos hábiles correcto (entre 1 y 5): ");
+					movHabilesJugador = Simulador.getScanner().nextInt();
+				}
+				jugadorAModificar.setMovHabiles(movHabilesJugador);
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
-			case 8: //posición //TODO hacer listado
-				System.out.println("  Ingrese la nueva posición: ");
-				scanner.nextLine();
-				jugadorAModificar.setPosicion(scanner.nextLine());
-				Simulador.guardarArchivoJugadores();
-				this.listadoOpcionesModificacionJugador(jugadorAModificar);
-				break;
-			case 9: //precio
-				System.out.println("  Ingrese el nuevo precio: ");
-				jugadorAModificar.setPrecio(scanner.nextDouble());
-				//TODO controlar que sea positivo y dentro del rango de la calificación
-				Simulador.guardarArchivoJugadores();
+			case 8: //posición
+				System.out.println("  Ingrese la nueva posición del Jugador:");
+				String nuevaPosicionJugador = jugadorAModificar.seleccionDePosicion();
+				Equipo equipoJugador = Simulador.getListadoLigasEquipos().getEquipo(jugadorAModificar.getLiga(), jugadorAModificar.getClub());
+				if (equipoJugador.hayEspacioEnPosicion(nuevaPosicionJugador)) {
+					String posicionAnterior = jugadorAModificar.getPosicion();
+					jugadorAModificar.setPosicion(nuevaPosicionJugador);
+					equipoJugador.modificacionPosiciones(posicionAnterior, nuevaPosicionJugador);
+					Simulador.guardarArchivoJugadores();
+				} else {
+					System.out.println("  No hay más espacios para la posición de " + nuevaPosicionJugador + " en el equipo seleccionado.");
+				}
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			default:
@@ -259,7 +271,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		System.out.println("    2. Modificar Club y Liga.");
 		System.out.println("    3. Modificar Nacionalidad.");
 		System.out.println("    4. Modificar Edad.");
-		System.out.println("    5. Modificar Precio.");
+		System.out.println("    5. Modificar Calidad y Precio.");
 		System.out.println("    6. Modificar Vestimenta.");
 		System.out.println("    7. Regresar al Menú de Administrador.");
 		System.out.println("");
@@ -279,7 +291,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 			case 1: //nombre apellido
 				System.out.println("  Ingrese el nuevo nombre y apellido: ");
 				scanner.nextLine();
-				dtAModificar.setNombreApellido(scanner.nextLine());
+				dtAModificar.setNombreApellido(scanner.nextLine().toUpperCase());
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
@@ -299,21 +311,24 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 			case 3: //nacionalidad
 				System.out.println("  Ingrese la nueva nacionalidad: ");
 				scanner.nextLine();
-				dtAModificar.setNacionalidad(scanner.nextLine());
+				dtAModificar.setNacionalidad(scanner.nextLine().toUpperCase());
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
 			case 4: //edad
 				System.out.println("  Ingrese la nueva edad: ");
-				dtAModificar.setEdad(scanner.nextInt());
-				//TODO controlar que no sea negativo
+				int edadDT = Simulador.getScanner().nextInt();
+				while (edadDT<35 || edadDT>75) {
+					System.out.println("  Por favor ingrese una edad correcta (entre 35 y 75): ");
+					edadDT = Simulador.getScanner().nextInt();
+				}
+				dtAModificar.setEdad(edadDT);
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
-			case 5: //precio
-				System.out.println("  Ingrese el nuevo precio: ");
-				dtAModificar.setPrecio(scanner.nextDouble());
-				//TODO controlar que sea positivo y dentro del rango de la calificación
+			case 5: //calidad y precio
+				dtAModificar.setTipo(dtAModificar.seleccionDeCalidad());
+				dtAModificar.setPrecio(dtAModificar.seleccionDePrecio(dtAModificar.getTipo()));
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;

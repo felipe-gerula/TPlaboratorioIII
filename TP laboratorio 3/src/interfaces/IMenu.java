@@ -1,4 +1,4 @@
-package Interfaces;
+package interfaces;
 /** 
  *  Esta interfaz con permite conectar las clases relacionadas con el Menu
  *  @author 

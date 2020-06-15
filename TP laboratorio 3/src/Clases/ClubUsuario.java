@@ -2,12 +2,7 @@ package Clases;
 import java.io.Serializable;
 import java.util.Iterator;
 
-/** 
- *  Esta clase nos permite crear objetos de tipo ClubUsuario
- *  nos permite armar nuestro equipo, ademas de jugar partidos con el mismo
- *  @author 
- */
-import Interfaces.IMenu;
+import interfaces.IMenu;
 
 public class ClubUsuario implements IMenu, Serializable{
 	private static final long serialVersionUID = 8888764086344279621L;
@@ -105,9 +100,68 @@ public class ClubUsuario implements IMenu, Serializable{
 				plantillaClub.eliminarJugador(jugAux.getID());
 			}
 		}
+		retorno += sincronizarPosiciones ();
 		return retorno;
 	}
 	
+	/**
+	 * Método que controla que los jugadores cumplan con la cantidad de posiciones de la plantilla. Puede ser que el Administrador modifique las posiciones de los jugadores, generando errores en las cantidades.
+	 * Se trabaja con variables locales para el conteo, ya que si no se generaban errores.
+	 * @return cantidad de monedas a sumar según la cantidad de jugadores incorrectos.
+	 */
+	
+	private double sincronizarPosiciones() {
+		Iterator<Integer> it = plantillaClub.getIterator();
+		Jugador jugAux;
+		double retorno = 0;
+		int cantidadPorteros = 0;
+		int cantidadDefensores = 0;
+		int cantidadMediocampistas = 0;
+		int cantidadDelanteros = 0;
+		while (it.hasNext()) {
+			jugAux = Simulador.getMercado().getListadoJugadores().buscar(it.next());
+			String posicionActual = jugAux.getPosicion();
+			if (posicionActual.equals("PO")) {
+				if (cantidadPorteros == 1 ) {
+					System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
+					retorno += jugAux.getPrecio();
+					plantillaClub.eliminarJugador(jugAux.getID());
+				} else {
+					cantidadPorteros++;
+				}
+			} else {
+				if (posicionActual.equals("DFC") || posicionActual.equals("LI") || posicionActual.equals("LD")) {
+					if (cantidadDefensores == 4 ) {
+						System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
+						retorno += jugAux.getPrecio();
+						plantillaClub.eliminarJugador(jugAux.getID());
+					} else {
+						cantidadDefensores++;
+					}
+				} else {
+					if (posicionActual.equals("MC") || posicionActual.equals("MI") || posicionActual.equals("MD") || posicionActual.equals("MCO")) {
+						if (cantidadMediocampistas == 3 ) {
+							System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
+							retorno += jugAux.getPrecio();
+							plantillaClub.eliminarJugador(jugAux.getID());
+						} else {
+							cantidadMediocampistas++;
+						}
+					} else {
+						if (cantidadDelanteros == 3 ) {
+							System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
+							retorno += jugAux.getPrecio();
+							plantillaClub.eliminarJugador(jugAux.getID());
+						} else {
+							cantidadDelanteros++;
+						}
+					}
+				}
+			}
+		}
+		return retorno;
+	}
+
 	private double sincronizarDT() {
 		double retorno = fondos;
 		DirectorTecnico aux = Simulador.getMercado().getListadoDTs().buscar(dtClub.getID());
