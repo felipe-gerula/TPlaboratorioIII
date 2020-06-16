@@ -23,6 +23,11 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		this.vestimentaEquipada = new Vestimenta();
 	}
 
+	public DirectorTecnico(DirectorTecnico dtRecibido) { //Constructor por copia. No se suma otro DT a la cantidad total
+		super(dtRecibido.getNombre(), dtRecibido.getClub(), dtRecibido.getLiga(), dtRecibido.getNacionalidad(), dtRecibido.getEdad(), dtRecibido.getTipo(), dtRecibido.getPrecio(), dtRecibido.getID());
+		this.vestimentaEquipada = new Vestimenta();
+	}
+
 	public static int getCantidadDTs() {
 		return cantidadTecnicos;
 	}

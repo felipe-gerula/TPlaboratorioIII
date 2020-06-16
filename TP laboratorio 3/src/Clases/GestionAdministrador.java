@@ -176,9 +176,10 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 8: //posición
 				System.out.println("  Ingrese la nueva posición del Jugador:");
+				String viejaPosicion = jugadorAModificar.getPosicion();
 				String nuevaPosicionJugador = jugadorAModificar.seleccionDePosicion();
 				Equipo equipoJugador = Simulador.getListadoLigasEquipos().getEquipo(jugadorAModificar.getLiga(), jugadorAModificar.getClub());
-				if (equipoJugador.hayEspacioEnPosicion(nuevaPosicionJugador)) {
+				if (equipoJugador.posicionesEquivalentes(viejaPosicion, nuevaPosicionJugador) || equipoJugador.hayEspacioEnPosicion(nuevaPosicionJugador)) {
 					String posicionAnterior = jugadorAModificar.getPosicion();
 					jugadorAModificar.setPosicion(nuevaPosicionJugador);
 					equipoJugador.modificacionPosiciones(posicionAnterior, nuevaPosicionJugador);

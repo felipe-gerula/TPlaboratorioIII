@@ -61,7 +61,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		String retorno = "";
 		System.out.println("  Ingrese el número de opción deseada: ");
 		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>2) {
+		while (opcion<1 || opcion>3) {
 			System.out.println("  Por favor ingrese una opción correcta: ");
 			opcion = Simulador.getScanner().nextInt();
 		}
@@ -80,6 +80,10 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 					retorno = "No hay DTs en el Mercado.";
 				}
 				break;
+			case 3:
+				Equipo aux = Simulador.getListadoLigasEquipos().listarLigasEquipos();
+				System.out.println(aux.toString());
+				break;
 		}
 		return retorno;
 	}
@@ -88,6 +92,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		System.out.println("  Opciones de listado de Mercado:");
 		System.out.println("    1. Ver Jugadores disponibles en el Mercado.");
 		System.out.println("    2. Ver Directores Técnicos disponibles en el Mercado.");
+		System.out.println("    3. Ver Director Técnico y Jugadores de un Equipo (ordenados por posición).");
 		return ingresarAOpcionVerMercado();
 	}
 	
@@ -183,7 +188,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		DirectorTecnico dtBuscado = listadoDTs.buscar(idBuscado);
 		if (dtBuscado.getEstado()) {
 			if (dtBuscado.getPrecio() < clubRecibido.getFondos()) {
-				clubRecibido.setDT(dtBuscado);
+				clubRecibido.setDT(new DirectorTecnico(dtBuscado)); //Le pasamos una copia para que no se modifique la vestimenta del DT del mercado
 				clubRecibido.setFondos(clubRecibido.getFondos() - dtBuscado.getPrecio());
 				Simulador.guardarArchivoUsuarios();
 				System.out.println(dtBuscado.getNombre() + " comprado con éxito. Fondos restantes: $" + clubRecibido.getFondos() + ".");

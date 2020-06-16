@@ -1,5 +1,7 @@
 package Clases;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 /** 
  *  Esta clase nos permite crear objetos de tipo Plantilla
  *  Es un contenedor con todos los jugadores del equipo creado
@@ -9,6 +11,8 @@ import java.io.Serializable;
  */
 import java.util.HashSet;
 import java.util.Iterator;
+
+import comparaciones.ComparacionPosicion;
 
 public class Plantilla implements Serializable{
 	private static final long serialVersionUID = 3139014270633585868L;
@@ -32,6 +36,37 @@ public class Plantilla implements Serializable{
 	 */
 	public boolean plantillaVacia() {
 		return listadoJugadores.isEmpty();
+	}
+	
+	/**
+	 * Método que se usa para volver a contar las posiciones en la plantilla al entrar al Club.
+	 * De esta forma, se evita tener valores negativos en las posiciones, y evitar que queden espacios ocupados en posiciones vacías.
+	 * Al hacerse consulta por ID, podía pasar que un delantero nunca descontara su posición al ser cambiado por el Admin.
+	 * 
+	 */
+	public void sincronizarCantidadPosiciones (){
+		cantidadPorteros = 0;
+		cantidadDefensores = 0;
+		cantidadMediocampistas = 0;
+		cantidadDelanteros = 0;
+		Iterator<Integer> it = listadoJugadores.iterator();
+		String posActual;
+		while (it.hasNext()) {
+			posActual = Simulador.getMercado().getListadoJugadores().buscar((int)it.next()).getPosicion();
+			if (posActual.equals("PO")) {
+				cantidadPorteros++;
+			} else {
+				if (posActual.equals("DFC") || posActual.equals("LI") || posActual.equals("LD")) {
+					cantidadDefensores++;
+				} else {
+					if (posActual.equals("MC") || posActual.equals("MI") || posActual.equals("MD") || posActual.equals("MCO")) {
+						cantidadMediocampistas++;
+					} else {
+						cantidadDelanteros++;
+					}
+				}
+			}
+		}
 	}
 	
 	public boolean jugadorYaCargado (String nombreApellidoRecibido) {
@@ -135,12 +170,29 @@ public class Plantilla implements Serializable{
 	public boolean jugadorEncontrado(int idBuscado) {
 		return listadoJugadores.contains((Integer)idBuscado);
 	}
+	
+	/**
+	 * 
+	 * @return Este método devuelve un ArrayList con los elementos cargados en el listado. Desde afuera se decide cómo ordenarlos para la muestra, y si mostrar todos o los que no están dados de baja
+	 */
+	
+	public ArrayList<Jugador> listado () {
+		ArrayList<Jugador> retorno = new ArrayList<>();
+		Iterator<Integer> it = listadoJugadores.iterator();
+		Jugador auxiliar = null;
+		while (it.hasNext()) {
+			auxiliar = Simulador.getMercado().getListadoJugadores().buscar((int)it.next());
+			retorno.add(auxiliar);
+		}
+		return retorno;
+	}
 
 	private String listadoJugadores() {
+		ArrayList<Jugador> lista = listado();
+		Collections.sort(lista, new ComparacionPosicion());
 		StringBuilder retorno = new StringBuilder();
-		Iterator<Integer> it = listadoJugadores.iterator();
-		while (it.hasNext()) {
-			retorno.append(Simulador.getMercado().getListadoJugadores().buscar(it.next()) + "\n\n");
+		for (int i=0; i<lista.size(); i++) {
+			retorno.append(lista.get(i) + "\n\n");
 		}
 		return retorno.toString();
 	}
@@ -148,11 +200,7 @@ public class Plantilla implements Serializable{
 	public Iterator<Integer> getIterator() {
 		return listadoJugadores.iterator();
 	}
-	
-	@Override
-	public String toString() {
-		return listadoJugadores();
-	}
+
 
 	public boolean hayEspacioEnPosicion(String posicionJugador) {
 		if (posicionJugador.equals("PO")) {
@@ -198,4 +246,8 @@ public class Plantilla implements Serializable{
 		return false;
 	}
 	
+	@Override
+	public String toString() {
+		return listadoJugadores();
+	}
 }

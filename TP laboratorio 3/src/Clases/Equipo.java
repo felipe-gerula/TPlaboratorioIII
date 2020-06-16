@@ -68,6 +68,25 @@ public class Equipo {
 	public void modificacionPosiciones(String posicionAnterior, String nuevaPosicionJugador) {
 		this.plantillaEquipo.modificacionPosiciones(posicionAnterior, nuevaPosicionJugador);
 	}
+
+	public boolean posicionesEquivalentes(String viejaPosicion, String nuevaPosicionJugador) {
+		if (viejaPosicion.equals(nuevaPosicionJugador)) {
+			return true;
+		} else {
+			if (viejaPosicion.equals("DFC") || viejaPosicion.equals("LI") || viejaPosicion.equals("LD") && nuevaPosicionJugador.equals("DFC") || nuevaPosicionJugador.equals("LI") || nuevaPosicionJugador.equals("LD")) {
+				return true;
+			} else {
+				if (viejaPosicion.equals("MC") || viejaPosicion.equals("MI") || viejaPosicion.equals("MD") || viejaPosicion.equals("MCO") && nuevaPosicionJugador.equals("MC") || nuevaPosicionJugador.equals("MI") || nuevaPosicionJugador.equals("MD") || nuevaPosicionJugador.equals("MCO") ) {
+					return true;
+				} else {
+					if (viejaPosicion.equals("DC") || viejaPosicion.equals("EI") || viejaPosicion.equals("ED") && viejaPosicion.equals("DC") || viejaPosicion.equals("EI") || viejaPosicion.equals("ED")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 	
 	@Override
 	public String toString() {
@@ -78,11 +97,12 @@ public class Equipo {
 			retorno.append("\n\nNo hay un Director Técnico en el Equipo.");
 		}
 		if (!plantillaEquipo.plantillaVacia()) {
-			retorno.append("\n\nInformación de Plantilla: " + plantillaEquipo.toString());
+			retorno.append("\n\nInformación de Plantilla: \n" + plantillaEquipo.toString());
 		} else {
 			retorno.append("\n\nNo hay Jugadores en el Equipo.");
 		}
 		return retorno.toString();
 	}
+
 	
 }

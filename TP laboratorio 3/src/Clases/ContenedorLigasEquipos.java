@@ -130,6 +130,49 @@ public class ContenedorLigasEquipos {
 		
 	}
 	
+	public Equipo listarLigasEquipos () {
+		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
+		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
+		ArrayList<String> nombresLigas = new ArrayList<>();
+		while (it.hasNext()) {
+			Entry<String, HashMap<String, Equipo>> auxA = it.next();
+			nombresLigas.add(auxA.getKey());
+		}
+		Collections.sort(nombresLigas);
+		System.out.println("  Ligas disponibles: ");
+		for (int i=0; i<nombresLigas.size(); i++){
+			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
+		}
+		System.out.println("  Ingrese la opción que desea utilizar: ");
+		int opcion = Simulador.getScanner().nextInt();
+		while (opcion<1 || opcion>(nombresLigas.size())) {
+			System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (nombresLigas.size()) + "): ");
+			opcion = Simulador.getScanner().nextInt();
+		}
+		HashMap<String, Equipo> auxB = hashMapLigasEquipos.get(nombresLigas.get(opcion-1)); //Usamos la opción como índice para buscar la clave
+		System.out.println("Equipos de la Liga " + nombresLigas.get(opcion-1) + ": \n");
+		ArrayList<String> nombresEquipos = new ArrayList<>();
+		Set<Entry<String, Equipo>> varSet2 = auxB.entrySet();
+		Iterator<Entry<String, Equipo>> it2 = varSet2.iterator(); 
+		while (it2.hasNext()) {
+			Entry<String, Equipo> auxC = it2.next();
+			nombresEquipos.add(auxC.getKey());
+		}
+		Collections.sort(nombresEquipos);
+		System.out.println("  Equipos disponibles: ");
+		for (int i=0; i<nombresEquipos.size(); i++){
+			System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".\n");
+		}
+		System.out.println("  Ingrese la opción que desea utilizar: ");
+		opcion = Simulador.getScanner().nextInt();
+		while (opcion<1 || opcion>(nombresEquipos.size())) {
+			System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (nombresEquipos.size()) + "): ");
+			opcion = Simulador.getScanner().nextInt();
+		}
+		Simulador.getScanner().nextLine();
+		return auxB.get(nombresEquipos.get(opcion-1));
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder retorno = new StringBuilder();

@@ -1,6 +1,7 @@
 package Clases;
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import interfaces.IMenu;
 
@@ -32,9 +33,13 @@ public class ClubUsuario implements IMenu, Serializable{
 	public Estadio getEstadio() {
 		return estadio;
 	}
-
+	
 	public String getCamiseta() {
 		return camiseta;
+	}
+
+	private void setCamiseta(String nuevaCamiseta) {
+		camiseta = nuevaCamiseta;
 	}
 
 	public DirectorTecnico getDTClub () {
@@ -47,6 +52,10 @@ public class ClubUsuario implements IMenu, Serializable{
 	
 	public String getNombre () {
 		return nombreClub;
+	}
+
+	private void setNombre(String nuevoNombre) {
+		this.nombreClub = nuevoNombre;
 	}
 
 	public void agregarJugadorPlantilla (int nuevoID) {
@@ -68,7 +77,7 @@ public class ClubUsuario implements IMenu, Serializable{
 	@Override
 	public void listadoOpciones() {
 		sincronizarClub ();
-		System.out.println("\n\nBienvenido al Club " /*+ nombreClub*/);
+		System.out.println("\n\nBienvenido al Club " + nombreClub);
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Acceder al Mercado.");
 		System.out.println("    2. Jugar Partido.");
@@ -100,6 +109,7 @@ public class ClubUsuario implements IMenu, Serializable{
 				plantillaClub.eliminarJugador(jugAux.getID());
 			}
 		}
+		plantillaClub.sincronizarCantidadPosiciones();
 		retorno += sincronizarPosiciones ();
 		return retorno;
 	}
@@ -193,7 +203,7 @@ public class ClubUsuario implements IMenu, Serializable{
 				listadoOpciones();
 				break;
 			case 3:
-				//modificar info club;
+				listadoOpcionesModificacionClub();
 				listadoOpciones();
 				break;
 			case 4:
@@ -211,6 +221,55 @@ public class ClubUsuario implements IMenu, Serializable{
 		
 	}
 	
+	private void listadoOpcionesModificacionClub () {
+		System.out.println("  A continuación están las opciones de modificación del Club:");
+		System.out.println("    1. Modificar Nombre del Club.");
+		System.out.println("    2. Modificar Estadio.");
+		System.out.println("    3. Modificar Camiseta.");
+		System.out.println("    4. Modificar Vestimenta del DT.");
+		System.out.println("    5. Regresar al Menú del Club.");
+		System.out.println("");
+		ingresarAOpcionModificacionClub();
+	}
+	
+	private void ingresarAOpcionModificacionClub() {
+		int opcion;
+		System.out.println("  Ingrese el número de opción deseada: ");
+		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
+		opcion = scanner.nextInt();
+		while (opcion<1 || opcion>5) {
+			System.out.println("  Por favor ingrese una opción correcta: ");
+			opcion = scanner.nextInt();
+		}
+		switch (opcion) {
+			case 1: //nombre del club
+				System.out.println("  Ingrese el nuevo Nombre del Club: ");
+				scanner.nextLine();
+				setNombre(Simulador.getScanner().nextLine());
+				Simulador.guardarArchivoUsuarios();
+				listadoOpcionesModificacionClub();
+				break;
+			case 2: //estadio
+				estadio.listadoOpcionesModificacionEstadio();
+				listadoOpcionesModificacionClub();
+				break;
+			case 3: //camiseta
+				System.out.println("  Ingrese la nueva Camiseta del Club: ");
+				scanner.nextLine();
+				setCamiseta(Simulador.getScanner().nextLine());
+				Simulador.guardarArchivoUsuarios();
+				listadoOpcionesModificacionClub();
+				break;
+			case 4: //vestimenta DT
+				dtClub.cambiarVestimenta();
+				Simulador.guardarArchivoUsuarios();
+				listadoOpcionesModificacionClub();
+				break;
+			default:
+				System.out.println("Regresando al Menú del Club.");
+		}
+	}
+
 	private void verPlantilla() {
 		if (this.dtClub.getEstado()) {
 			System.out.println("\n\nInformación del Director Técnico: ");
@@ -229,7 +288,7 @@ public class ClubUsuario implements IMenu, Serializable{
 	
 	@Override
 	public String toString() {
-		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n  Información del Estadio: " + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
+		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n" + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
 	}
 
 	public void setDT(DirectorTecnico nuevoDT) {
