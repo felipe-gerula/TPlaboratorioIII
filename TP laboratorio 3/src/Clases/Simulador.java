@@ -23,6 +23,7 @@ public class Simulador implements IMenu{
 	private static Mercado mercadoDePases;
 	private static ContenedorLigasEquipos listadoLigasEquipos;
 	private static Scanner scan;
+	private static String usuarioLogueado;
 	///TODO scan se crea en constructor y se destruye al salir
 	
 	/// * * * CONSTRUCTORES * * * ///
@@ -142,6 +143,24 @@ public class Simulador implements IMenu{
 		
 	}
 	
+	public static Equipo seleccionUsuarioRival() {
+		System.out.println(listadoUsuarios.listar());
+		System.out.println("\nIngrese el nombre del Usuario que quiere enfrentar: ");
+		scan.nextLine();
+		String nombreUsuarioAEnfrentar = scan.nextLine();
+		GestionUsuario usuarioAEnfrentar = listadoUsuarios.buscarElemento(new GestionUsuario(nombreUsuarioAEnfrentar));
+		if (usuarioAEnfrentar != null) {
+			if (!usuarioAEnfrentar.getNombre().equals(usuarioLogueado)) {
+				return new Equipo(usuarioAEnfrentar.getClubUsuario().getNombre(), usuarioAEnfrentar.getClubUsuario().getPlantillaClub(), usuarioAEnfrentar.getClubUsuario().getDTClub().getID());
+			} else {
+				System.out.println("\n Seleccioná un Usuario distinto al tuyo.");
+			}
+		} else {
+			System.out.println("\n Usuario no encontrado.");
+		}
+		return null;
+	}
+	
 	public void ingresarAOpcionUsuario() {
 		int opcion = 0; //TODO sacar inicialización
 		System.out.println("  Ingrese el número de opción deseada: ");
@@ -180,6 +199,7 @@ public class Simulador implements IMenu{
 				GestionUsuario usuarioRecibido = listadoUsuarios.buscarElemento(usuarioLeido);
 				if (usuarioRecibido != null){ ///TODO analizar uso de excepciones
 					if (usuarioRecibido.comparacionPassword()) {
+						usuarioLogueado = usuarioRecibido.getNombre();
 						if (usuarioRecibido.getClubUsuario() == null) {
 							usuarioRecibido.setClubUsuario(usuarioRecibido.crearClub());
 							guardarArchivoUsuarios();

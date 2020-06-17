@@ -1,5 +1,7 @@
 package Clases;
 
+import java.util.ArrayList;
+
 public class Equipo {
 	private String nombreEquipo;
 	private String nombreLiga;
@@ -11,6 +13,13 @@ public class Equipo {
 		this.nombreLiga = nombreLiga;
 		this.plantillaEquipo = new Plantilla();
 		this.DTEquipo = -1;
+	}
+	
+	public Equipo (String nombreEquipo, Plantilla plantillaClub, int dtClub) {
+		this.nombreEquipo = nombreEquipo;
+		this.plantillaEquipo = plantillaClub;
+		this.DTEquipo = dtClub;
+		this.nombreLiga = "";
 	}
 	
 	public String getNombreEquipo() {
@@ -46,7 +55,18 @@ public class Equipo {
 	}
 
 	public boolean hayEspacioParaDT() {
-		return this.DTEquipo == -1;
+		if (DTEquipo == -1) {
+			return true;
+		} else {
+			return !Simulador.getMercado().getListadoDTs().buscar(DTEquipo).getEstado();
+		}
+	}
+	
+	public boolean hayEspacioParaDTAdmin() {
+		if (DTEquipo == -1) {
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean jugadorYaCargado (String nombreApellidoRecibido) {
@@ -87,6 +107,14 @@ public class Equipo {
 		}
 		return false;
 	}
+
+	public double promedioJugadores() {
+		return plantillaEquipo.promedioJugadores(Simulador.getMercado().getListadoDTs().buscar(DTEquipo).getTipo());
+	}
+	
+	public ArrayList<Jugador> listado(){
+		return plantillaEquipo.listado();
+	}
 	
 	@Override
 	public String toString() {
@@ -103,6 +131,7 @@ public class Equipo {
 		}
 		return retorno.toString();
 	}
+
 
 	
 }

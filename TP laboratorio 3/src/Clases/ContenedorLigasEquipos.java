@@ -161,7 +161,15 @@ public class ContenedorLigasEquipos {
 		Collections.sort(nombresEquipos);
 		System.out.println("  Equipos disponibles: ");
 		for (int i=0; i<nombresEquipos.size(); i++){
-			System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".\n");
+			System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".");
+			if (auxB.get(nombresEquipos.get(i)).hayEspacioEnPlantilla()) {
+				System.out.println(" Equipo con menos de 11 jugadores.");
+			} else {
+				System.out.println(" Equipo con 11 jugadores.");
+			}
+			if (auxB.get(nombresEquipos.get(i)).hayEspacioParaDT()) {
+				System.out.println(" Equipo sin Director Técnico.\n");
+			}
 		}
 		System.out.println("  Ingrese la opción que desea utilizar: ");
 		opcion = Simulador.getScanner().nextInt();

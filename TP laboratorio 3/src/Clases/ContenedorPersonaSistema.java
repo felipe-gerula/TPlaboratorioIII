@@ -56,7 +56,10 @@ public class ContenedorPersonaSistema <V extends PersonaSistema>{
 		while (iterator.hasNext()) {
 			V actual = iterator.next();
 			if (actual != null) {
-				retorno.append(actual.toString() + "\n");
+				retorno.append("\nNombre: " + actual.getNombre() + ".");
+				if (actual instanceof GestionUsuario) {
+					retorno.append("\n  Club: " + ((GestionUsuario) actual).getClubUsuario().getNombre() + ".\n");
+				}
 			}
 		}
 		return retorno.toString();

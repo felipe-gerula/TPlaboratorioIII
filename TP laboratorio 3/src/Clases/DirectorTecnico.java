@@ -38,7 +38,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		System.out.println("  Ingrese el nombre y apellido del DT:");
 		String nombreDT = Simulador.getScanner().nextLine().toUpperCase();
 		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
-		if (equipoSeleccionado.hayEspacioParaDT()) {
+		if (equipoSeleccionado.hayEspacioParaDTAdmin()) {
 				System.out.println("  Ingrese la nacionalidad del DT:");
 				String nacionalidadDT = Simulador.getScanner().nextLine().toUpperCase();
 				System.out.println("  Ingrese la edad del DT:");

@@ -1,4 +1,5 @@
 package Clases;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import comparaciones.ComparacionID;
 import comparaciones.ComparacionPosicion;
 
 public class Plantilla implements Serializable{
@@ -163,8 +165,40 @@ public class Plantilla implements Serializable{
 		return listadoJugadores.size(); //TODO programar método
 	}
 	
-	public double promedioJugadores() {
-		return 0.00; //TODO programar método
+	public int cantidadJugadoresValidos() {
+		int retorno = 0;
+		Iterator<Integer> it = listadoJugadores.iterator();
+		while (it.hasNext()) {
+			if (Simulador.getMercado().getListadoJugadores().buscar(it.next()).getEstado()) {
+				retorno++;
+			}
+		}
+		return retorno;
+	}
+	
+	/**
+	 * @param calidadDT: Tipo del DT del equipo o club
+	 * @return Promedio de calificaciones + 0.5 * cantidad Jugadores Especiales + 0.3 si el DT es de PLATA || 0.5 si es de ORO
+	 */
+	public double promedioJugadores(String calidadDT) {
+		double suma = 0;
+		Iterator<Integer> it = listadoJugadores.iterator();
+		Jugador aux;
+		while (it.hasNext()) {
+			aux = Simulador.getMercado().getListadoJugadores().buscar(it.next());
+			suma += (aux.getCalificacion());
+			if (aux.getTipo().equals("ESPECIAL")) {
+				suma += 0.5;
+			}
+		}
+		if (calidadDT.equals("PLATA")) {
+			suma += 0.3;
+		} else {
+			if (calidadDT.equals("ORO")) {
+				suma += 0.5;
+			}
+		}
+		return (suma/listadoJugadores.size());
 	}
 	
 	public boolean jugadorEncontrado(int idBuscado) {
@@ -244,6 +278,12 @@ public class Plantilla implements Serializable{
 			return true;
 		}
 		return false;
+	}
+
+	public Jugador getJugador(int jugX) {
+		ArrayList<Jugador> aux = listado();
+		Collections.sort(aux, new ComparacionID());
+		return aux.get(jugX);
 	}
 	
 	@Override

@@ -26,6 +26,7 @@ public class ClubUsuario implements IMenu, Serializable{
 	public double getFondos() {
 		return fondos;
 	}
+	
 	public void setFondos(double fondos) {
 		this.fondos = fondos;
 	}
@@ -70,8 +71,9 @@ public class ClubUsuario implements IMenu, Serializable{
 		return plantillaClub.jugadorEncontrado(idBuscado);
 	}
 	
-	public double jugarPartido () {
-		return (Double)0.00; //TODO programar método
+	public void jugarPartido () {
+		Partido partido = new Partido();
+		partido.listadoOpcionesJugarPartido(this);
 	}
 	
 	@Override
@@ -186,7 +188,7 @@ public class ClubUsuario implements IMenu, Serializable{
 
 	@Override
 	public void ingresarAOpcion() {
-		int opcion = 0; //TODO sacar inicialización
+		int opcion;
 		System.out.println("  Ingrese el número de opción deseada: ");
 		opcion = Simulador.getScanner().nextInt();
 		while (opcion<1 || opcion>6) {
@@ -199,7 +201,7 @@ public class ClubUsuario implements IMenu, Serializable{
 				listadoOpciones();
 				break;
 			case 2:
-				//jugar partido;
+				jugarPartido();
 				listadoOpciones();
 				break;
 			case 3:
