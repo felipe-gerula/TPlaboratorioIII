@@ -18,7 +18,7 @@ import comparaciones.ComparacionPosicion;
 
 public class Plantilla implements Serializable{
 	private static final long serialVersionUID = 3139014270633585868L;
-	private HashSet<Integer> listadoJugadores; ///TODO capaz que conviene que sea arreglo o arreglo JSON
+	private HashSet<Integer> listadoJugadores;
 	private int cantidadPorteros;
 	private int cantidadDefensores;
 	private int cantidadMediocampistas;
@@ -161,8 +161,19 @@ public class Plantilla implements Serializable{
 		}
 	}
 	
-	public int cantidadJugadores() {
-		return listadoJugadores.size(); //TODO programar método
+	public int cantidadJugadores(boolean ingresoAdmin) {
+		if (ingresoAdmin) {
+			return listadoJugadores.size();
+		} else {
+			int i=0;
+			Iterator<Integer> it = listadoJugadores.iterator();
+			while (it.hasNext()) {
+				if (Simulador.getMercado().getListadoJugadores().buscar((int)it.next()).getEstado()) {
+					i++;
+				}
+			}
+			return i;
+		}
 	}
 	
 	public int cantidadJugadoresValidos() {
@@ -196,6 +207,10 @@ public class Plantilla implements Serializable{
 		} else {
 			if (calidadDT.equals("ORO")) {
 				suma += 0.5;
+			} else {
+				if (calidadDT.equals("ESPECIAL")) {
+					suma += 1;
+				}
 			}
 		}
 		return (suma/listadoJugadores.size());
@@ -221,12 +236,18 @@ public class Plantilla implements Serializable{
 		return retorno;
 	}
 
-	private String listadoJugadores() {
+	public String listadoJugadores(boolean ingresoAdmin) {
 		ArrayList<Jugador> lista = listado();
 		Collections.sort(lista, new ComparacionPosicion());
 		StringBuilder retorno = new StringBuilder();
 		for (int i=0; i<lista.size(); i++) {
-			retorno.append(lista.get(i) + "\n\n");
+			if (ingresoAdmin) {
+				retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+			} else {
+				if (lista.get(i).getEstado()) {
+					retorno.append(lista.get(i).toString() + "\n\n");
+				}
+			}
 		}
 		return retorno.toString();
 	}
@@ -284,10 +305,5 @@ public class Plantilla implements Serializable{
 		ArrayList<Jugador> aux = listado();
 		Collections.sort(aux, new ComparacionID());
 		return aux.get(jugX);
-	}
-	
-	@Override
-	public String toString() {
-		return listadoJugadores();
 	}
 }

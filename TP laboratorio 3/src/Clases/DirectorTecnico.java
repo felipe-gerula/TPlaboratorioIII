@@ -1,8 +1,5 @@
 package Clases;
 
-import java.util.ArrayList;
-//import java.util.Collections;
-
 /** 
  *  Esta clase nos permite crear objetos de tipo DirectorTecnico
  *  @author 
@@ -26,10 +23,15 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	public DirectorTecnico(DirectorTecnico dtRecibido) { //Constructor por copia. No se suma otro DT a la cantidad total
 		super(dtRecibido.getNombre(), dtRecibido.getClub(), dtRecibido.getLiga(), dtRecibido.getNacionalidad(), dtRecibido.getEdad(), dtRecibido.getTipo(), dtRecibido.getPrecio(), dtRecibido.getID());
 		this.vestimentaEquipada = new Vestimenta();
+		this.vestimentaEquipada.setVestimenta(dtRecibido.getVestimenta().getPrendaSuperior(), dtRecibido.getVestimenta().getPrendaInferior());
 	}
 
 	public static int getCantidadDTs() {
 		return cantidadTecnicos;
+	}
+	
+	public Vestimenta getVestimenta() {
+		return this.vestimentaEquipada;
 	}
 
 	public DirectorTecnico crearDirectorTecnico() {
@@ -42,11 +44,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 				System.out.println("  Ingrese la nacionalidad del DT:");
 				String nacionalidadDT = Simulador.getScanner().nextLine().toUpperCase();
 				System.out.println("  Ingrese la edad del DT:");
-				int edadDT = Simulador.getScanner().nextInt();
-				while (edadDT<35 || edadDT>75) {
-					System.out.println("  Por favor ingrese una edad correcta (entre 35 y 75): ");
-					edadDT = Simulador.getScanner().nextInt();
-				}
+				int edadDT = Simulador.ingresoOpcion(35, 75);
 				Simulador.getScanner().nextLine();
 				String calidadDT = seleccionDeCalidad();
 				double precioDT = seleccionDePrecio(calidadDT);
@@ -62,38 +60,22 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	public double seleccionDePrecio(String calidadDT) {
 		double retorno;
 		if (calidadDT.equals("BRONCE")) {
-			System.out.println(" Ingrese un precio entre $200 y $700.");
-			retorno = Simulador.getScanner().nextDouble();
-			while (retorno<200 || retorno>700) {
-				System.out.println("  Por favor ingrese un precio correcto (entre $200 y $700): ");
-				retorno = Simulador.getScanner().nextDouble();
-			}
+			System.out.println(" Ingreso de precio:\n");
+			retorno = Simulador.ingresoOpcion(200, 700);
 			return retorno;
 		} else {
 			if (calidadDT.equals("PLATA")) {
-				System.out.println(" Ingrese un precio entre $400 y $2000.");
-				retorno = Simulador.getScanner().nextDouble();
-				while (retorno<400 || retorno>2000) {
-					System.out.println("  Por favor ingrese un precio correcto (entre $400 y $2000): ");
-					retorno = Simulador.getScanner().nextDouble();
-				}
+				System.out.println(" Ingreso de precio:\n");
+				retorno = Simulador.ingresoOpcion(400, 2000);
 				return retorno;
 			} else {
 				if (calidadDT.contentEquals("ORO")) {
-					System.out.println(" Ingrese un precio entre $700 y $5000.");
-					retorno = Simulador.getScanner().nextDouble();
-					while (retorno<700 || retorno>5000) {
-						System.out.println("  Por favor ingrese un precio correcto (entre $700 y $5000): ");
-						retorno = Simulador.getScanner().nextDouble();
-					}
+					System.out.println(" Ingreso de precio:\n");
+					retorno = Simulador.ingresoOpcion(700, 5000);
 					return retorno;
 				} else {
-					System.out.println(" Ingrese un precio entre $6000 y $20000.");
-					retorno = Simulador.getScanner().nextDouble();
-					while (retorno<6000 || retorno>20000) {
-						System.out.println("  Por favor ingrese un precio correcto (entre $6000 y $20000): ");
-						retorno = Simulador.getScanner().nextDouble();
-					}
+					System.out.println(" Ingreso de precio:\n");
+					retorno = Simulador.ingresoOpcion(6000, 20000);
 					return retorno;
 				}
 			}
@@ -107,11 +89,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		System.out.println("    3. ORO.");
 		System.out.println("    4. ESPECIAL.");
 		System.out.println("  Ingrese la posición deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>4) {
-			System.out.println("  Por favor ingrese una opción correcta (entre 1 y 4): ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 4);
 		switch (opcion) {
 			case 1:
 				return "BRONCE";
@@ -125,98 +103,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	}
 	
 	public void cambiarVestimenta() {
-		int opcion;
-		String opcionSuperior = "";
-		String opcionInferior = "";
-		System.out.println("\n\nOpciones de vestimenta: " /*+ nombreAdmin*/);
-		System.out.println("  Parte superior:");
-		System.out.println("    1. Saco negro.");
-		System.out.println("    2. Saco azul.");
-		System.out.println("    3. Camperón Club.");
-		System.out.println("    4. Sweater gris.");
-		System.out.println("    5. Remera color club.");
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>5) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
-		switch (opcion) {
-			case 1:
-				opcionSuperior = "Saco negro";
-				break;
-			case 2:
-				opcionSuperior = "Saco azul";
-				break;
-			case 3:
-				opcionSuperior = "Camperón Club";
-				break;
-			case 4:
-				opcionSuperior = "Sweater gris";
-				break;
-			case 5:
-				opcionSuperior = "Remera color club";
-				break;
-		}
-		System.out.println("  Parte inferior:");
-		System.out.println("    1. Pantalón de vestir negro.");
-		System.out.println("    2. Pantalón de vestir azul.");
-		System.out.println("    3. Jogging Club.");
-		System.out.println("    4. Pantalón de vestir gris.");
-		System.out.println("    5. Pantalón corto color club.");
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>5) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
-		switch (opcion) {
-			case 1:
-				opcionInferior = "Pantalón de vestir negro";
-				break;
-			case 2:
-				opcionInferior = "Pantalón de vestir azul";
-				break;
-			case 3:
-				opcionInferior = "Jogging Club";
-				break;
-			case 4:
-				opcionInferior = "Pantalón de vestir gris";
-				break;
-			case 5:
-				opcionInferior = "Pantalón corto color club";
-				break;
-		}
-		this.vestimentaEquipada.setVestimenta(opcionSuperior, opcionInferior);
-	}
-	
-	public static String opcionesListado (ArrayList<DirectorTecnico> listadoDTs) {
-		System.out.println("  A continuación están los criterios de ordenación:");
-		System.out.println("    1. Por nombre.");
-		System.out.println("    2. Por liga.");
-		System.out.println("    3. Por club.");
-		System.out.println("    4. Por tipo.");
-		System.out.println("    5. Por precio.");
-		System.out.println("");
-		return ingresarAOpcionesListado(listadoDTs);
-	}
-	
-	public static String ingresarAOpcionesListado(ArrayList<DirectorTecnico> listadoDTs) {
-		System.out.println("  Ingrese el número de opción deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>5) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
-		switch (opcion) {
-			case 1: //Por nombre
-				//Collections.sort(listadoDTs);
-				break;
-			default:
-				System.out.println("Gracias por usar el Listado.");
-				break;
-		}
-		return listadoDTs.toString();
+		vestimentaEquipada.cambiarVestimenta();
 	}
 	
 	public static void setCantidadDTs(int cantidad) {
@@ -249,13 +136,5 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	public String toString() {
 		return super.toString() + vestimentaEquipada.toString() + "\n ID: " + super.getID() + ".";
 	}
-
-	
-
-	/*@Override
-	public int compareTo(Object o) {
-		DirectorTecnico recibido = (DirectorTecnico)o;
-		return recibido.getNombre().compareTo(this.getNombre());
-	}*/
 	
 }

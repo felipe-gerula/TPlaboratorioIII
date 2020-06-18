@@ -109,6 +109,7 @@ public class ClubUsuario implements IMenu, Serializable{
 				System.out.println("  El jugador " + jugAux.getNombre() + " fue dado de baja por el Administrador. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 				retorno += jugAux.getPrecio();
 				plantillaClub.eliminarJugador(jugAux.getID());
+				it = plantillaClub.getIterator(); //Si no lo reseteamos lanza ConcurrentModificationException. Reiniciamos el iterator sabiendo que la cantidad de elementos es poca (como mucho 11)
 			}
 		}
 		plantillaClub.sincronizarCantidadPosiciones();
@@ -188,13 +189,7 @@ public class ClubUsuario implements IMenu, Serializable{
 
 	@Override
 	public void ingresarAOpcion() {
-		int opcion;
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>6) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 6);
 		switch (opcion) {
 			case 1:
 				Simulador.getMercado().listadoOpcionesMercado(this);
@@ -235,14 +230,8 @@ public class ClubUsuario implements IMenu, Serializable{
 	}
 	
 	private void ingresarAOpcionModificacionClub() {
-		int opcion;
-		System.out.println("  Ingrese el número de opción deseada: ");
 		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
-		opcion = scanner.nextInt();
-		while (opcion<1 || opcion>5) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = scanner.nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 5);
 		switch (opcion) {
 			case 1: //nombre del club
 				System.out.println("  Ingrese el nuevo Nombre del Club: ");
@@ -280,7 +269,7 @@ public class ClubUsuario implements IMenu, Serializable{
 			System.out.println("\n\nNo hay un Director Técnico en el Club.");
 		}
 		System.out.println("\n\nInformación de Plantilla: ");
-		System.out.println(plantillaClub.toString());
+		System.out.println(plantillaClub.listadoJugadores(false));
 	}
 
 	@Override

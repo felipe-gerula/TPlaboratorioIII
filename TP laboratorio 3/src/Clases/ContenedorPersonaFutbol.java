@@ -36,10 +36,13 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	 * @return true si el listado está vacío, false si contiene al menos un válido
 	 * 
 	 */
-	public boolean estaVacio () {
+	public boolean estaVacio (boolean ingresoAdmin) {
 		if (listadoPersonaFutbol.isEmpty()) {
 			return true; //Si el listado está vacío
 		} else {
+			if (ingresoAdmin) { //Si el listado no está vacío, y se ingresó desde el Admin. No se tienen en cuenta los estados
+				return false;
+			}
 			Iterator<V> it = listadoPersonaFutbol.iterator();
 			while (it.hasNext()) {
 				if (it.next().getEstado() == true) {
@@ -87,7 +90,7 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		
 	}*/
 
-	public String opcionesListadoJugador() {
+	public String opcionesListadoJugador(boolean ingresoAdmin) {
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Ordenar por ID (menor a mayor).");
 		System.out.println("    2. Ordenar por Calificación (mayor a menor).");
@@ -97,65 +100,108 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		System.out.println("    6. Ordenar por Movimientos Hábiles (menor a mayor).");
 		System.out.println("    7. Ordenar por Edad (menor a mayor).");
 		System.out.println("    8. Ordenar por Nombre y Apellido.");
-		return ingresarAOpcionesListadoJugador();
+		return ingresarAOpcionesListadoJugador(ingresoAdmin);
 	}
 	
-	public String ingresarAOpcionesListadoJugador() {
-		System.out.println("  Ingrese el número de opción deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>8) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+	public String ingresarAOpcionesListadoJugador(boolean ingresoAdmin) {
+		int opcion = Simulador.ingresoOpcion(1, 8);
 		ArrayList<V> lista = listado();
 		StringBuilder retorno = new StringBuilder();
 		switch (opcion) {
 			case 1: //Ordenar por ID
 				Collections.sort(lista, new ComparacionID());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 2: //Ordenar por calificación
 				Collections.sort(lista, new ComparacionCalificacion());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 3: //Ordenar por tipo
 				Collections.sort(lista, new ComparacionTipo());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 4:
 				Collections.sort(lista, new ComparacionPosicion());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 5: //Ordenar por precio
 				Collections.sort(lista, new ComparacionPrecio());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 6: //Ordenar por movimientos hábiles
 				Collections.sort(lista, new ComparacionMovimientosHabiles());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 7: //Ordenar por edad
 				Collections.sort(lista, new ComparacionEdad());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 8: //Ordenar por nombre y apellido
 				Collections.sort(lista, new ComparacionNombre());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			default:
@@ -165,54 +211,79 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return "";
 	}
 	
-	public String opcionesListadoDT() {
+	public String opcionesListadoDT(boolean ingresoAdmin) {
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Ordenar por ID (menor a mayor).");
 		System.out.println("    2. Ordenar por Tipo.");
 		System.out.println("    3. Ordenar por Nombre y Apellido.");
 		System.out.println("    4. Ordenar por Edad (menor a mayor).");
 		System.out.println("    5. Ordenar por Precio (menor a mayor).");
-		return ingresarAOpcionesListadoDT();
+		return ingresarAOpcionesListadoDT(ingresoAdmin);
 	}
 	
-	public String ingresarAOpcionesListadoDT() {
-		System.out.println("  Ingrese el número de opción deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>5) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+	public String ingresarAOpcionesListadoDT(boolean ingresoAdmin) {
+		int opcion = Simulador.ingresoOpcion(1, 5);
 		ArrayList<V> lista = listado();
 		StringBuilder retorno = new StringBuilder();
 		switch (opcion) {
 			case 1: //Ordenar por ID
 				Collections.sort(lista, new ComparacionID());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 2: //Ordenar por calificación
 				Collections.sort(lista, new ComparacionTipo());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 3: //Ordenar por nombre y apellido
 				Collections.sort(lista, new ComparacionNombre());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 4: //Ordenar por edad
 				Collections.sort(lista, new ComparacionEdad());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			case 5: //Ordenar por precio
 				Collections.sort(lista, new ComparacionPrecio());
 				for (int i = 0; i < lista.size(); i++) {
-					retorno.append(lista.get(i).toString() + "\n\n");
+					if (ingresoAdmin) {
+						retorno.append(lista.get(i).toString() + "\n Estado: " + lista.get(i).getEstado() + "\n\n");
+					} else {
+						if (lista.get(i).getEstado()) {
+							retorno.append(lista.get(i).toString() + "\n\n");
+						}
+					}
 				}
 				return retorno.toString();
 			default:

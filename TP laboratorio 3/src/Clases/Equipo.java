@@ -50,8 +50,8 @@ public class Equipo {
 		this.DTEquipo = -1;
 	}
 	
-	public boolean hayEspacioEnPlantilla () {
-		return plantillaEquipo.cantidadJugadores()<11;
+	public boolean hayEspacioEnPlantilla (boolean ingresoAdmin) {
+		return plantillaEquipo.cantidadJugadores(ingresoAdmin)<11;
 	}
 
 	public boolean hayEspacioParaDT() {
@@ -116,16 +116,27 @@ public class Equipo {
 		return plantillaEquipo.listado();
 	}
 	
-	@Override
-	public String toString() {
+	public String toString(boolean ingresoAdmin) {
 		StringBuilder retorno = new StringBuilder();
 		if (DTEquipo != -1) {
-			retorno.append("\n\nInformación del Director Técnico: \n" + Simulador.getMercado().getListadoDTs().buscar(DTEquipo).toString());
+			if (ingresoAdmin) {
+				retorno.append("\n\nInformación del Director Técnico: \n" + Simulador.getMercado().getListadoDTs().buscar(DTEquipo).toString() + "\n Estado: " + Simulador.getMercado().getListadoDTs().buscar(DTEquipo).getEstado());
+			} else {
+				if (Simulador.getMercado().getListadoDTs().buscar(DTEquipo).getEstado()) {
+					retorno.append("\n\nInformación del Director Técnico: \n" + Simulador.getMercado().getListadoDTs().buscar(DTEquipo).toString());
+				}
+			}
 		} else {
 			retorno.append("\n\nNo hay un Director Técnico en el Equipo.");
 		}
 		if (!plantillaEquipo.plantillaVacia()) {
-			retorno.append("\n\nInformación de Plantilla: \n" + plantillaEquipo.toString());
+			if (ingresoAdmin) {
+				retorno.append("\n\nInformación de Plantilla: \n" + plantillaEquipo.listadoJugadores(ingresoAdmin));
+			} else {
+				if (plantillaEquipo.cantidadJugadoresValidos()>0) {
+					retorno.append("\n\nInformación de Plantilla: \n" + plantillaEquipo.listadoJugadores(ingresoAdmin));
+				}
+			}
 		} else {
 			retorno.append("\n\nNo hay Jugadores en el Equipo.");
 		}

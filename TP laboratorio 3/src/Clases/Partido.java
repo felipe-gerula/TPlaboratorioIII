@@ -11,7 +11,7 @@ public class Partido {
 	
 	///Pide liga y equipo a enfrentar. Si los encuentra y los equipos cuentan con 11 jugadores, recibe las monedas ganadas y las cambia en el club.
 	public void listadoOpcionesJugarPartido (ClubUsuario clubRecibido){
-	    int validosJugador = clubRecibido.getPlantillaClub().cantidadJugadores();
+	    int validosJugador = clubRecibido.getPlantillaClub().cantidadJugadores(false);
 	    if (validosJugador == 11) {
 	    	if (clubRecibido.getDTClub().getEstado()) {
 	    		System.out.println("  A continuación están las opciones:");
@@ -29,16 +29,10 @@ public class Partido {
 	}
 	
 	public void ingresarAOpcionJugarPartido (ClubUsuario clubRecibido){
-		int opcion;
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>3) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 3);
 		switch (opcion) {
 			case 1:
-				jugarPartido(clubRecibido, Simulador.getListadoLigasEquipos().listarLigasEquipos());
+				jugarPartido(clubRecibido, Simulador.getListadoLigasEquipos().listarLigasEquipos(false));
 				System.out.println("Regresando al menú de Club.");
 				break;
 			case 2:
@@ -55,7 +49,7 @@ public class Partido {
 	}
 
 	private void jugarPartido(ClubUsuario clubRecibido, Equipo equipoRival) {
-	    if (!equipoRival.hayEspacioEnPlantilla()) {
+	    if (!equipoRival.hayEspacioEnPlantilla(false)) {
 	    	if (!equipoRival.hayEspacioParaDT()) {
 	                System.out.println("\n   Todo correcto ¡A jugar!\n\n    ");
 	                int resultado = resultadoPartido(clubRecibido.getPlantillaClub().promedioJugadores(clubRecibido.getDTClub().getTipo()), equipoRival.promedioJugadores());
@@ -79,8 +73,8 @@ public class Partido {
 	    double x;
 	    int resultado;
 	    if (diferencia > 0){
-	        if (diferencia>26){
-	            diferencia = 26; ///Seteamos un tope de diferencia del 26%, que viene dado por el 20% + 11*0.5 (jug especiales) + 0.5 (DT ORO)
+	        if (diferencia>26.5){
+	            diferencia = 26.5; ///Seteamos un tope de diferencia del 26.5%, que viene dado por el 20% + 11*0.5 (jug especiales) + 1 (DT ESPECIAL)
 	        }
 	        x = (Math.random() * 100) + 1;
 	        if (x <= 50 + diferencia){
@@ -94,8 +88,8 @@ public class Partido {
 	        }
 	    } else { ///No tomamos valor absoluto porque tomamos dos casos, según quién tenga el mayor promedio
 	        diferencia = promedioRival - promedioUsuario;
-	        if (diferencia>26){
-	            diferencia = 26; ///Seteamos un tope de diferencia del 26%, que viene dado por el 20% + 11*0.5 (jug especiales) + 0.5 (DT ORO)
+	        if (diferencia>26.5){
+	        	diferencia = 26.5; ///Seteamos un tope de diferencia del 26.5%, que viene dado por el 20% + 11*0.5 (jug especiales) + 1 (DT ESPECIAL)
 	        }
 	        x = (Math.random() * 100) + 1;
 	        if (x<=50+diferencia){

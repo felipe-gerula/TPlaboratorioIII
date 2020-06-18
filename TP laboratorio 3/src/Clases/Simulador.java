@@ -24,7 +24,6 @@ public class Simulador implements IMenu{
 	private static ContenedorLigasEquipos listadoLigasEquipos;
 	private static Scanner scan;
 	private static String usuarioLogueado;
-	///TODO scan se crea en constructor y se destruye al salir
 	
 	/// * * * CONSTRUCTORES * * * ///
 	public Simulador() {
@@ -91,6 +90,17 @@ public class Simulador implements IMenu{
 		archivoDTs.guardar(mercadoDePases.getListadoDTs());
 	}
 	
+	public static int ingresoOpcion (int i, int j) {
+		int opcion;
+		System.out.println("  Ingrese un valor entre " + i + " y " + j + ": ");
+		opcion = scan.nextInt();
+		while (opcion<i || opcion>j) {
+			System.out.println("  Por favor ingrese un valor correcto (entre " + i + " y " + j + "): ");
+			opcion = scan.nextInt();
+		}
+		return opcion;
+	}
+	
 	@Override
 	public void listadoOpciones() {
 		System.out.println("Bienvenido al Simulador de Mercado de FIFA 20.");
@@ -104,13 +114,7 @@ public class Simulador implements IMenu{
 
 	@Override
 	public void ingresarAOpcion() {
-		int opcion; //TODO sacar inicialización
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = scan.nextInt();
-		while (opcion<1 || opcion>3) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = scan.nextInt();
-		}
+		int opcion = ingresoOpcion(1, 3);
 		switch (opcion) {
 			case 1:
 				listadoOpcionesUsuario();
@@ -140,7 +144,6 @@ public class Simulador implements IMenu{
 		System.out.println("    3. Salir.");
 		System.out.println("");
 		ingresarAOpcionUsuario();
-		
 	}
 	
 	public static Equipo seleccionUsuarioRival() {
@@ -162,13 +165,7 @@ public class Simulador implements IMenu{
 	}
 	
 	public void ingresarAOpcionUsuario() {
-		int opcion = 0; //TODO sacar inicialización
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = scan.nextInt();
-		while (opcion<1 || opcion>3) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = scan.nextInt();
-		}
+		int opcion = ingresoOpcion(1, 3);
 		switch (opcion) {
 			case 1:
 				GestionUsuario nuevoUsuario = new GestionUsuario();
@@ -208,12 +205,7 @@ public class Simulador implements IMenu{
 						System.out.println("    1. Ingresar a club.");
 						System.out.println("    2. Cambiar nombre de usuario.");
 						System.out.println("    3. Cambiar contraseña de usuario.");
-						System.out.println("  Ingrese el número de opción deseada: ");
-						opcion = scan.nextInt();
-						while (opcion<1 || opcion>3) {
-							System.out.println("  Por favor ingrese una opción correcta: ");
-							opcion = scan.nextInt();
-						}
+						opcion = ingresoOpcion(1, 3);
 						switch (opcion) {
 							case 1:
 								usuarioRecibido.getClubUsuario().listadoOpciones();
@@ -250,15 +242,9 @@ public class Simulador implements IMenu{
 	}
 	
 	public void ingresarAOpcionAdministrador() {
-		int opcion = 0; //TODO sacar inicialización
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = scan.nextInt();
-		while (opcion<1 || opcion>3) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = scan.nextInt();
-		}
+		int opcion = ingresoOpcion (1, 3);
 		switch (opcion) {
-			case 1: //TODO pedir contraseña de creación para evitar que cualquiera cree admins
+			case 1:
 				if (GestionAdministrador.comparacionPasswordCreacionAdmin()) {
 					GestionAdministrador nuevoAdministrador =  new GestionAdministrador();
 					nuevoAdministrador = (GestionAdministrador)nuevoAdministrador.crearPersona();

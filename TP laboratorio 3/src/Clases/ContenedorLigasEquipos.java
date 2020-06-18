@@ -78,11 +78,7 @@ public class ContenedorLigasEquipos {
 		}
 		System.out.println((nombresLigas.size()+1) + ". Agregar liga.");
 		System.out.println("  Ingrese la opción que desea utilizar: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<0 || opcion>(nombresLigas.size()+1)) {
-			System.out.println("  Por favor ingrese una opción correcta (entre 0 y " + (nombresLigas.size()+1) + "): ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(0, nombresLigas.size()+1);
 		if (opcion == (nombresLigas.size()+1)) { //Opción de agregar liga
 			System.out.println("  Eligió la opción de agregar una liga.\n");
 			System.out.println("  Ingrese el nombre de la nueva liga: ");
@@ -109,12 +105,7 @@ public class ContenedorLigasEquipos {
 				System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".\n");
 			}
 			System.out.println((nombresEquipos.size()+1) + ". Agregar equipo.");
-			System.out.println("  Ingrese la opción que desea utilizar: ");
-			int opcion2 = Simulador.getScanner().nextInt();
-			while (opcion2<0 || opcion2>(nombresEquipos.size()+1)) {
-				System.out.println("  Por favor ingrese una opción correcta (entre 0 y " + (nombresEquipos.size()+1) + "): ");
-				opcion2 = Simulador.getScanner().nextInt();
-			}
+			int opcion2 = Simulador.ingresoOpcion(0, nombresEquipos.size()+1);
 			if (opcion2 == (nombresEquipos.size()+1)) { //Opción de agregar equipo
 				System.out.println("  Eligió la opción de agregar un equipo.\n");
 				Simulador.getScanner().nextLine();
@@ -127,10 +118,9 @@ public class ContenedorLigasEquipos {
 				return auxB.get(nombresEquipos.get(opcion2-1));
 			}
 		}
-		
 	}
 	
-	public Equipo listarLigasEquipos () {
+	public Equipo listarLigasEquipos (boolean ingresoAdmin) {
 		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
 		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
 		ArrayList<String> nombresLigas = new ArrayList<>();
@@ -143,12 +133,7 @@ public class ContenedorLigasEquipos {
 		for (int i=0; i<nombresLigas.size(); i++){
 			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
 		}
-		System.out.println("  Ingrese la opción que desea utilizar: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>(nombresLigas.size())) {
-			System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (nombresLigas.size()) + "): ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(0, nombresLigas.size());
 		HashMap<String, Equipo> auxB = hashMapLigasEquipos.get(nombresLigas.get(opcion-1)); //Usamos la opción como índice para buscar la clave
 		System.out.println("Equipos de la Liga " + nombresLigas.get(opcion-1) + ": \n");
 		ArrayList<String> nombresEquipos = new ArrayList<>();
@@ -162,21 +147,16 @@ public class ContenedorLigasEquipos {
 		System.out.println("  Equipos disponibles: ");
 		for (int i=0; i<nombresEquipos.size(); i++){
 			System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".");
-			if (auxB.get(nombresEquipos.get(i)).hayEspacioEnPlantilla()) {
+			if (auxB.get(nombresEquipos.get(i)).hayEspacioEnPlantilla(ingresoAdmin)) {
 				System.out.println(" Equipo con menos de 11 jugadores.");
 			} else {
 				System.out.println(" Equipo con 11 jugadores.");
 			}
-			if (auxB.get(nombresEquipos.get(i)).hayEspacioParaDT()) {
+			if (auxB.get(nombresEquipos.get(i)).hayEspacioParaDT() && !ingresoAdmin) {
 				System.out.println(" Equipo sin Director Técnico.\n");
 			}
 		}
-		System.out.println("  Ingrese la opción que desea utilizar: ");
-		opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>(nombresEquipos.size())) {
-			System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (nombresEquipos.size()) + "): ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		opcion = Simulador.ingresoOpcion(0, nombresEquipos.size());
 		Simulador.getScanner().nextLine();
 		return auxB.get(nombresEquipos.get(opcion-1));
 	}
@@ -199,22 +179,4 @@ public class ContenedorLigasEquipos {
 		}
 		return retorno.toString();
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,5 @@
 package Clases;
 
-import java.util.ArrayList;
-/*import java.util.Collections;*/
-
 /** 
  *  Esta clase nos permite crear objetos de tipo Jugador
  *  @see "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/> JugadorFIFA 20</a>
@@ -94,7 +91,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		System.out.println("  Ingrese el nombre y apellido del Jugador:");
 		String nombreJugador = Simulador.getScanner().nextLine().toUpperCase();
 		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
-		if (equipoSeleccionado.hayEspacioEnPlantilla()) {
+		if (equipoSeleccionado.hayEspacioEnPlantilla(true)) {
 			if (!equipoSeleccionado.jugadorYaCargado(nombreJugador)) {
 				System.out.println("  Ingrese la posición del Jugador:");
 				String posicionJugador = seleccionDePosicion();
@@ -102,18 +99,10 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 					Simulador.getScanner().nextLine();
 					System.out.println("  Ingrese la nacionalidad del Jugador:");
 					String nacionalidadJugador = Simulador.getScanner().nextLine().toUpperCase();
-					System.out.println("  Ingrese la edad del Jugador:");
-					int edadJugador = Simulador.getScanner().nextInt();
-					while (edadJugador<15 || edadJugador>40) {
-						System.out.println("  Por favor ingrese una edad correcta (entre 15 y 40): ");
-						edadJugador = Simulador.getScanner().nextInt();
-					}
-					System.out.println("  Ingrese la calificación del Jugador:");
-					int calificacionJugador = Simulador.getScanner().nextInt();
-					while (calificacionJugador<49 || calificacionJugador>99) {
-						System.out.println("  Por favor ingrese una calificación correcta (entre 49 y 99): ");
-						calificacionJugador = Simulador.getScanner().nextInt();
-					}
+					System.out.println("  Ingreso de edad del Jugador:");
+					int edadJugador = Simulador.ingresoOpcion(15, 40);
+					System.out.println("  Ingreso de calificación del Jugador:");
+					int calificacionJugador = Simulador.ingresoOpcion(49, 99);
 					String calidadJugador = seleccionDeCalidad(calificacionJugador);
 					System.out.println("  Ingrese el pie hábil del Jugador (i/d):");
 					char pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
@@ -128,12 +117,8 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 							pieHabilJugador = 'D';
 						}
 					}
-					System.out.println("  Ingrese el nivel de movimientos hábiles del Jugador (1-5):");
-					int movHabilesJugador = Simulador.getScanner().nextInt();
-					while (movHabilesJugador<1 || movHabilesJugador>5) {
-						System.out.println("  Por favor ingrese un nivel de movimientos hábiles correcto (entre 1 y 5): ");
-						movHabilesJugador = Simulador.getScanner().nextInt();
-					}
+					System.out.println("  Ingreso del nivel de movimientos hábiles del Jugador:");
+					int movHabilesJugador = Simulador.ingresoOpcion(1, 5);
 					Simulador.getScanner().nextLine();
 					double precioJugador = seleccionDePrecio(calificacionJugador, calidadJugador);
 					Jugador nuevoJugador = new Jugador(nombreJugador, equipoSeleccionado.getNombreEquipo(), equipoSeleccionado.getNombreLiga(), nacionalidadJugador, edadJugador, calidadJugador, precioJugador, calificacionJugador, pieHabilJugador, movHabilesJugador, posicionJugador);
@@ -155,68 +140,40 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		double retorno;
 		if (calificacionJugador<65) {
 			if (calidadJugador.equals("ESPECIAL")) { //Bronce especial
-				System.out.println(" Ingrese un precio entre $1200 y $3000.");
-				retorno = Simulador.getScanner().nextDouble();
-				while (retorno<1200 || retorno>3000) {
-					System.out.println("  Por favor ingrese un precio correcto (entre $1200 y $3000): ");
-					retorno = Simulador.getScanner().nextDouble();
-				}
+				System.out.println(" Ingreso de precio: ");
+				retorno = Simulador.ingresoOpcion(1200, 3000);
 				return retorno;
 			} else { //Bronce normal
-				System.out.println(" Ingrese un precio entre $200 y $2000.");
-				retorno = Simulador.getScanner().nextDouble();
-				while (retorno<200 || retorno>2000) {
-					System.out.println("  Por favor ingrese un precio correcto (entre $200 y $2000): ");
-					retorno = Simulador.getScanner().nextDouble();
-				}
+				System.out.println(" Ingreso de precio: ");
+				retorno = Simulador.ingresoOpcion(200, 2000);
 				return retorno;
 			}
 		} else {
 			if (calificacionJugador<75) {
 				if (calidadJugador.equals("ESPECIAL")) { //Plata especial
-					System.out.println(" Ingrese un precio entre $2400 y $7000.");
-					retorno = Simulador.getScanner().nextDouble();
-					while (retorno<2400 || retorno>7000) {
-						System.out.println("  Por favor ingrese un precio correcto (entre $2400 y $7000): ");
-						retorno = Simulador.getScanner().nextDouble();
-					}
+					System.out.println(" Ingreso de precio: ");
+					retorno = Simulador.ingresoOpcion(2400, 7000);
 					return retorno;
 				} else { //Plata normal
-					System.out.println(" Ingrese un precio entre $400 y $5000.");
-					retorno = Simulador.getScanner().nextDouble();
-					while (retorno<400 || retorno>5000) {
-						System.out.println("  Por favor ingrese un precio correcto (entre $400 y $5000): ");
-						retorno = Simulador.getScanner().nextDouble();
-					}
+					System.out.println(" Ingreso de precio: ");
+					retorno = Simulador.ingresoOpcion(400, 5000);
 					return retorno;
 				}
 			} else {
 				if (calificacionJugador<85) {
 					if (calidadJugador.equals("ESPECIAL")) { //Oro especial <85
-						System.out.println(" Ingrese un precio entre $3700 y $13000.");
-						retorno = Simulador.getScanner().nextDouble();
-						while (retorno<3700 || retorno>13000) {
-							System.out.println("  Por favor ingrese un precio correcto (entre $3700 y $13000): ");
-							retorno = Simulador.getScanner().nextDouble();
-						}
+						System.out.println(" Ingreso de precio: ");
+						retorno = Simulador.ingresoOpcion(3700, 13000);
 						return retorno;
 					} else { //Oro normal <85
-						System.out.println(" Ingrese un precio entre $700 y $10000.");
-						retorno = Simulador.getScanner().nextDouble();
-						while (retorno<700 || retorno>10000) {
-							System.out.println("  Por favor ingrese un precio correcto (entre $700 y $10000): ");
-							retorno = Simulador.getScanner().nextDouble();
-						}
+						System.out.println(" Ingreso de precio: ");
+						retorno = Simulador.ingresoOpcion(700, 10000);
 						return retorno;
 					}
 			} else {
 					//Oro especial >85
-					System.out.println(" Ingrese un precio entre $15000 y $100000.");
-					retorno = Simulador.getScanner().nextDouble();
-					while (retorno<15000 || retorno>100000) {
-						System.out.println("  Por favor ingrese un precio correcto (entre $15000 y $100000): ");
-						retorno = Simulador.getScanner().nextDouble();
-					}
+				System.out.println(" Ingreso de precio: ");
+				retorno = Simulador.ingresoOpcion(15000, 100000);
 					return retorno;
 				}
 			}
@@ -257,11 +214,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		System.out.println("    3. Mediocampista.");
 		System.out.println("    4. Delantero.");
 		System.out.println("  Ingrese la posición deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>(4)) {
-			System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (4) + "): ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 4);
 		switch (opcion) {
 			case 1:
 				return "PO";
@@ -271,11 +224,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 				System.out.println("    2. Lateral Izquierdo (LI).");
 				System.out.println("    3. Lateral Derecho (LD).");
 				System.out.println("  Ingrese la posición deseada: ");
-				opcion = Simulador.getScanner().nextInt();
-				while (opcion<1 || opcion>(3)) {
-					System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (3) + "): ");
-					opcion = Simulador.getScanner().nextInt();
-				}
+				opcion = Simulador.ingresoOpcion(1, 3);
 				switch (opcion) {
 					case 1:
 						return "DFC";
@@ -292,11 +241,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 				System.out.println("    3. Mediocampista Derecho (MD).");
 				System.out.println("    4. Mediocampista Ofensivo (MCO).");
 				System.out.println("  Ingrese la posición deseada: ");
-				opcion = Simulador.getScanner().nextInt();
-				while (opcion<1 || opcion>(4)) {
-					System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (4) + "): ");
-					opcion = Simulador.getScanner().nextInt();
-				}
+				opcion = Simulador.ingresoOpcion(1, 4);
 				switch (opcion) {
 					case 1:
 						return "MC";
@@ -314,11 +259,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 				System.out.println("    2. Extremo Izquierdo (EI).");
 				System.out.println("    3. Extremo Derecho (ED).");
 				System.out.println("  Ingrese la posición deseada: ");
-				opcion = Simulador.getScanner().nextInt();
-				while (opcion<1 || opcion>(3)) {
-					System.out.println("  Por favor ingrese una opción correcta (entre 1 y " + (3) + "): ");
-					opcion = Simulador.getScanner().nextInt();
-				}
+				opcion = Simulador.ingresoOpcion(1, 3);
 				switch (opcion) {
 					case 1:
 						return "DC";
@@ -331,50 +272,16 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		}
 		return "";
 	}
-
-
-
-	public static String opcionesListado (ArrayList<Jugador> listadoJugadores) {
-		System.out.println("  A continuación están los criterios de ordenación:");
-		System.out.println("    1. Por nombre.");
-		System.out.println("    2. Por liga.");
-		System.out.println("    3. Por club.");
-		System.out.println("    4. Por calificación.");
-		System.out.println("    5. Por movimientos hábiles.");
-		System.out.println("    6. Por tipo.");
-		System.out.println("    7. Por posición.");
-		System.out.println("    8. Por precio.");
-		System.out.println("");
-		return ingresarAOpcionesListado(listadoJugadores);
-	}
-	
-	public static String ingresarAOpcionesListado(ArrayList<Jugador> listadoJugadores) {
-		System.out.println("  Ingrese el número de opción deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>8) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
-		switch (opcion) {
-			case 1: //Por nombre
-				/*Collections.sort(listadoJugadores);*/
-				break;
-			default:
-				System.out.println("Gracias por usar el Listado.");
-				break;
-		}
-		return listadoJugadores.toString();
-	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + " Calificación: " + this.calificacion + ".\n Pie hábil: "+ this.pieHabil + ".\n Estrellas movimientos hábiles: " + this.movHabiles + ".\n Posición: " + this.posicion + ".\n ID: " + super.getID() + "."; //TODO que meustre estrellas en vez de número
+		StringBuilder retorno = new StringBuilder();
+		retorno.append(super.toString() + " Calificación: " + this.calificacion + ".\n Pie hábil: "+ this.pieHabil + ".\n Movimientos hábiles: ");
+		for (int i=0; i<this.movHabiles; i++) {
+			retorno.append("*");
+		}
+		retorno.append(".\n Posición: " + this.posicion + ".\n ID: " + super.getID() + ".");
+		return retorno.toString();
 	}
-
-	/*@Override
-	public int compareTo(Object o) {
-		Jugador recibido = (Jugador)o;
-		return recibido.getNombre().compareTo(this.getNombre());
-	}*/
 	
 }

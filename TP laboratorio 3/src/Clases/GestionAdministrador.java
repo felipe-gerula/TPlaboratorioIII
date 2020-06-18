@@ -1,8 +1,5 @@
 package Clases;
 
-
-import java.util.Scanner;
-
 import interfaces.IMenu;
 
 /** 
@@ -62,12 +59,8 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	
 	public void modificarJugadorMercado() {
 		System.out.println("Bienvenido al menú de modificación de Jugador.");
-		System.out.println("  Ingrese el ID del Jugador que desea modificar: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(Jugador.getCantidadJugadores()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (Jugador.getCantidadJugadores()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		System.out.println("  ID del Jugador a modificar: ");
+		int idBuscado = Simulador.ingresoOpcion(0, Jugador.getCantidadJugadores()-1);
 		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
 		listadoOpcionesModificacionJugador(jugadorAModificar);
 	}
@@ -79,7 +72,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		System.out.println("    2. Modificar Club y Liga.");
 		System.out.println("    3. Modificar Nacionalidad.");
 		System.out.println("    4. Modificar Edad.");
-		System.out.println("    5. Modificar Calificación, Tipo y Precio."); //TODO modificar calificacion, tipo y precio juntos
+		System.out.println("    5. Modificar Calificación, Tipo y Precio.");
 		System.out.println("    6. Modificar Pie Hábil.");
 		System.out.println("    7. Modificar Movimientos Hábiles.");
 		System.out.println("    8. Modificar Posición.");
@@ -89,26 +82,20 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	}
 	
 	private void ingresarAOpcionModificacionJugador(Jugador jugadorAModificar) {
-		int opcion;
 		System.out.println("  Ingrese el número de opción deseada: ");
-		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
-		opcion = scanner.nextInt();
-		while (opcion<1 || opcion>9) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = scanner.nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 9);
 		switch (opcion) {
 			case 1: //nombre apellido
 				System.out.println("  Ingrese el nuevo nombre y apellido: ");
-				scanner.nextLine();
-				jugadorAModificar.setNombreApellido(scanner.nextLine().toUpperCase());
+				Simulador.getScanner().nextLine();
+				jugadorAModificar.setNombreApellido(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 2: //club y liga
 				System.out.println("  A continuación se mostrarán las ligas y equipos disponibles. Puede elegir o agregar nuevos.");
 				Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
-				if (equipoSeleccionado.hayEspacioEnPlantilla()) {
+				if (equipoSeleccionado.hayEspacioEnPlantilla(true)) {
 					if (equipoSeleccionado.hayEspacioEnPosicion(jugadorAModificar.getPosicion())) {
 						if (!equipoSeleccionado.jugadorYaCargado(jugadorAModificar.getNombre())) {
 							Simulador.getListadoLigasEquipos().eliminarJugador(jugadorAModificar);
@@ -129,29 +116,21 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 3: //nacionalidad
 				System.out.println("  Ingrese la nueva nacionalidad: ");
-				scanner.nextLine();
-				jugadorAModificar.setNacionalidad(scanner.nextLine().toUpperCase());
+				Simulador.getScanner().nextLine();
+				jugadorAModificar.setNacionalidad(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 4: //edad
-				System.out.println("  Ingrese la nueva edad: ");
-				int edadJugador = Simulador.getScanner().nextInt();
-				while (edadJugador<15 || edadJugador>40) {
-					System.out.println("  Por favor ingrese una edad correcta (entre 15 y 40): ");
-					edadJugador = Simulador.getScanner().nextInt();
-				}
+				System.out.println("  Cambio de edad: ");
+				int edadJugador = Simulador.ingresoOpcion(15, 40);
 				jugadorAModificar.setEdad(edadJugador);
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 5: //calificación, tipo y precio
-				System.out.println("  Ingrese la nueva calificación del Jugador:");
-				int calificacionJugador = Simulador.getScanner().nextInt();
-				while (calificacionJugador<49 || calificacionJugador>99) {
-					System.out.println("  Por favor ingrese una calificación correcta (entre 49 y 99): ");
-					calificacionJugador = Simulador.getScanner().nextInt();
-				}
+				System.out.println("  Cambio de calificación:");
+				int calificacionJugador = Simulador.ingresoOpcion(49, 99);
 				jugadorAModificar.setTipo(jugadorAModificar.seleccionDeCalidad(calificacionJugador));
 				jugadorAModificar.setPrecio(jugadorAModificar.seleccionDePrecio(calificacionJugador, jugadorAModificar.getTipo()));
 				Simulador.guardarArchivoJugadores();
@@ -164,12 +143,8 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 7: //movimientos hábiles
-				System.out.println("  Ingrese el nuevo nivel de movimientos hábiles del Jugador (1-5):");
-				int movHabilesJugador = Simulador.getScanner().nextInt();
-				while (movHabilesJugador<1 || movHabilesJugador>5) {
-					System.out.println("  Por favor ingrese un nivel de movimientos hábiles correcto (entre 1 y 5): ");
-					movHabilesJugador = Simulador.getScanner().nextInt();
-				}
+				System.out.println("  Cambio de movimientos hábiles del Jugador:");
+				int movHabilesJugador = Simulador.ingresoOpcion(1, 5);
 				jugadorAModificar.setMovHabiles(movHabilesJugador);
 				Simulador.guardarArchivoJugadores();
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
@@ -196,12 +171,8 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 
 	public void bajaJugadorMercado() {
 		System.out.println("Bienvenido al menú de baja de de Jugador.");
-		System.out.println("  Ingrese el ID del Jugador que desea dar de baja: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(Jugador.getCantidadJugadores()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (Jugador.getCantidadJugadores()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		System.out.println("  Ingreso del ID del Jugador a dar de baja: ");
+		int idBuscado = Simulador.ingresoOpcion(0, Jugador.getCantidadJugadores()-1);
 		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
 		if (jugadorAModificar.getEstado()) {
 			System.out.println(jugadorAModificar.toString());
@@ -220,12 +191,8 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	
 	public void altaJugadorMercado() {
 		System.out.println("Bienvenido al menú de alta de Jugador.");
-		System.out.println("  Ingrese el ID del Jugador que desea dar de alta: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(Jugador.getCantidadJugadores()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (Jugador.getCantidadJugadores()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		System.out.println("  Ingreso del ID del Jugador a dar de alta: ");
+		int idBuscado = Simulador.ingresoOpcion(0, Jugador.getCantidadJugadores()-1);
 		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
 		if (!jugadorAModificar.getEstado()) {
 			System.out.println(jugadorAModificar.toString());
@@ -256,11 +223,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public void modificarDTMercado() {
 		System.out.println("Bienvenido al menú de modificación de Director Técnico.");
 		System.out.println("  Ingrese el ID del Director Técnico que desea modificar: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(DirectorTecnico.getCantidadDTs()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (DirectorTecnico.getCantidadDTs()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		int idBuscado = Simulador.ingresoOpcion(0, DirectorTecnico.getCantidadDTs()-1);
 		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
 		listadoOpcionesModificacionDT(dtAModificar);
 	}
@@ -280,19 +243,12 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	}
 	
 	private void ingresarAOpcionModificacionDT(DirectorTecnico dtAModificar) {
-		int opcion;
-		System.out.println("  Ingrese el número de opción deseada: ");
-		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
-		opcion = scanner.nextInt();
-		while (opcion<1 || opcion>7) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = scanner.nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 7);
 		switch (opcion) {
 			case 1: //nombre apellido
 				System.out.println("  Ingrese el nuevo nombre y apellido: ");
-				scanner.nextLine();
-				dtAModificar.setNombreApellido(scanner.nextLine().toUpperCase());
+				Simulador.getScanner().nextLine();
+				dtAModificar.setNombreApellido(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
@@ -311,18 +267,14 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				break;
 			case 3: //nacionalidad
 				System.out.println("  Ingrese la nueva nacionalidad: ");
-				scanner.nextLine();
-				dtAModificar.setNacionalidad(scanner.nextLine().toUpperCase());
+				Simulador.getScanner().nextLine();
+				dtAModificar.setNacionalidad(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
 			case 4: //edad
-				System.out.println("  Ingrese la nueva edad: ");
-				int edadDT = Simulador.getScanner().nextInt();
-				while (edadDT<35 || edadDT>75) {
-					System.out.println("  Por favor ingrese una edad correcta (entre 35 y 75): ");
-					edadDT = Simulador.getScanner().nextInt();
-				}
+				System.out.println("  Cambio de edad: ");
+				int edadDT = Simulador.ingresoOpcion(35, 75);
 				dtAModificar.setEdad(edadDT);
 				Simulador.guardarArchivoDTs();
 				this.listadoOpcionesModificacionDT(dtAModificar);
@@ -346,11 +298,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public void bajaDTMercado() {
 		System.out.println("Bienvenido al menú de baja de de Director Técnico.");
 		System.out.println("  Ingrese el ID del DT que desea dar de baja: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(DirectorTecnico.getCantidadDTs()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (DirectorTecnico.getCantidadDTs()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		int idBuscado = Simulador.ingresoOpcion(0, DirectorTecnico.getCantidadDTs()-1);
 		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
 		System.out.println(dtAModificar.toString());
 		if (dtAModificar.getEstado()) {
@@ -370,11 +318,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public void altaDTMercado() {
 		System.out.println("Bienvenido al menú de alta de de Director Técnico.");
 		System.out.println("  Ingrese el ID del DT que desea dar de alta: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(DirectorTecnico.getCantidadDTs()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (DirectorTecnico.getCantidadDTs()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		int idBuscado = Simulador.ingresoOpcion(0, DirectorTecnico.getCantidadDTs()-1);
 		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
 		System.out.println(dtAModificar.toString());
 		if (!dtAModificar.getEstado()) {
@@ -399,7 +343,6 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		Simulador.getScanner().nextLine();
 		String nombreAdministrador = Simulador.getScanner().nextLine();
 		System.out.println("  Ingrese la contraseña del Administrador " + nombreAdministrador + ": ");
-		//Simulador.getScanner().nextLine();
 		String passAdministrador = Simulador.getScanner().nextLine();
 		nuevoAdministrador = new GestionAdministrador(nombreAdministrador, passAdministrador);
 		return nuevoAdministrador;
@@ -438,18 +381,13 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	@Override
 	public void ingresarAOpcion() {
 		int opcion;
-		System.out.println("  Ingrese el número de opción deseada: ");
-		opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>10) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		opcion = Simulador.ingresoOpcion(1, 10);
 		switch (opcion) {
-			case 1:
+			case 1: //Agregar Jugador
 				this.agregarJugadorMercado();
 				this.listadoOpciones();
 				break;
-			case 2:
+			case 2: //Modificar Jugador
 				if (Jugador.getCantidadJugadores()>0) {
 					this.modificarJugadorMercado();
 				} else {
@@ -457,19 +395,19 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				}
 				this.listadoOpciones();
 				break;
-			case 3:
+			case 3: //Baja Jugador
 				this.bajaJugadorMercado();
 				this.listadoOpciones();
 				break;
-			case 4:
+			case 4: //Alta Jugador
 				this.altaJugadorMercado();
 				this.listadoOpciones();
 				break;
-			case 5:
+			case 5: //Agregar DT
 				this.agregarDTMercado();
 				this.listadoOpciones();
 				break;
-			case 6:
+			case 6: //Modificar DT
 				if (DirectorTecnico.getCantidadDTs()>0) {
 					this.modificarDTMercado();
 				} else {
@@ -477,16 +415,16 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				}
 				this.listadoOpciones();
 				break;
-			case 7:
+			case 7: //Baja DT
 				this.bajaDTMercado();
 				this.listadoOpciones();
 				break;
-			case 8:
+			case 8: //Alta DT
 				this.altaDTMercado();
 				this.listadoOpciones();
 				break;
-			case 9:
-				System.out.println(Simulador.getMercado().verMercado());
+			case 9: //Ver Mercado
+				System.out.println(Simulador.getMercado().verMercado(true));
 				this.listadoOpciones();
 				break;
 			default:

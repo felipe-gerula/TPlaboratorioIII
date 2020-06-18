@@ -57,48 +57,50 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		}
 	}
 	
-	public String ingresarAOpcionVerMercado() {
+	public String ingresarAOpcionVerMercado(boolean ingresoAdmin) {
 		String retorno = "";
 		System.out.println("  Ingrese el número de opción deseada: ");
-		int opcion = Simulador.getScanner().nextInt();
-		while (opcion<1 || opcion>3) {
-			System.out.println("  Por favor ingrese una opción correcta: ");
-			opcion = Simulador.getScanner().nextInt();
-		}
+		int opcion = Simulador.ingresoOpcion(1, 3);
 		switch (opcion) {
 			case 1:
-				if (!listadoJugadores.estaVacio()) {
-					retorno = listadoJugadores.opcionesListadoJugador();
+				if (!listadoJugadores.estaVacio(ingresoAdmin)) {
+					retorno = listadoJugadores.opcionesListadoJugador(ingresoAdmin);
 				} else {
 					retorno = "No hay jugadores en el Mercado.";
 				}
 				break;
 			case 2:
-				if (!listadoDTs.estaVacio()) {
-					retorno = listadoDTs.opcionesListadoDT();
+				if (!listadoDTs.estaVacio(ingresoAdmin)) {
+					retorno = listadoDTs.opcionesListadoDT(ingresoAdmin);
 				} else {
 					retorno = "No hay DTs en el Mercado.";
 				}
 				break;
 			case 3:
-				Equipo aux = Simulador.getListadoLigasEquipos().listarLigasEquipos();
-				System.out.println(aux.toString());
+				Equipo aux = Simulador.getListadoLigasEquipos().listarLigasEquipos(ingresoAdmin);
+				System.out.println(aux.toString(ingresoAdmin));
 				break;
 		}
 		return retorno;
 	}
 	
-	public String verMercado() {
+	
+	/**
+	 * Método común para Usuarios y Administradores.
+	 * @param ingresoAdmin true si se ingresa desde el Administrador: muestra los que están dados de baja y el estado de todos.
+	 *
+	 */
+	public String verMercado(boolean ingresoAdmin) {
 		System.out.println("  Opciones de listado de Mercado:");
 		System.out.println("    1. Ver Jugadores disponibles en el Mercado.");
 		System.out.println("    2. Ver Directores Técnicos disponibles en el Mercado.");
 		System.out.println("    3. Ver Director Técnico y Jugadores de un Equipo (ordenados por posición).");
-		return ingresarAOpcionVerMercado();
+		return ingresarAOpcionVerMercado(ingresoAdmin);
 	}
 	
 	public void listadoOpcionesMercado(ClubUsuario clubRecibido) {
 		System.out.println("\n\nBienvenido al Mercado, " + clubRecibido.getNombre());
-		if(this.listadoJugadores.estaVacio() && this.listadoDTs.estaVacio()) {
+		if(this.listadoJugadores.estaVacio(false) && this.listadoDTs.estaVacio(false)) {
 			System.out.println(clubRecibido.getNombre() + ", lamentamos informarte que el Mercado está vacío. Un Administrador debe cargar datos.");
 		} else {
 			System.out.println("  A continuación están las opciones:");
@@ -114,61 +116,56 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	}
 	
 	public void ingresarAOpcionMercado(ClubUsuario clubRecibido) {
-			System.out.println("  Ingrese el número de opción deseada: ");
-			int opcion = Simulador.getScanner().nextInt();
-			while (opcion<1 || opcion>6) {
-				System.out.println("  Por favor ingrese una opción correcta: ");
-				opcion = Simulador.getScanner().nextInt();
-			}
-			switch (opcion) {
-				case 1: //Ver Mercado
-					System.out.println(verMercado());
-					listadoOpcionesMercado(clubRecibido);
-					break;
-				case 2: //Comprar Jugador
-					if (clubRecibido.getPlantillaClub().cantidadJugadores()<11) {
-						if (!listadoJugadores.estaVacio()) {
-							comprarJugador(clubRecibido);
-						} else {
-							System.out.println("No hay jugadores en el Mercado");
-						}
-						listadoOpcionesMercado(clubRecibido);
+		int opcion = Simulador.ingresoOpcion(1, 6);
+		switch (opcion) {
+			case 1: //Ver Mercado
+				System.out.println(verMercado(false));
+				listadoOpcionesMercado(clubRecibido);
+				break;
+			case 2: //Comprar Jugador
+				if (clubRecibido.getPlantillaClub().cantidadJugadores(false)<11) {
+					if (!listadoJugadores.estaVacio(false)) {
+						comprarJugador(clubRecibido);
 					} else {
-						System.out.println("Tu Club ya tiene 11 jugadores. Intentá vender uno.");
-					}
-					break;
-				case 3: //Comprar DT
-					if (!clubRecibido.getDTClub().getEstado()) {
-						if (!listadoDTs.estaVacio()) {
-							comprarDT(clubRecibido);
-						} else {
-							System.out.println("No hay DTs en el Mercado.");
-						}
-					} else {
-						System.out.println("Tu club ya cuenta con un DT. Intentá venderlo.");
+						System.out.println("No hay jugadores en el Mercado");
 					}
 					listadoOpcionesMercado(clubRecibido);
-					break;
-				case 4: //Vender Jugador
-					if (!clubRecibido.getPlantillaClub().plantillaVacia()) {
-						venderJugador(clubRecibido);
+				} else {
+					System.out.println("Tu Club ya tiene 11 jugadores. Intentá vender uno.");
+				}
+				break;
+			case 3: //Comprar DT
+				if (!clubRecibido.getDTClub().getEstado()) {
+					if (!listadoDTs.estaVacio(false)) {
+						comprarDT(clubRecibido);
 					} else {
-						System.out.println("No hay jugadores en el Club");
+						System.out.println("No hay DTs en el Mercado.");
 					}
-					listadoOpcionesMercado(clubRecibido);
-					break;
-				case 5: //Vender DT
-					if (clubRecibido.getDTClub().getEstado()) {
-						venderDT(clubRecibido);
-					} else {
-						System.out.println("No hay un DT en el Club");
-					}
-					listadoOpcionesMercado(clubRecibido);
-					break;
-				default:
-					System.out.println("Gracias por usar el Mercado.");
-					break;
-			}
+				} else {
+					System.out.println("Tu club ya cuenta con un DT. Intentá venderlo.");
+				}
+				listadoOpcionesMercado(clubRecibido);
+				break;
+			case 4: //Vender Jugador
+				if (!clubRecibido.getPlantillaClub().plantillaVacia()) {
+					venderJugador(clubRecibido);
+				} else {
+					System.out.println("No hay jugadores en el Club");
+				}
+				listadoOpcionesMercado(clubRecibido);
+				break;
+			case 5: //Vender DT
+				if (clubRecibido.getDTClub().getEstado()) {
+					venderDT(clubRecibido);
+				} else {
+					System.out.println("No hay un DT en el Club");
+				}
+				listadoOpcionesMercado(clubRecibido);
+				break;
+			default:
+				System.out.println("Gracias por usar el Mercado.");
+				break;
+		}
 	}
 
 	private void venderDT(ClubUsuario clubRecibido) {
@@ -179,12 +176,8 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	}
 
 	private void comprarDT(ClubUsuario clubRecibido) {
-		System.out.println("  Ingrese el ID del DT que desea comprar: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(listadoDTs.cantidad()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (listadoDTs.cantidad()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		System.out.println("  Ingreso de ID del Director Técnico a comprar: ");
+		int idBuscado = Simulador.ingresoOpcion(0, listadoDTs.cantidad()-1);
 		DirectorTecnico dtBuscado = listadoDTs.buscar(idBuscado);
 		if (dtBuscado.getEstado()) {
 			if (dtBuscado.getPrecio() < clubRecibido.getFondos()) {
@@ -196,17 +189,13 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 				System.out.println("Fondos insuficientes. Faltan $" + (dtBuscado.getPrecio() - clubRecibido.getFondos()) + ".");
 			}
 		} else {
-			System.out.println("El DT seleccionado no puede utilizarse.");
+			System.out.println("El Director Técnico seleccionado no puede utilizarse.");
 		}
 	}
 
 	private void comprarJugador(ClubUsuario clubRecibido) {
-		System.out.println("  Ingrese el ID del Jugador que desea comprar: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(listadoJugadores.cantidad()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (listadoJugadores.cantidad()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		System.out.println("  Ingreso de ID del Jugador a comprar: ");
+		int idBuscado = Simulador.ingresoOpcion(0, listadoJugadores.cantidad()-1);
 		Jugador jugadorBuscado = listadoJugadores.buscar(idBuscado);
 		if (jugadorBuscado.getEstado()) {
 			if (!clubRecibido.jugadorExistentePlantilla(idBuscado)) {
@@ -232,12 +221,8 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	}
 	
 	private void venderJugador(ClubUsuario clubRecibido) {
-		System.out.println("  Ingrese el ID del Jugador perteneciente a su Plantilla que desea vender: ");
-		int idBuscado = Simulador.getScanner().nextInt();
-		while (idBuscado<0 || idBuscado>(listadoJugadores.cantidad()-1)) {
-			System.out.println("  Por favor ingrese un ID correcto (entre 0 y " + (listadoJugadores.cantidad()-1) + "): ");
-			idBuscado = Simulador.getScanner().nextInt();
-		}
+		System.out.println("  Ingreso de ID del Jugador a vender: ");
+		int idBuscado = Simulador.ingresoOpcion(0, listadoJugadores.cantidad()-1);
 		Jugador jugadorBuscado = listadoJugadores.buscar(idBuscado);
 		if (jugadorBuscado.getEstado()) {
 			if (clubRecibido.jugadorExistentePlantilla(idBuscado)) {

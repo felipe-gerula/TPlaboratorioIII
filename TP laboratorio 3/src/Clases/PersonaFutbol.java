@@ -117,11 +117,4 @@ public abstract class PersonaFutbol implements Serializable {
 	public String toString() {
 		return "Datos de " + nombreApellido + ":\n Liga: " + liga + ".\n Club: " + club + ".\n Nacionalidad: " + nacionalidad + ".\n Edad: " + edad + ".\n Tipo: " + tipo + ".\n Precio: $" + precio + ".\n";
 	}
-
-
-
-
-	
-	
-	
 }

@@ -36,7 +36,7 @@ public class ContenedorPersonaSistema <V extends PersonaSistema>{
 	 */
 	public V buscarElemento (V valor) {
 		V retorno = null;
-		if (hashSetElementos.contains(valor)) { //TODO hacer override de equals y hashCode en Usuario y Administrador
+		if (hashSetElementos.contains(valor)) {
 			int flag = 0;
 			Iterator<V> iterator = hashSetElementos.iterator();
 			while (flag==0 && iterator.hasNext()) {
