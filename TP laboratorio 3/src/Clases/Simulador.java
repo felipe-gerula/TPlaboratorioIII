@@ -92,10 +92,10 @@ public class Simulador implements IMenu{
 	
 	public static int ingresoOpcion (int i, int j) {
 		int opcion;
-		System.out.println("  Ingrese un valor entre " + i + " y " + j + ": ");
+		System.out.print("  Ingrese un valor entre " + i + " y " + j + ": ");
 		opcion = scan.nextInt();
 		while (opcion<i || opcion>j) {
-			System.out.println("  Por favor ingrese un valor correcto (entre " + i + " y " + j + "): ");
+			System.out.print("  Por favor ingrese un valor correcto (entre " + i + " y " + j + "): ");
 			opcion = scan.nextInt();
 		}
 		return opcion;

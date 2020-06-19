@@ -113,7 +113,11 @@ public class ClubUsuario implements IMenu, Serializable{
 			}
 		}
 		plantillaClub.sincronizarCantidadPosiciones();
-		retorno += sincronizarPosiciones ();
+		double respuestaSincroPosiciones = sincronizarPosiciones();
+		while (respuestaSincroPosiciones > 0) {
+			retorno += respuestaSincroPosiciones;
+			respuestaSincroPosiciones = sincronizarPosiciones();
+		}
 		return retorno;
 	}
 	
@@ -139,6 +143,7 @@ public class ClubUsuario implements IMenu, Serializable{
 					System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 					retorno += jugAux.getPrecio();
 					plantillaClub.eliminarJugador(jugAux.getID());
+					return retorno;
 				} else {
 					cantidadPorteros++;
 				}
@@ -148,6 +153,7 @@ public class ClubUsuario implements IMenu, Serializable{
 						System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 						retorno += jugAux.getPrecio();
 						plantillaClub.eliminarJugador(jugAux.getID());
+						return retorno;
 					} else {
 						cantidadDefensores++;
 					}
@@ -157,6 +163,7 @@ public class ClubUsuario implements IMenu, Serializable{
 							System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 							retorno += jugAux.getPrecio();
 							plantillaClub.eliminarJugador(jugAux.getID());
+							return retorno;
 						} else {
 							cantidadMediocampistas++;
 						}
@@ -165,6 +172,7 @@ public class ClubUsuario implements IMenu, Serializable{
 							System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 							retorno += jugAux.getPrecio();
 							plantillaClub.eliminarJugador(jugAux.getID());
+							return retorno;
 						} else {
 							cantidadDelanteros++;
 						}
