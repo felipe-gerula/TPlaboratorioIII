@@ -38,6 +38,18 @@ public class Equipo {
 		this.nombreLiga = nombreLiga;
 	}	
 	
+	public Plantilla getPlantillaEquipo () {
+		return plantillaEquipo;
+	}
+	
+	public DirectorTecnico getDTEquipo () {
+		if (DTEquipo == -1) {
+			return new DirectorTecnico();
+		} else {
+			return Simulador.getMercado().getListadoDTs().buscar(DTEquipo);
+		}
+	}
+	
 	public void agregarJugador (int IDJugador) {
 		plantillaEquipo.agregarJugador(IDJugador);
 	}

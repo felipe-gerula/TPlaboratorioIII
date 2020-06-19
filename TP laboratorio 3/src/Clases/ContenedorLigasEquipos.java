@@ -19,6 +19,12 @@ public class ContenedorLigasEquipos {
 		return aux.get(nombreEquipo);
 	}
 	
+	public Iterator<Entry<String, HashMap<String, Equipo>>> getIterator () {
+		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
+		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
+		return it;
+	}
+	
 	public boolean agregarLiga(String nuevaLiga) {
 		if (hashMapLigasEquipos.containsKey(nuevaLiga)) {
 			return false;
