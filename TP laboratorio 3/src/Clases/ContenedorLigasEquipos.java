@@ -133,7 +133,7 @@ public class ContenedorLigasEquipos {
 		for (int i=0; i<nombresLigas.size(); i++){
 			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
 		}
-		int opcion = Simulador.ingresoOpcion(0, nombresLigas.size());
+		int opcion = Simulador.ingresoOpcion(1, nombresLigas.size());
 		HashMap<String, Equipo> auxB = hashMapLigasEquipos.get(nombresLigas.get(opcion-1)); //Usamos la opción como índice para buscar la clave
 		System.out.println("Equipos de la Liga " + nombresLigas.get(opcion-1) + ": \n");
 		ArrayList<String> nombresEquipos = new ArrayList<>();
@@ -156,7 +156,7 @@ public class ContenedorLigasEquipos {
 				System.out.println(" Equipo sin Director Técnico.\n");
 			}
 		}
-		opcion = Simulador.ingresoOpcion(0, nombresEquipos.size());
+		opcion = Simulador.ingresoOpcion(1, nombresEquipos.size());
 		Simulador.getScanner().nextLine();
 		return auxB.get(nombresEquipos.get(opcion-1));
 	}

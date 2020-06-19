@@ -59,8 +59,12 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	
 	public String ingresarAOpcionVerMercado(boolean ingresoAdmin) {
 		String retorno = "";
-		System.out.println("  Ingrese el número de opción deseada: ");
-		int opcion = Simulador.ingresoOpcion(1, 3);
+		int opcion;
+		if (ingresoAdmin) {
+			opcion = Simulador.ingresoOpcion(1, 4);
+		} else {
+			opcion = Simulador.ingresoOpcion(1, 3);
+		}
 		switch (opcion) {
 			case 1:
 				if (!listadoJugadores.estaVacio(ingresoAdmin)) {
@@ -80,6 +84,9 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 				Equipo aux = Simulador.getListadoLigasEquipos().listarLigasEquipos(ingresoAdmin);
 				System.out.println(aux.toString(ingresoAdmin));
 				break;
+			case 4:
+				System.out.println("JSON");
+				break;
 		}
 		return retorno;
 	}
@@ -95,6 +102,9 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		System.out.println("    1. Ver Jugadores disponibles en el Mercado.");
 		System.out.println("    2. Ver Directores Técnicos disponibles en el Mercado.");
 		System.out.println("    3. Ver Director Técnico y Jugadores de un Equipo (ordenados por posición).");
+		if (ingresoAdmin) {
+			System.out.println("    4. Ver datos de Ligas, Equipos, DTs y Jugadores en formato JSON.");
+		}
 		return ingresarAOpcionVerMercado(ingresoAdmin);
 	}
 	
