@@ -96,7 +96,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				System.out.println("  A continuación se mostrarán las ligas y equipos disponibles. Puede elegir o agregar nuevos.");
 				Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
 				if (equipoSeleccionado.hayEspacioEnPlantilla(true)) {
-					if (equipoSeleccionado.hayEspacioEnPosicion(jugadorAModificar.getPosicion())) {
+					if (equipoSeleccionado.getPlantillaEquipo().hayEspacioEnPosicion(jugadorAModificar.getPosicion())) {
 						if (!equipoSeleccionado.jugadorYaCargado(jugadorAModificar.getNombre())) {
 							Simulador.getListadoLigasEquipos().eliminarJugador(jugadorAModificar);
 							jugadorAModificar.setClub(equipoSeleccionado.getNombreEquipo());
@@ -154,7 +154,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				String viejaPosicion = jugadorAModificar.getPosicion();
 				String nuevaPosicionJugador = jugadorAModificar.seleccionDePosicion();
 				Equipo equipoJugador = Simulador.getListadoLigasEquipos().getEquipo(jugadorAModificar.getLiga(), jugadorAModificar.getClub());
-				if (equipoJugador.posicionesEquivalentes(viejaPosicion, nuevaPosicionJugador) || equipoJugador.hayEspacioEnPosicion(nuevaPosicionJugador)) {
+				if (equipoJugador.posicionesEquivalentes(viejaPosicion, nuevaPosicionJugador) || equipoJugador.getPlantillaEquipo().hayEspacioEnPosicion(nuevaPosicionJugador)) {
 					String posicionAnterior = jugadorAModificar.getPosicion();
 					jugadorAModificar.setPosicion(nuevaPosicionJugador);
 					equipoJugador.modificacionPosiciones(posicionAnterior, nuevaPosicionJugador);

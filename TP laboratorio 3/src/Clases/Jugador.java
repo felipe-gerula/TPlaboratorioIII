@@ -95,7 +95,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 			if (!equipoSeleccionado.jugadorYaCargado(nombreJugador)) {
 				System.out.println("  Ingrese la posición del Jugador:");
 				String posicionJugador = seleccionDePosicion();
-				if (equipoSeleccionado.hayEspacioEnPosicion(posicionJugador)) {
+				if (equipoSeleccionado.getPlantillaEquipo().hayEspacioEnPosicion(posicionJugador)) {
 					Simulador.getScanner().nextLine();
 					System.out.println("  Ingrese la nacionalidad del Jugador:");
 					String nacionalidadJugador = Simulador.getScanner().nextLine().toUpperCase();
@@ -123,10 +123,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 					double precioJugador = seleccionDePrecio(calificacionJugador, calidadJugador);
 					Jugador nuevoJugador = new Jugador(nombreJugador, equipoSeleccionado.getNombreEquipo(), equipoSeleccionado.getNombreLiga(), nacionalidadJugador, edadJugador, calidadJugador, precioJugador, calificacionJugador, pieHabilJugador, movHabilesJugador, posicionJugador);
 					return nuevoJugador;
-				} else {
-					System.out.println("  No hay más espacios para la posición de " + posicionJugador + " en el equipo seleccionado.");
 				}
-				
 			} else {
 				System.out.println("  Ya hay un jugador con el nombre " + nombreJugador + " cargado en el equipo.");
 			}

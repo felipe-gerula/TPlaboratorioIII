@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.json.JSONException;
 
+import excepciones.FondosInsuficientesException;
 import jsonPackage.JSONLiga;
 
 /** 
@@ -95,7 +96,6 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		}
 		return retorno;
 	}
-	
 	
 	/**
 	 * Método común para Usuarios y Administradores.
@@ -213,16 +213,16 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 		if (jugadorBuscado.getEstado()) {
 			if (!clubRecibido.jugadorExistentePlantilla(idBuscado)) {
 				if (clubRecibido.getPlantillaClub().hayEspacioEnPosicion(jugadorBuscado.getPosicion())) {
-					if (jugadorBuscado.getPrecio() < clubRecibido.getFondos()) {
+					try {
+						FondosInsuficientesException.comprobarFondos(jugadorBuscado.getPrecio(), clubRecibido.getFondos());
 						clubRecibido.agregarJugadorPlantilla(idBuscado);
 						clubRecibido.setFondos(clubRecibido.getFondos() - jugadorBuscado.getPrecio());
 						Simulador.guardarArchivoUsuarios();
 						System.out.println(jugadorBuscado.getNombre() + " comprado con éxito. Fondos restantes: $" + clubRecibido.getFondos() + ".");
-					} else {
+					}
+					catch (FondosInsuficientesException e) {
 						System.out.println("Fondos insuficientes. Faltan $" + (jugadorBuscado.getPrecio() - clubRecibido.getFondos()) + ".");
 					}
-				} else {
-					System.out.println("  No hay más espacios para la posición de " + jugadorBuscado.getPosicion() + " en tu club.");
 				}
 			} else {
 				System.out.println("El jugador seleccionado ya forma parte de su plantilla.");

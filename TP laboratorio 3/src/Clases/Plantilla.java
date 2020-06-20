@@ -15,6 +15,7 @@ import java.util.Iterator;
 
 import comparaciones.ComparacionID;
 import comparaciones.ComparacionPosicion;
+import excepciones.SinEspacioEnPosicionException;
 
 public class Plantilla implements Serializable{
 	private static final long serialVersionUID = 3139014270633585868L;
@@ -30,8 +31,24 @@ public class Plantilla implements Serializable{
 		cantidadDefensores = 0;
 		cantidadMediocampistas = 0;
 		cantidadDelanteros = 0;
-	}
+	}	
 	
+	public int getCantidadPorteros() {
+		return cantidadPorteros;
+	}
+
+	public int getCantidadDefensores() {
+		return cantidadDefensores;
+	}
+
+	public int getCantidadMediocampistas() {
+		return cantidadMediocampistas;
+	}
+
+	public int getCantidadDelanteros() {
+		return cantidadDelanteros;
+	}
+
 	/**
 	 * consulta si la plantilla esta vacia
 	 * @return true si la plantilla esta vacia
@@ -257,49 +274,34 @@ public class Plantilla implements Serializable{
 	}
 
 
-	public boolean hayEspacioEnPosicion(String posicionJugador) {
-		if (posicionJugador.equals("PO")) {
-			return hayEspacioPortero();
-		} else {
-			if (posicionJugador.equals("DFC") || posicionJugador.equals("LI") || posicionJugador.equals("LD")) {
-				return hayEspacioDefensor();
-			} else {
-				if (posicionJugador.equals("MC") || posicionJugador.equals("MI") || posicionJugador.equals("MD") || posicionJugador.equals("MCO")) {
-					return hayEspacioMediocampista();
-				} else {
-					return hayEspacioDelantero();
-				}
-			}
+	public String muestraEspaciosDisponibles (String posicionJugador) {
+		StringBuilder retorno = new StringBuilder();
+		retorno.append("Sin espacio en la posición de " + posicionJugador + ". Espacios disponibles:\n");
+		if (cantidadPorteros==0) {
+			retorno.append("  Portero: 1.");
 		}
-	}
-
-	private boolean hayEspacioDelantero() {
-		if (cantidadDelanteros <3) {
-			return true;
+		if (cantidadDefensores<4) {
+			retorno.append("  Defensores: " + (4 - cantidadDefensores) + ".\n");
 		}
-		return false;
-	}
-
-	private boolean hayEspacioMediocampista() {
-		if (cantidadMediocampistas <3) {
-			return true;
+		if (cantidadMediocampistas<3) {
+			retorno.append("  Mediocampistas: " + (3 - cantidadMediocampistas) + ".\n");
 		}
-		return false;
-	}
-
-	private boolean hayEspacioDefensor() {
-		if (cantidadDefensores <4) {
-			return true;
+		if (cantidadDelanteros<3) {
+			retorno.append("  Delanteros: " + (3 - cantidadDelanteros) + ".");
 		}
-		return false;
+		return retorno.toString();
 	}
-
-	private boolean hayEspacioPortero() {
-		if (cantidadPorteros == 0) {
-			return true;
+	
+	public boolean hayEspacioEnPosicion(String posicionJugador){
+		try {
+			SinEspacioEnPosicionException.comprobarPosicion(posicionJugador, this);
+		} catch (SinEspacioEnPosicionException e) {
+			System.out.println(muestraEspaciosDisponibles(posicionJugador));
+			return false;
 		}
-		return false;
+		return true;
 	}
+	
 
 	public Jugador getJugador(int jugX) {
 		ArrayList<Jugador> aux = listado();

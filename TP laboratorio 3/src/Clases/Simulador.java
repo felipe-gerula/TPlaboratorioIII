@@ -1,4 +1,5 @@
 package Clases;
+import java.util.InputMismatchException;
 /**
  * Esta clase nos permite crear objetos de tipo Simulador
  * simula el funcionamiento del juego FIFA 20
@@ -10,6 +11,8 @@ import dao.ArchivoAdministradores;
 import dao.ArchivoDTs;
 import dao.ArchivoJugadores;
 import dao.ArchivoUsuarios;
+import excepciones.MismoRivalUsuarioException;
+import excepciones.RivalNoEncontradoException;
 import interfaces.IMenu;
 
 public class Simulador implements IMenu{
@@ -93,10 +96,23 @@ public class Simulador implements IMenu{
 	public static int ingresoOpcion (int i, int j) {
 		int opcion;
 		System.out.print("  Ingrese un valor entre " + i + " y " + j + ": ");
-		opcion = scan.nextInt();
-		while (opcion<i || opcion>j) {
-			System.out.print("  Por favor ingrese un valor correcto (entre " + i + " y " + j + "): ");
+		try {
 			opcion = scan.nextInt();
+		}
+		catch (InputMismatchException e) {
+			System.out.println("  Ingresó un tipo de dato erróneo.");
+			opcion = i-1;
+		}
+		while (opcion<i || opcion>j) {
+			scan.nextLine();
+			System.out.print("  Por favor ingrese un valor correcto (entre " + i + " y " + j + "): ");
+			try {
+				opcion = scan.nextInt();
+			}
+			catch (InputMismatchException e) {
+				System.out.println("  Ingresó un tipo de dato erróneo.");
+				opcion = i-1;
+			}
 		}
 		return opcion;
 	}
@@ -146,20 +162,24 @@ public class Simulador implements IMenu{
 		ingresarAOpcionUsuario();
 	}
 	
-	public static Equipo seleccionUsuarioRival() {
+	
+	public static Equipo seleccionUsuarioRival(){
 		System.out.println(listadoUsuarios.listar());
 		System.out.println("\nIngrese el nombre del Usuario que quiere enfrentar: ");
 		scan.nextLine();
 		String nombreUsuarioAEnfrentar = scan.nextLine();
 		GestionUsuario usuarioAEnfrentar = listadoUsuarios.buscarElemento(new GestionUsuario(nombreUsuarioAEnfrentar));
-		if (usuarioAEnfrentar != null) {
-			if (!usuarioAEnfrentar.getNombre().equals(usuarioLogueado)) {
-				return new Equipo(usuarioAEnfrentar.getClubUsuario().getNombre(), usuarioAEnfrentar.getClubUsuario().getPlantillaClub(), usuarioAEnfrentar.getClubUsuario().getDTClub().getID());
-			} else {
-				System.out.println("\n Seleccioná un Usuario distinto al tuyo.");
-			}
-		} else {
+		try {
+			RivalNoEncontradoException.rivalNulo(usuarioAEnfrentar);
+			MismoRivalUsuarioException.mismoUsuarioRival(usuarioLogueado, nombreUsuarioAEnfrentar);
+			//Usamos uno de los constructores de Equipo para instanciar el Club a enfrentar como un Equipo y devolverlo
+			return new Equipo(usuarioAEnfrentar.getClubUsuario().getNombre(), usuarioAEnfrentar.getClubUsuario().getPlantillaClub(), usuarioAEnfrentar.getClubUsuario().getDTClub().getID());
+		}
+		catch (RivalNoEncontradoException e) {
 			System.out.println("\n Usuario no encontrado.");
+		}
+		catch (MismoRivalUsuarioException e) {
+			System.out.println("\n Seleccioná un Usuario distinto al tuyo.");
 		}
 		return null;
 	}

@@ -1,6 +1,5 @@
 package jsonPackage;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import Clases.Equipo;
@@ -16,7 +15,7 @@ public class JSONEquipo {
 		retorno.put("Nombre Liga", recibido.getNombreLiga());
 		retorno.put("Director Técnico", objectAux);
 		JSONPlantilla plantillaAux = new JSONPlantilla();
-		JSONArray plantillaArray = plantillaAux.toJSONPlantilla(recibido.getPlantillaEquipo());
+		JSONObject plantillaArray = plantillaAux.toJSONPlantilla(recibido.getPlantillaEquipo());
 		retorno.put("Plantilla Equipo", plantillaArray);
 		return retorno;
 	}

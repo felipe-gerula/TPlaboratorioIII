@@ -69,7 +69,7 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		}
 		return auxiliar;
 	}
-
+	
 	/**
 	 * 
 	 * @return Este método devuelve un ArrayList con los elementos cargados en el listado. Desde afuera se decide cómo ordenarlos para la muestra, y si mostrar todos o los que no están dados de baja
