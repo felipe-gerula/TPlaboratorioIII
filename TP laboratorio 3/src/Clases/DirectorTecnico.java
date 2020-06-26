@@ -1,39 +1,88 @@
 package Clases;
 
 /** 
- *  Esta clase nos permite crear objetos de tipo DirectorTecnico
- *  @author 
+ *  Esta clase nos permite crear objetos del tipo Director Técnico, la cual cuenta con los atributos y métodos 
+ * necesarios para su gestión. Hereda de PersonaFutbol
  */
 public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	private static final long serialVersionUID = 1L;
 	private static int cantidadTecnicos;
 	private Vestimenta vestimentaEquipada;
 	
+	/**
+	 * Constructor vacío que llama al constructor vacío de PersonaFutbol y al constructor vacío de Vestimenta
+	 */
 	public DirectorTecnico() {
 		super();
 		vestimentaEquipada = new Vestimenta();
 	}
 	
+	/**
+	 * Constructor de Director Técnico con los parámetros a asignar al nuevo objeto
+	 */
 	public DirectorTecnico(String nombreDT, String equipoDT, String ligaDT, String nacionalidadDT, int edadDT, String calidadDT, double precioDT) {
 		super(nombreDT, equipoDT, ligaDT, nacionalidadDT, edadDT, calidadDT, precioDT, cantidadTecnicos);
 		cantidadTecnicos++;
 		this.vestimentaEquipada = new Vestimenta();
 	}
 
-	public DirectorTecnico(DirectorTecnico dtRecibido) { //Constructor por copia. No se suma otro DT a la cantidad total
+	/**
+	 * Constructor por copia. No se suma otro DT a la cantidad total.
+	 * @param dtRecibido DT a ser copiado en la nueva instancia
+	 */
+	public DirectorTecnico(DirectorTecnico dtRecibido) {
 		super(dtRecibido.getNombre(), dtRecibido.getClub(), dtRecibido.getLiga(), dtRecibido.getNacionalidad(), dtRecibido.getEdad(), dtRecibido.getTipo(), dtRecibido.getPrecio(), dtRecibido.getID());
 		this.vestimentaEquipada = new Vestimenta();
 		this.vestimentaEquipada.setVestimenta(dtRecibido.getVestimenta().getPrendaSuperior(), dtRecibido.getVestimenta().getPrendaInferior());
 	}
 
+	/**
+	 * @return cantidad total de DTs
+	 */
 	public static int getCantidadDTs() {
 		return cantidadTecnicos;
 	}
+
+	/**
+	 * Método para obtener el tipo de la instancia
+	 */
+	public String getTipo() {
+		return super.getTipo();
+	}
+
+	/**
+	 * Método para obtener la edad de la instancia
+	 */
+	public int getEdad() {
+		return super.getEdad();
+	}
 	
+	/**
+	 * Método para obtener la nacionalidad de la instancia
+	 */
+	public String getNacionalidad() {
+		return super.getNacionalidad();
+	}
+	
+	/**
+	 * Método para cambiar la cantidad total de DTs
+	 * @param cantidad nueva cantidad total
+	 */
+	public static void setCantidadDTs(int cantidad) {
+		cantidadTecnicos = cantidad;		
+	}
+	
+	/**
+	 * @return vestimenta del DT
+	 */
 	public Vestimenta getVestimenta() {
 		return this.vestimentaEquipada;
 	}
 
+	/**
+	 * Método para la creación de un Director Técnico, con menúes internos
+	 * @return nuevo Director Técnico creado en el menú
+	 */
 	public DirectorTecnico crearDirectorTecnico() {
 		System.out.println("Bienvenido al menú de creación de DT.");
 		Simulador.getScanner().nextLine();
@@ -57,6 +106,11 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		return null;
 	}
 	
+	/**
+	 * Método que lee el precio del DT según la valoración del mismo
+	 * @param calidadDT valoración del DT
+	 * @return nuevo precio
+	 */
 	public double seleccionDePrecio(String calidadDT) {
 		double retorno;
 		if (calidadDT.equals("BRONCE")) {
@@ -82,6 +136,10 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		}
 	}
 	
+	/**
+	 * Método para seleccionar la calidad del DT dentro de las opciones dadas
+	 * @return nueva calidad del DT
+	 */
 	public String seleccionDeCalidad() {
 		System.out.println("  A continuación están las calidades disponibles:");
 		System.out.println("    1. BRONCE.");
@@ -102,14 +160,17 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		}
 	}
 	
+	/**
+	 * Método que cambia la vestimenta del DT
+	 */
 	public void cambiarVestimenta() {
 		vestimentaEquipada.cambiarVestimenta();
 	}
-	
-	public static void setCantidadDTs(int cantidad) {
-		cantidadTecnicos = cantidad;		
-	}
 
+	/**
+	 * Método que copia los datos del DT recibido, excepto la vestimenta
+	 * @param aux DT de referencia
+	 */
 	public void sincronizarDatos(DirectorTecnico aux) {
 		this.setClub(aux.getClub());
 		this.setEdad(aux.getEdad());
@@ -118,18 +179,6 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		this.setNombreApellido(aux.getNombre());
 		this.setPrecio(aux.getPrecio());
 		this.setTipo(aux.getTipo());
-	}
-
-	public String getTipo() {
-		return super.getTipo();
-	}
-
-	public int getEdad() {
-		return super.getEdad();
-	}
-	
-	public String getNacionalidad() {
-		return super.getNacionalidad();
 	}
 
 	@Override

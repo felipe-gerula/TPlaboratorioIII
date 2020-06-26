@@ -1,6 +1,7 @@
 package Clases;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -15,26 +16,43 @@ import comparaciones.ComparacionPosicion;
 import comparaciones.ComparacionPrecio;
 import comparaciones.ComparacionTipo;
 
+/**
+ * Clase que permite la creación de Contenedores de Jugadores o DTs, la cual cuenta con los atributos y métodos 
+ * necesarios para su gestión.
+ *
+ */
+
 public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	HashSet<V> listadoPersonaFutbol;
 	
+	/**
+	 * Constructor vacío que inicia el hashSet
+	 */
 	public ContenedorPersonaFutbol (){
 		listadoPersonaFutbol = new HashSet<V>();
 	}
 	
+	/**
+	 * Método que devuelve el Iterator del hashSet
+	 * @return el Iterator del hashSet
+	 */
 	public Iterator<V> getIterator () {
 		Iterator<V> it = listadoPersonaFutbol.iterator();
 		return it;
 	}
 	
+	/**
+	 * Método que permite saber la cantidad de elementos cargados en el contenedor
+	 * @return tamaño del contenedor
+	 */
 	public int cantidad() {
 		return listadoPersonaFutbol.size();
 	}
 	
 	/**
-	 * 
+	 * Método que permite saber si el contenedor tiene elementos
 	 * @return true si el listado está vacío, false si contiene al menos un válido
-	 * 
+	 * @param ingresoAdmin determina si se accede al método como Administrador, en cuyo caso no se tienen en cuenta los estados
 	 */
 	public boolean estaVacio (boolean ingresoAdmin) {
 		if (listadoPersonaFutbol.isEmpty()) {
@@ -53,10 +71,21 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return true; //Si no hay ningún válido
 	}
 	
-	public boolean agregar (V nuevoElemento) { //TODO hace un throws de ID erróneo (suponemos que no debería pasar)
+	/**
+	 * Método que permite agregar un elemento al contenedor
+	 * @param nuevoElemento elemento a agregar
+	 * @return true si se agrega correctamente, false si no
+	 */
+	public boolean agregar (V nuevoElemento) {
 		return listadoPersonaFutbol.add(nuevoElemento);
 	}
 	
+	
+	/**
+	 * Método que busca un elemento por su ID
+	 * @param idBuscado ID del elemento a buscar
+	 * @return elemento buscado por ID. Null si no se encuentra
+	 */
 	public V buscar (int idBuscado) {
 		Iterator<V> it = listadoPersonaFutbol.iterator();
 		boolean encontrado = false;
@@ -71,10 +100,10 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	}
 	
 	/**
-	 * 
-	 * @return Este método devuelve un ArrayList con los elementos cargados en el listado. Desde afuera se decide cómo ordenarlos para la muestra, y si mostrar todos o los que no están dados de baja
+	 * Método que devuelve un ArrayList con los elementos cargados en el listado. Desde afuera se decide cómo 
+	 * ordenarlos para la muestra, y si mostrar todos o los que no están dados de baja
+	 * @return ArrayList con los elementos cargados en el listado.
 	 */
-	
 	public ArrayList<V> listado () {
 		ArrayList<V> retorno = new ArrayList<>();
 		Iterator<V> it = listadoPersonaFutbol.iterator();
@@ -86,10 +115,12 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return retorno;
 	}
 	
-	/*public String listarLista(ArrayList<V>) {
-		
-	}*/
-
+	/**
+	 * Método que lista las opciones de muestra de los elementos del tipo Jugador.
+	 * Si bien la clase es genérica, sabemos que hay o Jugadores o DTs
+	 * @param ingresoAdmin determina si se ingresa al método desde un Administrador
+	 * @return muestra de elementos
+	 */
 	public String opcionesListadoJugador(boolean ingresoAdmin) {
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Ordenar por ID (menor a mayor).");
@@ -103,6 +134,11 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return ingresarAOpcionesListadoJugador(ingresoAdmin);
 	}
 	
+	/**
+	 * Acceso a las opciones de muestra de los elementos del tipo Jugador
+	 * @param ingresoAdmin determina si se ingresa al método desde un Administrador
+	 * @return muestra de elementos
+	 */
 	public String ingresarAOpcionesListadoJugador(boolean ingresoAdmin) {
 		int opcion = Simulador.ingresoOpcion(1, 8);
 		ArrayList<V> lista = listado();
@@ -211,6 +247,11 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return "";
 	}
 	
+	/**
+	 * Método que da las opciones de listado de DTs
+	 * @param ingresoAdmin determina si se accede al método desde un Administrador
+	 * @return muestra del listado
+	 */
 	public String opcionesListadoDT(boolean ingresoAdmin) {
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Ordenar por ID (menor a mayor).");
@@ -221,6 +262,11 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return ingresarAOpcionesListadoDT(ingresoAdmin);
 	}
 	
+	/**
+	 * Acceso a la opción de muestra deseada
+	 * @param ingresoAdmin determina si se accede al método desde un Administrador
+	 * @return muestra del listado
+	 */
 	public String ingresarAOpcionesListadoDT(boolean ingresoAdmin) {
 		int opcion = Simulador.ingresoOpcion(1, 5);
 		ArrayList<V> lista = listado();
@@ -293,6 +339,9 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		return "";
 	}
 	
+	/**
+	 * Muestra del contenedor
+	 */
 	@Override
 	public String toString() {
 		StringBuilder retorno = new StringBuilder();

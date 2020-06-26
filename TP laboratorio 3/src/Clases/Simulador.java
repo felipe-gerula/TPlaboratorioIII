@@ -15,6 +15,12 @@ import excepciones.MismoRivalUsuarioException;
 import excepciones.RivalNoEncontradoException;
 import interfaces.IMenu;
 
+/** 
+ *  Esta clase es la raíz del programa, nos permite crear un objeto del tipo Simulador. 
+ * La misma cuenta con los métodos y atributos necesarios para el manejo del programa.
+ * Se encarga de la inicialización de datos y cuenta con algunos atributos estáticos a 
+ * los que se puede acceder desde cualquier parte del programa.
+ */
 public class Simulador implements IMenu{
 
 	private static ContenedorPersonaSistema<GestionUsuario> listadoUsuarios;
@@ -29,6 +35,11 @@ public class Simulador implements IMenu{
 	private static String usuarioLogueado;
 	
 	/// * * * CONSTRUCTORES * * * ///
+	
+	/**
+	 * Constructor vacío que inicializa todos los datos a partir de los archivos,
+	 * e inicializa los demás atributos.
+	 */
 	public Simulador() {
 		listadoUsuarios = new ContenedorPersonaSistema<>();
 		listadoAdministradores = new ContenedorPersonaSistema<>();
@@ -46,53 +57,92 @@ public class Simulador implements IMenu{
 	/// * * * FIN CONSTRUCTORES * * * ///
 	
 	/// * * * GETTERS * * * ///
+	
+	/**
+	 * @return listado de ligas y equipos del simulador
+	 */
 	public static ContenedorLigasEquipos getListadoLigasEquipos() {
 		return listadoLigasEquipos;
 	}
 	
+	/**
+	 * @return mercado del simulador
+	 */
 	public static Mercado getMercado() {
 		return mercadoDePases;
 	}
 	
+	/**
+	 * @return archivo de administradores
+	 */
 	public static ArchivoAdministradores getArchivoAdministradores() {
 		return archivoAdministradores;
 	}
 	
+	/**
+	 * @return archivo de usuarios
+	 */
 	public static ArchivoUsuarios getArchivoUsuarios() {
 		return archivoUsuarios;
 	}
 	
+	/**
+	 * @return archivo de jugadores
+	 */
 	public static ArchivoJugadores getArchivoJugadores() {
 		return archivoJugadores;
 	}
 	
+	/**
+	 * @return archivo de DTs
+	 */
 	public static ArchivoDTs getArchivoDTs() {
 		return archivoDTs;
 	}
 	
+	/**
+	 * @return scanner estático que se puede utilizar desde cualquier parte del programa
+	 */
 	public static Scanner getScanner() {
 		return scan;
 	}
 	
 	/// * * * FIN GETTERS * * * ///
 	
-	
+	/**
+	 * Método estático utilizado para actualizar los datos en el archivo de administradores
+	 */
 	public static void guardarArchivoAdministradores() {
 		archivoAdministradores.guardar(listadoAdministradores);
 	}
 	
+	/**
+	 * Método estático utilizado para actualizar los datos en el archivo de usuarios
+	 */
 	public static void guardarArchivoUsuarios() {
 		archivoUsuarios.guardar(listadoUsuarios);
 	}
 	
+	/**
+	 * Método estático utilizado para actualizar los datos en el archivo de jugadores
+	 */
 	public static void guardarArchivoJugadores() {
 		archivoJugadores.guardar(mercadoDePases.getListadoJugadores());
 	}
 	
+	/**
+	 * Método estático utilizado para actualizar los datos en el archivo de DTs
+	 */
 	public static void guardarArchivoDTs() {
 		archivoDTs.guardar(mercadoDePases.getListadoDTs());
 	}
 	
+	/**
+	 * Menú utilizado para la lectura correcta de un entero
+	 * @param i límite inferior de lectura de datos
+	 * @param j límite superior de lectura de datos
+	 * @return dato leído
+	 */
 	public static int ingresoOpcion (int i, int j) {
 		int opcion;
 		System.out.print("  Ingrese un valor entre " + i + " y " + j + ": ");
@@ -117,6 +167,9 @@ public class Simulador implements IMenu{
 		return opcion;
 	}
 	
+	/**
+	 * Método de listado de las opciones del simulador
+	 */
 	@Override
 	public void listadoOpciones() {
 		System.out.println("Bienvenido al Simulador de Mercado de FIFA 20.");
@@ -128,6 +181,9 @@ public class Simulador implements IMenu{
 		ingresarAOpcion();
 	}
 
+	/**
+	 * Método de acceso a las opciones del simulador
+	 */
 	@Override
 	public void ingresarAOpcion() {
 		int opcion = ingresoOpcion(1, 3);
@@ -146,12 +202,18 @@ public class Simulador implements IMenu{
 		}
 	}
 
+	/**
+	 * Método de salida del simulador
+	 */
 	@Override
 	public void regresar() {
 		System.out.println("Gracias por usar el Simulador. Esperamos que vuelva pronto.");
 		scan.close();
 	}
 	
+	/**
+	 * Método que lista las opciones de usuario
+	 */
 	public void listadoOpcionesUsuario() {
 		System.out.println("\n\nBienvenido al Menú de Usuario.");
 		System.out.println("  A continuación están las opciones:");
@@ -162,28 +224,9 @@ public class Simulador implements IMenu{
 		ingresarAOpcionUsuario();
 	}
 	
-	
-	public static Equipo seleccionUsuarioRival(){
-		System.out.println(listadoUsuarios.listar());
-		System.out.println("\nIngrese el nombre del Usuario que quiere enfrentar: ");
-		scan.nextLine();
-		String nombreUsuarioAEnfrentar = scan.nextLine();
-		GestionUsuario usuarioAEnfrentar = listadoUsuarios.buscarElemento(new GestionUsuario(nombreUsuarioAEnfrentar));
-		try {
-			RivalNoEncontradoException.rivalNulo(usuarioAEnfrentar);
-			MismoRivalUsuarioException.mismoUsuarioRival(usuarioLogueado, nombreUsuarioAEnfrentar);
-			//Usamos uno de los constructores de Equipo para instanciar el Club a enfrentar como un Equipo y devolverlo
-			return new Equipo(usuarioAEnfrentar.getClubUsuario().getNombre(), usuarioAEnfrentar.getClubUsuario().getPlantillaClub(), usuarioAEnfrentar.getClubUsuario().getDTClub().getID());
-		}
-		catch (RivalNoEncontradoException e) {
-			System.out.println("\n Usuario no encontrado.");
-		}
-		catch (MismoRivalUsuarioException e) {
-			System.out.println("\n Seleccioná un Usuario distinto al tuyo.");
-		}
-		return null;
-	}
-	
+	/**
+	 * Método de acceso a las opciones de usuario
+	 */
 	public void ingresarAOpcionUsuario() {
 		int opcion = ingresoOpcion(1, 3);
 		switch (opcion) {
@@ -251,6 +294,9 @@ public class Simulador implements IMenu{
 		}
 	}
 	
+	/**
+	 * Método que lista las opciones de administrador
+	 */
 	public void listadoOpcionesAdministrador() {
 		System.out.println("\n\nBienvenido al Menú de Administrador.");
 		System.out.println("  A continuación están las opciones:");
@@ -261,6 +307,9 @@ public class Simulador implements IMenu{
 		ingresarAOpcionAdministrador();
 	}
 	
+	/**
+	 * Método de acceso a las opciones de administrador
+	 */
 	public void ingresarAOpcionAdministrador() {
 		int opcion = ingresoOpcion (1, 3);
 		switch (opcion) {
@@ -304,10 +353,45 @@ public class Simulador implements IMenu{
 				} else {
 					System.out.println("   El Administrador ingresado no existe");
 				}
-				
 				break;	
 		}
 	}
 	
+	public static void mismoUsuarioRival (String usuario, String rival) throws MismoRivalUsuarioException{
+		if (usuario.equals(rival)) {
+			throw new MismoRivalUsuarioException("Error de selección de rival.");
+		}
+	}
+	
+	public static void rivalNulo (GestionUsuario recibido, String nombre) throws RivalNoEncontradoException{
+		if (recibido == null) {
+			throw new RivalNoEncontradoException("Error de selección de rival.", nombre);
+		}
+	}
+	
+	/**
+	 * Método para la selección de un usuario para enfrentar en un partido
+	 * @return club del rival convertido en equipo
+	 */
+	public static Equipo seleccionUsuarioRival(){
+		System.out.println(listadoUsuarios.listar());
+		System.out.println("\nIngrese el nombre del Usuario que quiere enfrentar: ");
+		scan.nextLine();
+		String nombreUsuarioAEnfrentar = scan.nextLine();
+		GestionUsuario usuarioAEnfrentar = listadoUsuarios.buscarElemento(new GestionUsuario(nombreUsuarioAEnfrentar));
+		try {
+			rivalNulo(usuarioAEnfrentar, nombreUsuarioAEnfrentar);
+			mismoUsuarioRival(usuarioLogueado, nombreUsuarioAEnfrentar);
+			//Usamos uno de los constructores de Equipo para instanciar el Club a enfrentar como un Equipo y devolverlo
+			return new Equipo(usuarioAEnfrentar.getClubUsuario().getNombre(), usuarioAEnfrentar.getClubUsuario().getPlantillaClub(), usuarioAEnfrentar.getClubUsuario().getDTClub().getID());
+		}
+		catch (RivalNoEncontradoException e) {
+			System.out.println(e.getMessage());
+		}
+		catch (MismoRivalUsuarioException e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
 
 }

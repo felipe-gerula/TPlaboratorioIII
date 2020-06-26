@@ -11,11 +11,9 @@ public class MismoRivalUsuarioException extends Exception{
 		super(mensajeError);
 	}
 	
-	public static boolean mismoUsuarioRival (String usuario, String rival) throws MismoRivalUsuarioException{
-		if (usuario.equals(rival)) {
-			throw new MismoRivalUsuarioException("El usuario logueado está intentando jugar un partido contra sí mismo.");
-		}
-		return true;
+	@Override
+	public String getMessage() {
+		return super.getMessage() + " Un usuario no puede enfrentarse a sí mismo.";
 	}
 
 }

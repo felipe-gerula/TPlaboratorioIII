@@ -2,8 +2,14 @@ package comparaciones;
 
 import Clases.PersonaFutbol;
 
+/**
+ * Clase utilizada para comparar dos elementos de PersonaFutbol por tipo
+ */
 public class ComparacionTipo  extends Comparacion<PersonaFutbol>{
 
+	/**
+	 * Método que realiza la comparación por tipo
+	 */
 	@Override
 	public int compare(PersonaFutbol persona1, PersonaFutbol persona2) {
 		String tipo1 = persona1.getTipo();

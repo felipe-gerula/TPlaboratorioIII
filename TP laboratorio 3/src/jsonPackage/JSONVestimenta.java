@@ -12,5 +12,4 @@ public class JSONVestimenta {
 		retorno.put("Prenda Superior", recibida.getPrendaSuperior());
 		return retorno;
 	}
-	
 }

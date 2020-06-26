@@ -3,8 +3,15 @@ package comparaciones;
 import Clases.Jugador;
 import Clases.PersonaFutbol;
 
+/**
+ * Clase utilizada para comparar por posición.
+ * Si bien hablamos de PersonaFutbol, este criterio aplica solamente para jugadores
+ */
 public class ComparacionPosicion extends Comparacion<PersonaFutbol>{
 	
+	/**
+	 * Método que realiza la comparación por posición
+	 */
 	@Override
 	public int compare(PersonaFutbol jugador1, PersonaFutbol jugador2) {
 		Jugador aux1 = (Jugador)jugador1;

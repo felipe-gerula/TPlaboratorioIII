@@ -12,17 +12,33 @@ import java.util.Iterator;
 import Clases.ContenedorPersonaSistema;
 import Clases.GestionAdministrador;
 
+/**
+ * Clase utilizada para la gestión del archivo de administradores. Cuenta con los métodos necesarios
+ * para tal fin.
+ * Hereda de la clase ArchivoAbstracto
+ */
 public class ArchivoAdministradores extends ArchivoAbstracto<ContenedorPersonaSistema<GestionAdministrador>>{
+	
+	/**
+	 * Constructor vacío que llama al constructor de la clase padre con el nombre del archivo a gestionar
+	 */
 	public ArchivoAdministradores () {
 		super ("Administradores.dat");
 	}
 
+	/**
+	 * Método que llama a la función de carga de datos
+	 * @param listadoAdministradoresRecibido listado a cargar de datos
+	 */
 	public void cargarListadoAdministradores (ContenedorPersonaSistema<GestionAdministrador> listadoAdministradoresRecibido) {
 		leer(listadoAdministradoresRecibido);
 	}
 	
+	/**
+	 * Método que recibe un listado de administradores y guarda sus elementos en el archivo
+	 */
 	@Override
-	public boolean guardar(ContenedorPersonaSistema<GestionAdministrador> objetoAGuardar) {
+	public void guardar(ContenedorPersonaSistema<GestionAdministrador> objetoAGuardar) {
 		try {
 			ObjectOutputStream archivo = new ObjectOutputStream(new FileOutputStream(super.getNombreArchivo()));
 			Iterator<GestionAdministrador> it = objetoAGuardar.getIterator();
@@ -40,11 +56,14 @@ public class ArchivoAdministradores extends ArchivoAbstracto<ContenedorPersonaSi
 		catch (IOException e) {
 			System.out.println("IOException.");
 		}
-		return true;
 	}
 
+	/**
+	 * Método que carga los datos desde el archivo al contenedor de administradores recibido
+	 * @param contenedorRecibido contenedor a cargar de datos
+	 */
 	@Override
-	public boolean leer(ContenedorPersonaSistema<GestionAdministrador> contenedorRecibido) {
+	public void leer(ContenedorPersonaSistema<GestionAdministrador> contenedorRecibido) {
 		try {
 			GestionAdministrador aux;
 			FileInputStream fileInputStream = new FileInputStream(super.getNombreArchivo());
@@ -66,7 +85,6 @@ public class ArchivoAdministradores extends ArchivoAbstracto<ContenedorPersonaSi
 		catch (ClassNotFoundException e) {
 			System.out.println("ClassNotFoundException.");
 		}
-		return true;
 	}
 	
 }

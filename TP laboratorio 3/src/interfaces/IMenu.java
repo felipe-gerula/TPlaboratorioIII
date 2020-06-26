@@ -1,19 +1,22 @@
 package interfaces;
 /** 
- *  Esta interfaz con permite conectar las clases relacionadas con el Menu
+ *  Interfaz de métodos para las clases que tengan un menú
  *  @author 
  */
 public interface IMenu {
+	
 	/**
-	 * lista las opciones del menu
+	 * Listado de opciones de menú
 	 */
 	public void listadoOpciones(); ///Optamos por mostrar el listado dentro del método
+	
 	/**
-	 * permite al usuario ingresar la opcion deseada
+	 * Método de acceso a la opción deseada
 	 */
 	public void ingresarAOpcion();
+	
 	/**
-	 * regresa al menu anterior
+	 * Método utilizado para salir del menú
 	 */
 	public void regresar();
 }

@@ -3,33 +3,48 @@ package Clases;
 import java.io.Serializable;
 
 /** 
- *  Esta clase nos permite crear objetos de tipo Vestimenta
- *  Utilizada por el DT´s
- *  @author 
+ *  Clase que nos permite crear objetos del tipo Vestimenta. Cuenta con los atributos y métodos necesarios
+ *  para su gestión y modificación. Es utilizada por los DTs 
  */
 public class Vestimenta implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String prendaSuperior;
 	private String prendaInferior;
 	
+	/**
+	 * Constructor vacío que asigna valores predeterminados a las prendas
+	 */
 	public Vestimenta() {
 		prendaSuperior = "";
 		prendaInferior = "";
 	}
 	
+	/**
+	 * @param nuevaParteSuperior nueva parte superior de la vestimenta
+	 * @param nuevaParteInferior nueva parte inferior de la vestimenta
+	 */
 	public void setVestimenta(String nuevaParteSuperior, String nuevaParteInferior) {
 		this.prendaSuperior = nuevaParteSuperior;
 		this.prendaInferior = nuevaParteInferior;
 	}
 	
+	/**
+	 * @return prenda superior de la vestimenta
+	 */
 	public String getPrendaSuperior () {
 		return this.prendaSuperior;
 	}
 	
+	/**
+	 * @return prenda inferior de la vestimenta
+	 */
 	public String getPrendaInferior () {
 		return this.prendaInferior;
 	}
 	
+	/**
+	 * Método que lista y lee las opciones de vestimenta
+	 */
 	public void cambiarVestimenta() {
 		int opcion;
 		String opcionSuperior = "";
@@ -87,6 +102,9 @@ public class Vestimenta implements Serializable{
 		prendaInferior = opcionInferior;
 	}
 
+	/**
+	 * Información de la vestimenta
+	 */
 	@Override
 	public String toString() {
 		return " Vestimenta equipada: \n  Prenda Superior: " + prendaSuperior + ".\n  Prenda Inferior: " + prendaInferior + ".";

@@ -3,31 +3,70 @@ package Clases;
 import java.io.Serializable;
 
 /** 
- *  Esta clase abstracta contiene los atributos de PersonaSistema
- *  clase padre de GestionAdministrador y GestionUsuario
- *  @author 
+ *  Clase abstracta que contiene los atributos de PersonaSistema.
+ *  Clase padre de GestionAdministrador y GestionUsuario
  */
 public abstract class PersonaSistema implements Serializable{
 	private static final long serialVersionUID = -6734207281855156759L;
 	private String nombre;
 	private String password;
 	
-	public PersonaSistema(String nombreUsuario, String passUsuario) {
-		this.nombre = nombreUsuario;
-		this.password = passUsuario;
+	/**
+	 * Constructor de PersonaSistema que asigna nombre y contraseña
+	 * @param nombreUsuario nombre del nuevo usuario o administrador
+	 * @param passUsuario constraseña del nuevo usuario o administrador
+	 */
+	public PersonaSistema(String nombrePersona, String passPersona) {
+		this.nombre = nombrePersona;
+		this.password = passPersona;
 	}
 
+	/**
+	 * Constructor vacío que asigna automáticamente valores de una nueva instancia
+	 */
 	public PersonaSistema() {
 		nombre = "";
 		password = "";
 	}
 
-	public PersonaSistema(String nombreUsuario) {
-		this.nombre = nombreUsuario;
+	/**
+	 * Constructor que solamente asigna un nombre. Se utiliza para, por ejemplo, la búsqueda de datos
+	 * @param nombrePersona nombre de la nueva PersonaSistema
+	 */
+	public PersonaSistema(String nombrePersona) {
+		this.nombre = nombrePersona;
+	}
+	
+	/**
+	 * @return nombre de la PersonaSistema
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre nuevo nombre de la PersonaSistema
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return contraseña de la PersonaSistema
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password nueva contraseña de la PersonaSistema
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
     /**
-     * Cambia la contraseña del usuario
+     * Método para cambiar la contraseña de la PersonaSistema instanciada
      */
 	public void cambiarPassword() {
 		Simulador.getScanner().nextLine();
@@ -37,21 +76,22 @@ public abstract class PersonaSistema implements Serializable{
 	}
 	
 	/**
-	 * permite crear usuarios nuevos para el sistema
-	 * @return el nuevo usuario creado  
+	 * Método que permite la creación de PersonaSistema nuevas para el sistema
+	 * @return la nueva PersonaSistema creada  
 	 */
 	public abstract PersonaSistema crearPersona();
 	
 	/**
-	 * permite acceder al sistema a un usuario
+	 * Método que permite a una PersonaSistema acceder al sistema
 	 * @return el usuario ingresado
 	 */
 	public abstract PersonaSistema acceder();
 	
-/**
- * compara la contraseña ingresada por el usuario con la que esta cargada en el sistema
- * @return si es true la contraseña ingresa es valido, sino retorna false
- */
+	/**
+	 * Método que compara la contraseña ingresada por el usuario o administrador con la que 
+	 * está cargada en el sistema
+	 * @return true si la contraseña ingresada es válida, false si no
+	 */
 	public boolean comparacionPassword() {
 		int intentos = 3;
 		String passwordLeida;
@@ -72,22 +112,9 @@ public abstract class PersonaSistema implements Serializable{
 		return false;
 	}
 	
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
+	/**
+	 * Método para determinar si dos PersonaSistema son equivalentes
+	 */
 	@Override
 	public boolean equals(Object obj) { ///Comparamos dos PersonaSistema por su nombre
 		if (obj != null && obj instanceof PersonaSistema) {
@@ -97,6 +124,9 @@ public abstract class PersonaSistema implements Serializable{
 		return false;
 	}
 	
+	/**
+	 * Método usado para la carga a estructuras
+	 */
 	@Override
 	public int hashCode() {
 		return 0;

@@ -7,23 +7,47 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * Clase que permite la creación de Contenedores de Ligas y Equipos, la cual cuenta con los atributos y métodos 
+ * necesarios para su gestión.
+ *
+ */
 public class ContenedorLigasEquipos {
 	private HashMap<String, HashMap<String, Equipo>> hashMapLigasEquipos;
 	
+	/**
+	 * Contructor vacío
+	 */
 	public ContenedorLigasEquipos() {
 		hashMapLigasEquipos = new HashMap<>();
 	}
 	
+	/**
+	 * Método que devuelve un equipo particular de una liga particular.
+	 * @param ligaEquipo nombre de la liga del equipo buscado
+	 * @param nombreEquipo nombre del equipo buscado
+	 * @return equipo buscado
+	 */
 	public Equipo getEquipo (String ligaEquipo, String nombreEquipo) {
 		HashMap<String, Equipo> aux = hashMapLigasEquipos.get(ligaEquipo);
 		return aux.get(nombreEquipo);
 	}
 	
+	/**
+	 * Método que devuelve el Iterator del hashMap que contiene las ligas y los equipos
+	 * @return Iterator del hashMap contenedor de ligas y equipos
+	 */
 	public Iterator<Entry<String, HashMap<String, Equipo>>> getIterator () {
 		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
 		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
 		return it;
 	}
+	
+	/**
+	 * Método que agrega una liga al hashMap contenedor de ligas y equipos
+	 * @param nuevaLiga Nombre de la nueva liga
+	 * @return true si la liga fue agregada, false si la liga ya estaba agregada.
+	 */
 	
 	public boolean agregarLiga(String nuevaLiga) {
 		if (hashMapLigasEquipos.containsKey(nuevaLiga)) {
@@ -34,6 +58,12 @@ public class ContenedorLigasEquipos {
 		}
 	}
 	
+	/**
+	 * Método que agrega un equipo al hashMap de equipos
+	 * @param nuevoEquipo nombre del nuevo equipo
+	 * @param ligaEquipo liga del nuevo equipo
+	 * @return true si el equipo fue agregado, false si el equipo ya estaba agregado
+	 */
 	public boolean agregarEquipo (String nuevoEquipo, String ligaEquipo) {
 		if (!hashMapLigasEquipos.containsKey(ligaEquipo)) {
 			agregarLiga(ligaEquipo);
@@ -47,28 +77,49 @@ public class ContenedorLigasEquipos {
 		}
 	}
 	
+	/**
+	 * Método que agrega un jugador a su equipo
+	 * @param nuevoJugador jugador a ser agregado
+	 */
 	public void agregarJugador (Jugador nuevoJugador) {
 		agregarEquipo (nuevoJugador.getClub(), nuevoJugador.getLiga());
 		Equipo copia = hashMapLigasEquipos.get(nuevoJugador.getLiga()).get(nuevoJugador.getClub());
 		copia.agregarJugador(nuevoJugador.getIDJugador());
 	}
 
+	/**
+	 * Método que elimia un jugador de su equipo
+	 * @param jugadorAEliminar jugador a ser eliminado
+	 */
 	public void eliminarJugador(Jugador jugadorAEliminar) {
 		Equipo copia = hashMapLigasEquipos.get(jugadorAEliminar.getLiga()).get(jugadorAEliminar.getClub());
 		copia.eliminarJugador(jugadorAEliminar.getIDJugador());
 	}
 	
+	/**
+	 * Método que agrega un DT a su equipo
+	 * @param nuevoDT Director Técnico a agregar
+	 * @return true si el DT pudo ser agregado, false si no
+	 */
 	public boolean agregarDT (DirectorTecnico nuevoDT) {
 		agregarEquipo (nuevoDT.getClub(), nuevoDT.getLiga());
 		Equipo copia = hashMapLigasEquipos.get(nuevoDT.getLiga()).get(nuevoDT.getClub());
 		return copia.agregarDT(nuevoDT.getID());
 	}
 
+	/**
+	 * Método que elimina un DT de su equipo
+	 * @param dtAEliminar Director Técnico a ser eliminado
+	 */
 	public void eliminarDT(DirectorTecnico dtAEliminar) {
 		Equipo copia = hashMapLigasEquipos.get(dtAEliminar.getLiga()).get(dtAEliminar.getClub());
-		copia.elimiarDT();
+		copia.eliminarDT();
 	}
 	
+	/**
+	 * Método que permite al Administrador elegir una liga o equipo existentes, o agregar nuevos para un DT o Jugador
+	 * @return el equipo seleccionado o agregado
+	 */
 	public Equipo seleccionLigasEquipos () {
 		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
 		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
@@ -126,6 +177,11 @@ public class ContenedorLigasEquipos {
 		}
 	}
 	
+	/**
+	 * Método que permite la selección de un equipo ya existente para, por ejemplo, ser visto o enfrentado
+	 * @param ingresoAdmin determina si se accede desde el Administrador
+	 * @return el equipo seleccionado
+	 */
 	public Equipo listarLigasEquipos (boolean ingresoAdmin) {
 		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
 		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
@@ -167,6 +223,9 @@ public class ContenedorLigasEquipos {
 		return auxB.get(nombresEquipos.get(opcion-1));
 	}
 	
+	/**
+	 * Muestra de los datos del contenedor
+	 */
 	@Override
 	public String toString() {
 		StringBuilder retorno = new StringBuilder();

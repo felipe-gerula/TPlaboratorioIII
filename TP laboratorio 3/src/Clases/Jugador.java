@@ -1,21 +1,24 @@
 package Clases;
 
 /** 
- *  Esta clase nos permite crear objetos de tipo Jugador
+ *  Esta clase nos permite crear objetos del tipo Jugador, la cual cuenta con los atributos y métodos 
+ *  necesarios para su gestión. Hereda de PersonaFutbol
  *  @see "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/> JugadorFIFA 20</a>
- *  @author 
  */
+
 public class Jugador extends PersonaFutbol /*implements Comparable*/{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -1017025389533618303L;
+	
 	private static int cantidadJugadores;
 	private int calificacion;
 	private char pieHabil;
 	private int movHabiles;
 	private String posicion;
 	
+	/**
+	 * Constructor de Jugador con los parámetros a asignar al nuevo objeto
+	 */
 	public Jugador(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int calificacion, char pieHabil, int movHabiles, String posicion) {
 		super(nombreApellido, club, liga, nacionalidad, edad, tipo, precio, cantidadJugadores);
 		cantidadJugadores++;
@@ -25,34 +28,59 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		this.posicion = posicion;
 	}
 
+	/**
+	 * Constructor vacío que llama al constructor vacío de PersonaFutbol
+	 */
 	public Jugador() {
 		super();
 	}
 
+	/**
+	 * @return cantidad de jugadores existentes
+	 */
 	public static int getCantidadJugadores() {
 		return cantidadJugadores;
 	}
 	
+	/**
+	 * @return ID de la instancia de Jugador
+	 */
 	public int getIDJugador() {
 		return super.getID();
 	}
 	
+	/**
+	 * @return calificación de la instancia de Jugador
+	 */
 	public int getCalificacion() {
 		return calificacion;
 	}
 	
+	/**
+	 * Método para cambiar la cantidad total de Jugadores
+	 * @param cantidad nueva cantidad total
+	 */
 	public static void setCantidadJugadores(int cantidad) {
 		cantidadJugadores = cantidad;
 	}
 	
+	/**
+	 * @param calificacion nueva calificación del jugador
+	 */
 	public void setCalificacion(int calificacion) {
 		this.calificacion = calificacion;
 	}
 	
+	/**
+	 * @return pie hábil del jugador
+	 */
 	public char getPieHabil() {
 		return pieHabil;
 	}
 	
+	/**
+	 * Método que cambia automáticamente el pie hábil del jugador
+	 */
 	public void setPieHabil() {
 		if (pieHabil == 'd' || pieHabil == 'D') {
 			this.pieHabil = 'I';
@@ -61,30 +89,52 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		}
 	}
 	
+	/**
+	 * @return movimientos hábiles del jugador
+	 */
 	public int getMovHabiles() {
 		return movHabiles;
 	}
 	
+	/**
+	 * @param movHabiles nuevos movimientos hábiles del jugador
+	 */
 	public void setMovHabiles(int movHabiles) {
 		this.movHabiles = movHabiles;
 	}
 	
+	/**
+	 * @return posición del jugador
+	 */
 	public String getPosicion() {
 		return posicion;
 	}
 	
+	/**
+	 * @param posicion nueva posición del jugador
+	 */
 	public void setPosicion(String posicion) {
 		this.posicion = posicion;
 	}
 
+	/**
+	 * @return club del jugador
+	 */
 	public String getClub() {
 		return super.getClub();
 	}	
 	
+	/**
+	 * @return precio del jugador
+	 */
 	public double getPrecio() {
 		return super.getPrecio();
 	}
 	
+	/**
+	 * Método para la creación de un jugador, con menúes internos
+	 * @return nuevo jugador creado en el menú
+	 */
 	public Jugador crearJugador() {
 		System.out.println("Bienvenido al menú de creación de Jugador.");
 		Simulador.getScanner().nextLine();
@@ -133,6 +183,12 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		return null;
 	}
 	
+	/**
+	 * Método que lee el precio del jugador según la valoración y calidad del mismo
+	 * @param calificacionJugador calificación numérica del jugador
+	 * @param calidadJugador calidad del jugador
+	 * @return nuevo precio
+	 */
 	public double seleccionDePrecio(int calificacionJugador, String calidadJugador) {
 		double retorno;
 		if (calificacionJugador<65) {
@@ -177,8 +233,10 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		}
 	}
 
-
-
+	/**
+	 * Método para seleccionar la calidad del jugador dentro de las opciones dadas
+	 * @return nueva calidad del jugador
+	 */
 	public String seleccionDeCalidad(int calificacionDeJugador) {
 		System.out.println("¿El jugador es de calidad especial? (s para confirmar): ");
 		Simulador.getScanner().nextLine();
@@ -202,8 +260,10 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		}
 	}
 
-
-
+	/**
+	 * Método para seleccionar la posición del jugador dentro de las opciones dadas
+	 * @return nueva posición del jugador
+	 */
 	public String seleccionDePosicion() {
 		System.out.println("  A continuación están las posiciones disponibles:");
 		System.out.println("    1. Portero.");
@@ -270,6 +330,9 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 		return "";
 	}
 	
+	/**
+	 * Listado de información del Jugador
+	 */
 	@Override
 	public String toString() {
 		StringBuilder retorno = new StringBuilder();

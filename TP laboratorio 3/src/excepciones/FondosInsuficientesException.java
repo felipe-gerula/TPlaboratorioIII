@@ -2,20 +2,17 @@ package excepciones;
 
 public class FondosInsuficientesException extends Exception{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8174757789769433068L;
-
-	public FondosInsuficientesException(String mensajeError) {
+	private double fondosNecesarios;
+	
+	public FondosInsuficientesException(String mensajeError, double fondosNecesarios) {
 		super(mensajeError);
+		this.fondosNecesarios = fondosNecesarios;
 	}
 	
-	public static boolean comprobarFondos (double precioJugador, double fondosClub) throws FondosInsuficientesException{
-		if (fondosClub >= precioJugador) {
-			return true;
-		} else {
-			throw new FondosInsuficientesException("Fondos insuficientes. Faltan $" + (precioJugador - fondosClub));
-		}
+	@Override
+	public String getMessage() {
+		return super.getMessage() + " Monedas necesarias: $" + fondosNecesarios;
 	}
+	
 }

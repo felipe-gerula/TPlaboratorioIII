@@ -4,12 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import comparaciones.ComparacionPosicion;
 
+/** 
+ *  Esta clase nos permite crear objetos del tipo Partido, la cual cuenta con los métodos 
+ * necesarios para su gestión. Trabaja con el club del usuario y el equipo rival, sea uno cargado
+ * por el administrador o uno de un usuario, siempre y cuando cuenten con 11 jugadores válidos y un DT
+ * que también lo sea
+ */
+
 public class Partido {
 	
+	/**
+	 * Constructor vacío. La clase Partido no necesita atributos
+	 */
 	public Partido () {
 	}
 	
-	///Pide liga y equipo a enfrentar. Si los encuentra y los equipos cuentan con 11 jugadores, recibe las monedas ganadas y las cambia en el club.
+	/**
+	 * Método que pide liga y equipo a enfrentar. Si los encuentra y los equipos cuentan con 11 jugadores,
+	 * recibe las monedas ganadas y las cambia en el club.
+	 * @param clubRecibido club del usuario que enfrentará a otro rival
+	 */
 	public void listadoOpcionesJugarPartido (ClubUsuario clubRecibido){
 	    int validosJugador = clubRecibido.getPlantillaClub().cantidadJugadores(false);
 	    if (validosJugador == 11) {
@@ -28,6 +42,10 @@ public class Partido {
 	    }
 	}
 	
+	/**
+	 * Acceso a las opciones para jugar un partido
+	 * @param clubRecibido club del usuario que enfrentará a otro rival
+	 */
 	public void ingresarAOpcionJugarPartido (ClubUsuario clubRecibido){
 		int opcion = Simulador.ingresoOpcion(1, 3);
 		switch (opcion) {
@@ -48,6 +66,12 @@ public class Partido {
 		}
 	}
 
+	/**
+	 * Método que determina si el club rival cumple con los requisitos para ser enfrentado y, de ser así,
+	 * llama a los métodos necesarios para la simulación del partido 
+	 * @param clubRecibido club del usuario que enfrentará a otro rival
+	 * @param equipoRival club del rival que enfrentará al usuario
+	 */
 	private void jugarPartido(ClubUsuario clubRecibido, Equipo equipoRival) {
 	    if (!equipoRival.hayEspacioEnPlantilla(false)) {
 	    	if (!equipoRival.hayEspacioParaDT()) {
@@ -63,11 +87,22 @@ public class Partido {
 	    }
 	}
 	
-	///Recibe los promedios de calificaciones del equipo del usuario y del equipo del rival. Segun la diferencia, tenemos dos casos:
-	///que el usuario tenga más promedio: la probabilidad es de 50+la diferencia. Si la prob es mayor a 76, se limita a 76.
-	///que el rival tenga más promedio: ídem anterior.
-	///Luego se hace un random de 0 a 100. Según dónde caiga será el resultado del partido, siempre que caiga entre 95 y 100 será empate.
-	///Tomamos los dos casos como separados por cómo se le asignan valores a la variable resultado: -1 por perder, 0 por empatar, 1 por ganar
+	/**
+	 * Método que recibe los promedios de calificaciones del equipo del usuario y del equipo del rival.
+	 * Segun la diferencia, tenemos dos casos:
+	 *     • Que el usuario tenga más promedio: la probabilidad de ganar es de 50+la diferencia.
+	 *         Si la prob es mayor a 76.5, se limita a 76.5.
+	 *     • Que el rival tenga más promedio: ídem anterior.
+	 * Luego se hace un random de 0 a 100. Según dónde caiga será el resultado del partido, 
+	 * siempre que caiga entre 95 y 100 será empate.
+	 * Tomamos los dos casos como separados por cómo se le asignan valores a la variable resultado: 
+	 *     • -1 por perder, 
+	 *     • 0 por empatar, 
+	 *     • 1 por ganar.
+	 * @param promedioUsuario valor de referencia de la calidad del equipo del usuario
+	 * @param promedioRival valor de referencia de la calidad del equipo del rival
+	 * @return cantidad de monedas ganadas en el partido
+	 */
 	private int resultadoPartido (double promedioUsuario, double promedioRival){
 	    double diferencia = promedioUsuario - promedioRival;
 	    double x;
@@ -105,8 +140,14 @@ public class Partido {
 	    return resultado;
 	}
 	
-	///Recibe el valor del resultado (-1, 0 o 1). Calcula los goles, como máximo 5 por equipo, y calcula al azar los jugadores que los hicieron.
-	///Devuelve las monedas ganadas. Se podrá ganar un mínimo de 50 (perder 5-0) y un máximo de 400 (ganar 5-0).
+	/**
+	 * Método que recibe el valor del resultado, calcula los goles, como máximo 5 por equipo, y calcula
+	 * al azar los jugadores que los marcaron.
+	 * @param resultado -1 por perder, 0 por empatar, 1 por ganar.
+	 * @param clubRecibido club del usuario que enfrentará a otro rival
+	 * @param equipoRival club del rival que enfrentará al usuario
+	 * @return Monedas ganadas en el partido: un mínimo de 50 (perder 5-0) y un máximo de 400 (ganar 5-0).
+	 */
 	private double calcularMonedas (int resultado, ClubUsuario clubUsuario, Equipo equipoRival){
 	    double retorno = 0;
 	    int x = -1; ///Goles usuario

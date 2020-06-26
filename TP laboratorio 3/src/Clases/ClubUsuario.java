@@ -5,6 +5,12 @@ import java.util.Scanner;
 
 import interfaces.IMenu;
 
+/**
+ * Clase que permite la creación de Clubes de Usuario, la cual cuenta con los atributos y métodos necesarios para
+ * su gestión.
+ *
+ */
+
 public class ClubUsuario implements IMenu, Serializable{
 	private static final long serialVersionUID = 8888764086344279621L;
 	private String nombreClub;
@@ -14,6 +20,15 @@ public class ClubUsuario implements IMenu, Serializable{
 	private Estadio estadio; 
 	private String camiseta;
 	
+	
+	/**
+	 * Constructor para crear un nuevo Club con los parámetros recibidos. El DT y la Plantilla se crean como nuevas
+	 * instancias, y los fondos tienen un valor de creación por defecto de $100.000.
+	 * 
+	 * @param nombreClub Nombre ingresado por el Usuario. Puede ser igual que el de otro club.
+	 * @param nuevaCamiseta Nombre de la camiseta ingresado por el Usuario.
+	 * @param nuevoEstadio Estadio creado por el Usuario en el menú de creación de Estadio.
+	 */
 	public ClubUsuario(String nombreClub, String nuevaCamiseta, Estadio nuevoEstadio) {
 		this.nombreClub = nombreClub;
 		camiseta = nuevaCamiseta;
@@ -71,11 +86,18 @@ public class ClubUsuario implements IMenu, Serializable{
 		return plantillaClub.jugadorEncontrado(idBuscado);
 	}
 	
+	/**
+	 * Método que crea una instancia de la Clase Partido y llama al listado de opciones.
+	 * Dentro del mismo se modifican las monedas del Club en caso de poder jugarse un partido.
+	 */
 	public void jugarPartido () {
 		Partido partido = new Partido();
 		partido.listadoOpcionesJugarPartido(this);
 	}
 	
+	/**
+	 * Listado de opciones básicas dentro del Club.
+	 */
 	@Override
 	public void listadoOpciones() {
 		sincronizarClub ();
@@ -91,6 +113,11 @@ public class ClubUsuario implements IMenu, Serializable{
 		ingresarAOpcion();
 	}
 	
+	/**
+	 * Método que corrobora que la información del Club sea la correcta con respecto a la que aparece en
+	 * el Mercado. Además, controla que la plantilla siga siendo correcta. Es decir, si hay una cantidad
+	 * de jugadores en una posición que no sea correcta, el jugador será eliminado del Club.
+	 */
 	private void sincronizarClub() {
 		setFondos(sincronizarJugadores());
 		if (dtClub.getID()!=-1) {
@@ -99,6 +126,14 @@ public class ClubUsuario implements IMenu, Serializable{
 		Simulador.guardarArchivoUsuarios();
 	}
 
+	
+	/**
+	 * Controla que los jugadores de la plantilla no estén dados de baja por el Administrador.
+	 * Controla que las posiciones estén correctamente ocupadas.
+	 * De encontrar algún jugador que no lo cumpla, se devuelve su precio junto al retorno.
+	 * 
+	 * @return total de monedas correspondientes a la suma de los precios de los jugadores erróneos.
+	 */
 	private double sincronizarJugadores() {
 		double retorno = fondos;
 		Iterator<Integer> it = plantillaClub.getIterator();
@@ -183,6 +218,13 @@ public class ClubUsuario implements IMenu, Serializable{
 		return retorno;
 	}
 
+	
+	/**
+	 * Método que sincroniza los datos del DT del Club y controla que no haya sido dado de baja.
+	 * De cumplirse lo anterior, se suma el valor del DT al retorno.
+	 * 
+	 * @return fondos del club + precio del DT (si fue eliminado)
+	 */
 	private double sincronizarDT() {
 		double retorno = fondos;
 		DirectorTecnico aux = Simulador.getMercado().getListadoDTs().buscar(dtClub.getID());
@@ -195,6 +237,10 @@ public class ClubUsuario implements IMenu, Serializable{
 		return retorno;
 	}
 
+	
+	/**
+	 * Método que permite el acceso a las opciones principales del Club
+	 */
 	@Override
 	public void ingresarAOpcion() {
 		int opcion = Simulador.ingresoOpcion(1, 6);
@@ -226,6 +272,9 @@ public class ClubUsuario implements IMenu, Serializable{
 		
 	}
 	
+	/**
+	 * Menú de opciones de modificación del Club
+	 */
 	private void listadoOpcionesModificacionClub () {
 		System.out.println("  A continuación están las opciones de modificación del Club:");
 		System.out.println("    1. Modificar Nombre del Club.");
@@ -237,6 +286,9 @@ public class ClubUsuario implements IMenu, Serializable{
 		ingresarAOpcionModificacionClub();
 	}
 	
+	/**
+	 * Ingreso a opciones de modificación del Club
+	 */
 	private void ingresarAOpcionModificacionClub() {
 		Scanner scanner = Simulador.getScanner(); //Lo pasamos a una variable local porque tiraba error de leaking resource
 		int opcion = Simulador.ingresoOpcion(1, 5);
@@ -269,6 +321,9 @@ public class ClubUsuario implements IMenu, Serializable{
 		}
 	}
 
+	/**
+	 * Método que muestra los datos del DT (de haber uno), y la plantilla de jugadores del Club.
+	 */
 	private void verPlantilla() {
 		if (this.dtClub.getEstado()) {
 			System.out.println("\n\nInformación del Director Técnico: ");
@@ -280,11 +335,17 @@ public class ClubUsuario implements IMenu, Serializable{
 		System.out.println(plantillaClub.listadoJugadores(false));
 	}
 
+	/**
+	 * Regreso al menú de usuario.
+	 */
 	@Override
 	public void regresar() {
 		System.out.println("Regresando al Menú de Usuario.");
 	}
 	
+	/** 
+	 * Muestra de datos del Club.
+	 */
 	@Override
 	public String toString() {
 		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n" + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");

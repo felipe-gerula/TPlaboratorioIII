@@ -12,19 +12,34 @@ import java.util.Iterator;
 import Clases.ContenedorPersonaFutbol;
 import Clases.Jugador;
 
+/**
+ * Clase utilizada para la gestión del archivo de jugadores. Cuenta con los métodos necesarios
+ * para tal fin.
+ * Hereda de la clase ArchivoAbstracto
+ */
 public class ArchivoJugadores extends ArchivoAbstracto<ContenedorPersonaFutbol<Jugador>>{
 	
+	/**
+	 * Constructor vacío que llama al constructor de la clase padre con el nombre del archivo a gestionar
+	 */
 	public ArchivoJugadores () {
 		super ("Jugadores.dat");
 	}
 	
+	/**
+	 * Método que llama a la función de carga de datos
+	 * @param listadoJugadoresRecibido listado a cargar de datos
+	 */
 	public void cargarListadoJugadores (ContenedorPersonaFutbol<Jugador> listadoJugadoresRecibido) {
 		leer(listadoJugadoresRecibido);
 		Jugador.setCantidadJugadores(listadoJugadoresRecibido.cantidad());
 	}
 
+	/**
+	 * Método que recibe un listado de jugadores y guarda sus elementos en el archivo
+	 */
 	@Override
-	public boolean guardar(ContenedorPersonaFutbol<Jugador> objetoAGuardar) {
+	public void guardar(ContenedorPersonaFutbol<Jugador> objetoAGuardar) {
 		try {
 			ObjectOutputStream archivo = new ObjectOutputStream(new FileOutputStream(super.getNombreArchivo()));
 			Iterator<Jugador> it = objetoAGuardar.getIterator();
@@ -42,11 +57,14 @@ public class ArchivoJugadores extends ArchivoAbstracto<ContenedorPersonaFutbol<J
 		catch (IOException e) {
 			System.out.println("IOException.");
 		}
-		return true;
 	}
 
+	/**
+	 * Método que carga los datos desde el archivo al contenedor de jugadores recibido
+	 * @param contenedorRecibido contenedor a cargar de datos
+	 */
 	@Override
-	public boolean leer(ContenedorPersonaFutbol<Jugador> contenedorRecibido)  {
+	public void leer(ContenedorPersonaFutbol<Jugador> contenedorRecibido)  {
 		try {
 			Jugador aux;
 			FileInputStream fileInputStream = new FileInputStream(super.getNombreArchivo());
@@ -68,9 +86,5 @@ public class ArchivoJugadores extends ArchivoAbstracto<ContenedorPersonaFutbol<J
 		catch (ClassNotFoundException e) {
 			System.out.println("ClassNotFoundException.");
 		}
-		return true;
 	}
-	
-	
-	
 }

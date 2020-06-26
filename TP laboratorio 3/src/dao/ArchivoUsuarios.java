@@ -12,18 +12,33 @@ import java.util.Iterator;
 import Clases.ContenedorPersonaSistema;
 import Clases.GestionUsuario;
 
+/**
+ * Clase utilizada para la gestión del archivo de usuarios. Cuenta con los métodos necesarios
+ * para tal fin.
+ * Hereda de la clase ArchivoAbstracto
+ */
 public class ArchivoUsuarios extends ArchivoAbstracto<ContenedorPersonaSistema<GestionUsuario>>{
 	
+	/**
+	 * Constructor vacío que llama al constructor de la clase padre con el nombre del archivo a gestionar
+	 */
 	public ArchivoUsuarios () {
 		super ("Usuarios.dat");
 	}
 
+	/**
+	 * Método que llama a la función de carga de datos
+	 * @param listadoUsuariosRecibido listado a cargar de datos
+	 */
 	public void cargarListadoUsuarios (ContenedorPersonaSistema<GestionUsuario> listadoUsuariosRecibido) {
 		leer(listadoUsuariosRecibido);
 	}
 	
+	/**
+	 * Método que recibe un listado de usuarios y guarda sus elementos en el archivo
+	 */
 	@Override
-	public boolean guardar(ContenedorPersonaSistema<GestionUsuario> objetoAGuardar) {
+	public void guardar(ContenedorPersonaSistema<GestionUsuario> objetoAGuardar) {
 		try {
 			ObjectOutputStream archivo = new ObjectOutputStream(new FileOutputStream(super.getNombreArchivo()));
 			Iterator<GestionUsuario> it = objetoAGuardar.getIterator();
@@ -41,11 +56,14 @@ public class ArchivoUsuarios extends ArchivoAbstracto<ContenedorPersonaSistema<G
 		catch (IOException e) {
 			System.out.println("IOException.");
 		}
-		return true;
 	}
 
+	/**
+	 * Método que carga los datos desde el archivo al contenedor de usuarios recibido
+	 * @param contenedorRecibido contenedor a cargar de datos
+	 */
 	@Override
-	public boolean leer(ContenedorPersonaSistema<GestionUsuario> contenedorRecibido) {
+	public void leer(ContenedorPersonaSistema<GestionUsuario> contenedorRecibido) {
 		try {
 			GestionUsuario aux;
 			FileInputStream fileInputStream = new FileInputStream(super.getNombreArchivo());
@@ -67,7 +85,6 @@ public class ArchivoUsuarios extends ArchivoAbstracto<ContenedorPersonaSistema<G
 		catch (ClassNotFoundException e) {
 			System.out.println("ClassNotFoundException.");
 		}
-		return true;
 	}
 	
 	
