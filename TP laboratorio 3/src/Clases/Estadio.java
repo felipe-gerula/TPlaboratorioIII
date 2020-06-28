@@ -78,11 +78,11 @@ public class Estadio implements Serializable{
 	 */
 	public Estadio crearEstadio() {
 		System.out.println("Bienvenido al menú de creación de Estadio.");
-		System.out.println("  Ingrese el nombre del Estadio:");
+		System.out.print("  Ingrese el nombre del Estadio:");
 		String nombreEstadio = Simulador.getScanner().nextLine();
-		System.out.println("  Capacidad del Estadio.");
+		System.out.println("  Capacidad del Estadio:");
 		int capacidadEstadio = Simulador.ingresoOpcion(1000, 100000);
-		System.out.println("  Ingrese la ubicación del Estadio (ciudad, país o continente): ");
+		System.out.print("  Ingrese la ubicación del Estadio (ciudad, país o continente): ");
 		Simulador.getScanner().nextLine();
 		String ubicacionEstadio = Simulador.getScanner().nextLine();
 		Estadio nuevoEstadio = new Estadio(nombreEstadio, capacidadEstadio, ubicacionEstadio);
@@ -108,7 +108,7 @@ public class Estadio implements Serializable{
 		int opcion = Simulador.ingresoOpcion(1, 4);
 		switch (opcion) {
 			case 1: //nombre del estadio
-				System.out.println("  Ingrese el nuevo Nombre del Estadio: ");
+				System.out.print("  Ingrese el nuevo Nombre del Estadio: ");
 				Simulador.getScanner().nextLine();
 				setNombre(Simulador.getScanner().nextLine());
 				Simulador.guardarArchivoUsuarios();
@@ -120,7 +120,7 @@ public class Estadio implements Serializable{
 				Simulador.guardarArchivoUsuarios();
 				break;
 			case 3: //ubicación del estadio
-				System.out.println("  Ingrese la ubicación del Estadio (ciudad, país o continente): ");
+				System.out.print("  Ingrese la ubicación del Estadio (ciudad, país o continente): ");
 				Simulador.getScanner().nextLine();
 				String ubicacionEstadio = Simulador.getScanner().nextLine();
 				setUbicacion(ubicacionEstadio);

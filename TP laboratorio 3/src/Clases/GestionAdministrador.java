@@ -45,14 +45,14 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		int intentos = 3;
 		String passwordLeida;
 		Simulador.getScanner().nextLine();
-		System.out.println("Ingrese la contraseña de creación de Administrador (3 intentos restantes): ");
+		System.out.print("Ingrese la contraseña de creación de Administrador (3 intentos restantes): ");
 		passwordLeida = Simulador.getScanner().nextLine();
 		if (passwordLeida.equals(password)) {
 			return true;
 		} else {
 			while (intentos>1) {
 				intentos--;
-				System.out.println("Contraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
+				System.out.print("Contraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
 				passwordLeida = Simulador.getScanner().nextLine();
 				if (passwordLeida.equals(password)) {
 					return true;
@@ -145,7 +145,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpcionesModificacionJugador(jugadorAModificar);
 				break;
 			case 3: //nacionalidad
-				System.out.println("  Ingrese la nueva nacionalidad: ");
+				System.out.print("  Ingrese la nueva nacionalidad: ");
 				Simulador.getScanner().nextLine();
 				jugadorAModificar.setNacionalidad(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoJugadores();
@@ -209,7 +209,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
 		if (jugadorAModificar.getEstado()) {
 			System.out.println(jugadorAModificar.toString());
-			System.out.println("¿Está seguro de que desea darlo de baja? (s para confirmar): ");
+			System.out.print("¿Está seguro de que desea darlo de baja? (s para confirmar): ");
 			Simulador.getScanner().nextLine();
 			char opcion = Simulador.getScanner().nextLine().charAt(0);
 			if (opcion == 's' || opcion == 'S') {
@@ -232,7 +232,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		Jugador jugadorAModificar = Simulador.getMercado().getListadoJugadores().buscar(idBuscado);
 		if (!jugadorAModificar.getEstado()) {
 			System.out.println(jugadorAModificar.toString());
-			System.out.println("¿Está seguro de que desea darlo de alta? (s para confirmar): ");
+			System.out.print("¿Está seguro de que desea darlo de alta? (s para confirmar): ");
 			Simulador.getScanner().nextLine();
 			char opcion = Simulador.getScanner().nextLine().charAt(0);
 			if (opcion == 's' || opcion == 'S') {
@@ -297,7 +297,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		int opcion = Simulador.ingresoOpcion(1, 7);
 		switch (opcion) {
 			case 1: //nombre apellido
-				System.out.println("  Ingrese el nuevo nombre y apellido: ");
+				System.out.print("  Ingrese el nuevo nombre y apellido: ");
 				Simulador.getScanner().nextLine();
 				dtAModificar.setNombreApellido(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoDTs();
@@ -317,7 +317,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 				this.listadoOpcionesModificacionDT(dtAModificar);
 				break;
 			case 3: //nacionalidad
-				System.out.println("  Ingrese la nueva nacionalidad: ");
+				System.out.print("  Ingrese la nueva nacionalidad: ");
 				Simulador.getScanner().nextLine();
 				dtAModificar.setNacionalidad(Simulador.getScanner().nextLine().toUpperCase());
 				Simulador.guardarArchivoDTs();
@@ -356,7 +356,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
 		System.out.println(dtAModificar.toString());
 		if (dtAModificar.getEstado()) {
-			System.out.println("¿Está seguro de que desea darlo de baja? (s para confirmar): ");
+			System.out.print("¿Está seguro de que desea darlo de baja? (s para confirmar): ");
 			Simulador.getScanner().nextLine();
 			char opcion = Simulador.getScanner().nextLine().charAt(0);
 			if (opcion == 's' || opcion == 'S') {
@@ -379,7 +379,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		DirectorTecnico dtAModificar = Simulador.getMercado().getListadoDTs().buscar(idBuscado);
 		System.out.println(dtAModificar.toString());
 		if (!dtAModificar.getEstado()) {
-			System.out.println("¿Está seguro de que desea darlo de alta? (s para confirmar): ");
+			System.out.print("¿Está seguro de que desea darlo de alta? (s para confirmar): ");
 			Simulador.getScanner().nextLine();
 			char opcion = Simulador.getScanner().nextLine().charAt(0);
 			if (opcion == 's' || opcion == 'S') {
@@ -400,9 +400,9 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public PersonaSistema crearPersona() {
 		GestionAdministrador nuevoAdministrador;
 		System.out.println("Bienvenido al menú de creación de Administrador.");
-		System.out.println("  Ingrese el nombre de Administrador:");
+		System.out.print("  Ingrese el nombre de Administrador:");
 		String nombreAdministrador = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese la contraseña del Administrador " + nombreAdministrador + ": ");
+		System.out.print("  Ingrese la contraseña del Administrador " + nombreAdministrador + ": ");
 		String passAdministrador = Simulador.getScanner().nextLine();
 		nuevoAdministrador = new GestionAdministrador(nombreAdministrador, passAdministrador);
 		return nuevoAdministrador;
@@ -416,7 +416,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public PersonaSistema acceder() {
 		GestionAdministrador ingresoAdministrador;
 		System.out.println("Bienvenido al menú de ingreso a Administrador.");
-		System.out.println("  Ingrese el nombre de Administrador:");
+		System.out.print("  Ingrese el nombre de Administrador:");
 		Simulador.getScanner().nextLine();
 		String nombreAdministrador = Simulador.getScanner().nextLine();
 		ingresoAdministrador = new GestionAdministrador(nombreAdministrador);

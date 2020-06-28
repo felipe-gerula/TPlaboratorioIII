@@ -18,7 +18,14 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	}
 	
 	/**
-	 * Constructor de Director Técnico con los parámetros a asignar al nuevo objeto
+	 * Constructor de Director Técnico con los parámetros a asignar al nuevo objeto 
+	 * @param nombreDT nombre y apellido del nuevo DT
+	 * @param equipoDT equipo del nuevo DT
+	 * @param ligaDT liga del nuevo DT
+	 * @param nacionalidadDT nacionalidad del nuevo DT
+	 * @param edadDT edad del nuevo DT
+	 * @param calidadDT calidad del nuevo DT
+	 * @param precioDT precio del nuevo DT
 	 */
 	public DirectorTecnico(String nombreDT, String equipoDT, String ligaDT, String nacionalidadDT, int edadDT, String calidadDT, double precioDT) {
 		super(nombreDT, equipoDT, ligaDT, nacionalidadDT, edadDT, calidadDT, precioDT, cantidadTecnicos);
@@ -86,11 +93,11 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	public DirectorTecnico crearDirectorTecnico() {
 		System.out.println("Bienvenido al menú de creación de DT.");
 		Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre y apellido del DT:");
+		System.out.print("  Ingrese el nombre y apellido del DT:");
 		String nombreDT = Simulador.getScanner().nextLine().toUpperCase();
 		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
 		if (equipoSeleccionado.hayEspacioParaDTAdmin()) {
-				System.out.println("  Ingrese la nacionalidad del DT:");
+				System.out.print("  Ingrese la nacionalidad del DT:");
 				String nacionalidadDT = Simulador.getScanner().nextLine().toUpperCase();
 				System.out.println("  Ingrese la edad del DT:");
 				int edadDT = Simulador.ingresoOpcion(35, 75);
@@ -181,6 +188,9 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 		this.setTipo(aux.getTipo());
 	}
 
+	/**
+	 * Informacion del DT
+	 */
 	@Override
 	public String toString() {
 		return super.toString() + vestimentaEquipada.toString() + "\n ID: " + super.getID() + ".";

@@ -1,7 +1,6 @@
 package interfaces;
 /** 
  *  Interfaz de métodos para las clases que tengan un menú
- *  @author 
  */
 public interface IMenu {
 	

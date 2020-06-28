@@ -38,50 +38,97 @@ public class ClubUsuario implements IMenu, Serializable{
 		dtClub = new DirectorTecnico();
 	}
 	
+	/**
+	 * @return fondos del club
+	 */
 	public double getFondos() {
 		return fondos;
 	}
 	
+	/**
+	 * @param fondos nuevos fondos del club
+	 */
 	public void setFondos(double fondos) {
 		this.fondos = fondos;
 	}
 
+	/**
+	 * @return estadio del club
+	 */
 	public Estadio getEstadio() {
 		return estadio;
 	}
 	
+	/**
+	 * @return camiseta del club
+	 */
 	public String getCamiseta() {
 		return camiseta;
 	}
 
+	/**
+	 * @param nuevaCamiseta nueva camiseta del club
+	 */
 	private void setCamiseta(String nuevaCamiseta) {
 		camiseta = nuevaCamiseta;
 	}
 
+	/**
+	 * @return DT del club
+	 */
 	public DirectorTecnico getDTClub () {
 		return dtClub;
 	}
 	
+	/**
+	 * @param nuevoDT nuevo DT del club
+	 */
+	public void setDT(DirectorTecnico nuevoDT) {
+		dtClub = nuevoDT;
+	}
+	
+	/**
+	 * @return plantilla del club
+	 */
 	public Plantilla getPlantillaClub () {
 		return plantillaClub;
 	}
 	
+	/**
+	 * @return nombre del club
+	 */
 	public String getNombre () {
 		return nombreClub;
 	}
 
+	/**
+	 * @param nuevoNombre nuevo nombre del club
+	 */
 	private void setNombre(String nuevoNombre) {
 		this.nombreClub = nuevoNombre;
 	}
 
+	/**
+	 * Agrega un ID a la plantilla del club
+	 * @param nuevoID ID del nuevo jugador
+	 */
 	public void agregarJugadorPlantilla (int nuevoID) {
 		this.plantillaClub.agregarJugador(nuevoID);
 	}
 
+	/**
+	 * Elimina un ID de la plantilla del club
+	 * @param idAEliminar ID del jugador a eliminar
+	 */
 	public void eliminarJugadorPlantilla (int idAEliminar) {
 		this.plantillaClub.eliminarJugador(idAEliminar);
 	}
 	
+	/**
+	 * Determina si un ID ya forma parte de la plantilla del club
+	 * @param idBuscado ID a buscar en la plantilla
+	 * @return true si es encontrado, false si no
+	 */
 	public boolean jugadorExistentePlantilla (int idBuscado) {
 		return plantillaClub.jugadorEncontrado(idBuscado);
 	}
@@ -161,7 +208,6 @@ public class ClubUsuario implements IMenu, Serializable{
 	 * Se trabaja con variables locales para el conteo, ya que si no se generaban errores.
 	 * @return cantidad de monedas a sumar según la cantidad de jugadores incorrectos.
 	 */
-	
 	private double sincronizarPosiciones() {
 		Iterator<Integer> it = plantillaClub.getIterator();
 		Jugador jugAux;
@@ -349,10 +395,6 @@ public class ClubUsuario implements IMenu, Serializable{
 	@Override
 	public String toString() {
 		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n" + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
-	}
-
-	public void setDT(DirectorTecnico nuevoDT) {
-		dtClub = nuevoDT;
 	}
 	
 }

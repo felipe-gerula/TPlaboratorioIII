@@ -129,20 +129,19 @@ public class ContenedorLigasEquipos {
 			nombresLigas.add(auxA.getKey());
 		}
 		Collections.sort(nombresLigas);
-		System.out.println("  Ligas disponibles: ");
+		System.out.println("  Ligas disponibles: \n");
 		for (int i=0; i<nombresLigas.size(); i++){
 			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
 		}
-		System.out.println((nombresLigas.size()+1) + ". Agregar liga.");
-		System.out.println("  Ingrese la opción que desea utilizar: ");
+		System.out.println((nombresLigas.size()+1) + ". Agregar liga.\n");
 		int opcion = Simulador.ingresoOpcion(0, nombresLigas.size()+1);
 		if (opcion == (nombresLigas.size()+1)) { //Opción de agregar liga
 			System.out.println("  Eligió la opción de agregar una liga.\n");
-			System.out.println("  Ingrese el nombre de la nueva liga: ");
+			System.out.print("  Ingrese el nombre de la nueva liga: ");
 			Simulador.getScanner().nextLine();
 			String nuevaLiga = Simulador.getScanner().nextLine();
 			nuevaLiga = nuevaLiga.toUpperCase();
-			System.out.println("  Ingrese el nombre del nuevo equipo: ");
+			System.out.print("  Ingrese el nombre del nuevo equipo: ");
 			String nuevoEquipo = Simulador.getScanner().nextLine();
 			nuevoEquipo = nuevoEquipo.toUpperCase();
 			return new Equipo(nuevoEquipo, nuevaLiga);
@@ -166,7 +165,7 @@ public class ContenedorLigasEquipos {
 			if (opcion2 == (nombresEquipos.size()+1)) { //Opción de agregar equipo
 				System.out.println("  Eligió la opción de agregar un equipo.\n");
 				Simulador.getScanner().nextLine();
-				System.out.println("  Ingrese el nombre del nuevo equipo: ");
+				System.out.print("  Ingrese el nombre del nuevo equipo: ");
 				String nuevoEquipo = Simulador.getScanner().nextLine();
 				nuevoEquipo = nuevoEquipo.toUpperCase();
 				return new Equipo(nuevoEquipo, nombresLigas.get(opcion-1));
@@ -191,7 +190,7 @@ public class ContenedorLigasEquipos {
 			nombresLigas.add(auxA.getKey());
 		}
 		Collections.sort(nombresLigas);
-		System.out.println("  Ligas disponibles: ");
+		System.out.println("  Ligas disponibles: \n");
 		for (int i=0; i<nombresLigas.size(); i++){
 			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
 		}

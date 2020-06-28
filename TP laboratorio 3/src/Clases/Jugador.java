@@ -3,7 +3,7 @@ package Clases;
 /** 
  *  Esta clase nos permite crear objetos del tipo Jugador, la cual cuenta con los atributos y métodos 
  *  necesarios para su gestión. Hereda de PersonaFutbol
- *  @see "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/> JugadorFIFA 20</a>
+ *  See "Jugadores FIFA 20"<a href=https://www.fifaindex.com/es/players/fifa20/>JugadorFIFA 20</a>
  */
 
 public class Jugador extends PersonaFutbol /*implements Comparable*/{
@@ -18,6 +18,17 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 	
 	/**
 	 * Constructor de Jugador con los parámetros a asignar al nuevo objeto
+	 * @param nombreApellido nombre y apellido del nuevo Jugador
+	 * @param club club del nuevo Jugador
+	 * @param liga liga del nuevo Jugador
+	 * @param nacionalidad nacionalidad del nuevo Jugador
+	 * @param edad edad del nuevo Jugador
+	 * @param tipo tipo del nuevo Jugador
+	 * @param precio precio del nuevo Jugador
+	 * @param calificacion calificación del nuevo Jugador
+	 * @param pieHabil pie hábil del nuevo Jugador
+	 * @param movHabiles calidad de movimientos hábiles del nuevo Jugador
+	 * @param posicion posición del nuevo Jugador
 	 */
 	public Jugador(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int calificacion, char pieHabil, int movHabiles, String posicion) {
 		super(nombreApellido, club, liga, nacionalidad, edad, tipo, precio, cantidadJugadores);
@@ -138,26 +149,26 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 	public Jugador crearJugador() {
 		System.out.println("Bienvenido al menú de creación de Jugador.");
 		Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre y apellido del Jugador:");
+		System.out.print("  Ingrese el nombre y apellido del Jugador: ");
 		String nombreJugador = Simulador.getScanner().nextLine().toUpperCase();
 		Equipo equipoSeleccionado = Simulador.getListadoLigasEquipos().seleccionLigasEquipos();
 		if (equipoSeleccionado.hayEspacioEnPlantilla(true)) {
 			if (!equipoSeleccionado.jugadorYaCargado(nombreJugador)) {
-				System.out.println("  Ingrese la posición del Jugador:");
+				System.out.println("  Ingrese la posición del Jugador: ");
 				String posicionJugador = seleccionDePosicion();
 				if (equipoSeleccionado.getPlantillaEquipo().hayEspacioEnPosicion(posicionJugador)) {
 					Simulador.getScanner().nextLine();
-					System.out.println("  Ingrese la nacionalidad del Jugador:");
+					System.out.print("  Ingrese la nacionalidad del Jugador: ");
 					String nacionalidadJugador = Simulador.getScanner().nextLine().toUpperCase();
 					System.out.println("  Ingreso de edad del Jugador:");
 					int edadJugador = Simulador.ingresoOpcion(15, 40);
 					System.out.println("  Ingreso de calificación del Jugador:");
 					int calificacionJugador = Simulador.ingresoOpcion(49, 99);
 					String calidadJugador = seleccionDeCalidad(calificacionJugador);
-					System.out.println("  Ingrese el pie hábil del Jugador (i/d):");
+					System.out.print("  Ingrese el pie hábil del Jugador (i/d): ");
 					char pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
 					while (pieHabilJugador != 'i' && pieHabilJugador != 'I' && pieHabilJugador != 'd' && pieHabilJugador != 'D') {
-						System.out.println("  Por favor ingrese un valor correcto (i/d): ");
+						System.out.print("  Por favor ingrese un valor correcto (i/d): ");
 						pieHabilJugador = Simulador.getScanner().nextLine().charAt(0);
 					}
 					if (pieHabilJugador == 'i') {
@@ -235,10 +246,11 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 
 	/**
 	 * Método para seleccionar la calidad del jugador dentro de las opciones dadas
+	 * @param calificacionDeJugador calificación del jugador recibido
 	 * @return nueva calidad del jugador
 	 */
 	public String seleccionDeCalidad(int calificacionDeJugador) {
-		System.out.println("¿El jugador es de calidad especial? (s para confirmar): ");
+		System.out.print("¿El jugador es de calidad especial? (s para confirmar): ");
 		Simulador.getScanner().nextLine();
 		char opcion = Simulador.getScanner().nextLine().charAt(0);
 		if (opcion == 's' || opcion == 'S') {

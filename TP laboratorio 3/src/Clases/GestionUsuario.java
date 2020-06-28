@@ -55,9 +55,9 @@ public class GestionUsuario extends PersonaSistema{
 	 */
 	public ClubUsuario crearClub () {
 		System.out.println("Bienvenido al menú de creación de Club.");
-		System.out.println("  Ingrese el nombre del Club:");
+		System.out.print("  Ingrese el nombre del Club: ");
 		String nombreClub = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese el nombre del equipo de la Camiseta:");
+		System.out.print("  Ingrese el nombre del equipo de la Camiseta: ");
 		String nuevaCamiseta = Simulador.getScanner().nextLine();
 		Estadio nuevoEstadio = new Estadio();
 		nuevoEstadio = nuevoEstadio.crearEstadio();
@@ -67,13 +67,14 @@ public class GestionUsuario extends PersonaSistema{
 	
 	/**
      * Método de cambio de nombre del usuario. Controla que el nuevo nombre no exista
+     * @param listadoRecibido listado de usuarios recibido
      * @return true si el nombre es cambiado con éxito. False si no pudo ser cambiado
      */
 	public boolean cambiarNombre(ContenedorPersonaSistema<GestionUsuario> listadoRecibido) {
 		Simulador.getScanner().nextLine();
 		char opcion = 's';
 		while (opcion == 's' || opcion == 'S') {
-			System.out.println("  Ingrese el nuevo nombre deseado: ");
+			System.out.print("  Ingrese el nuevo nombre deseado: ");
 			String nuevoNombre = Simulador.getScanner().nextLine();
 			GestionUsuario buscado = new GestionUsuario(nuevoNombre);
 			if (listadoRecibido.buscarElemento(buscado) == null) {
@@ -82,7 +83,7 @@ public class GestionUsuario extends PersonaSistema{
 				return true;
 			} else {
 				System.out.println("  El nombre de usuario " + nuevoNombre + " ya está siendo utilizado.");
-				System.out.println("  ¿Desea intentar con otro nombre? (s para confirmar): ");
+				System.out.print("  ¿Desea intentar con otro nombre? (s para confirmar): ");
 				opcion = Simulador.getScanner().nextLine().charAt(0);
 			}
 		}
@@ -97,11 +98,10 @@ public class GestionUsuario extends PersonaSistema{
 	public PersonaSistema crearPersona() {
 		GestionUsuario nuevoUsuario;
 		System.out.println("Bienvenido al menú de creación de Usuario.");
-		System.out.println("  Ingrese el nombre de Usuario:");
+		System.out.print("  Ingrese el nombre de Usuario: ");
 		Simulador.getScanner().nextLine();
 		String nombreUsuario = Simulador.getScanner().nextLine();
-		System.out.println("  Ingrese la contraseña del Usuario " + nombreUsuario + ": ");
-		//Simulador.getScanner().nextLine();
+		System.out.print("  Ingrese la contraseña del Usuario " + nombreUsuario + ": ");
 		String passUsuario = Simulador.getScanner().nextLine();
 		nuevoUsuario = new GestionUsuario(nombreUsuario, passUsuario);
 		return nuevoUsuario;
@@ -115,12 +115,11 @@ public class GestionUsuario extends PersonaSistema{
 	public PersonaSistema acceder() {
 		GestionUsuario ingresoUsuario;
 		System.out.println("Bienvenido al menú de ingreso a Usuario.");
-		System.out.println("  Ingrese el nombre de Usuario:");
+		System.out.print("  Ingrese el nombre de Usuario: ");
 		Simulador.getScanner().nextLine();
 		String nombreUsuario = Simulador.getScanner().nextLine();
 		ingresoUsuario = new GestionUsuario(nombreUsuario);
 		return ingresoUsuario;
 	}
-
 
 }

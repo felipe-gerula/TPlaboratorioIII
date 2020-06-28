@@ -47,7 +47,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 * Método usado desde clases externas (GestionAdministrador) para agregar un jugador al Mercado y 
 	 * evitar el acceso a los atributos privados
 	 * 
-	 * @param idJugador ID del jugador a agregar
+	 * @param nuevoJugador jugador a agregar
 	 */
 	public void agregarJugador(Jugador nuevoJugador) {
 		listadoJugadores.agregar(nuevoJugador);
@@ -57,7 +57,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 * Método usado desde clases externas (GestionAdministrador) para agregar un DT al Mercado y 
 	 * evitar el acceso a los atributos privados
 	 * 
-	 * @param idDT ID del DT a agregar
+	 * @param nuevoDT DT a agregar
 	 */
 	public void agregarDirectorTecnico(DirectorTecnico nuevoDT) {
 		listadoDTs.agregar(nuevoDT);
@@ -122,6 +122,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 * Método común para Usuarios y Administradores.
 	 * @param ingresoAdmin true si se ingresa desde el Administrador: muestra los que están dados de baja 
 	 * y el estado de todos.
+	 * @return información del mercado seleccionada por el usuario o administrador
 	 */
 	public String verMercado(boolean ingresoAdmin) {
 		System.out.println("  Opciones de listado de Mercado:");

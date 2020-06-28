@@ -36,6 +36,14 @@ public abstract class PersonaFutbol implements Serializable {
 	
 	/**
 	 * Constructor de PersonaFutbol con los parámetros a asignar al nuevo objeto
+	 * @param nombreApellido nombre y apellido de la nueva persona
+	 * @param club club de la nueva persona
+	 * @param liga liga de la nueva persona
+	 * @param nacionalidad nacionalidad de la nueva persona
+	 * @param edad edad de la nueva persona
+	 * @param tipo tipo de la nueva persona
+	 * @param precio precio de la nueva persona
+	 * @param id ID de la nueva persona
 	 */
 	public PersonaFutbol(String nombreApellido, String club, String liga, String nacionalidad, int edad, String tipo, double precio, int id) {
 		super();

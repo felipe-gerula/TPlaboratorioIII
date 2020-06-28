@@ -74,6 +74,7 @@ public class Equipo {
 	}
 	
 	/**
+	 * Método que devuelve el ID del DT del Equipo
 	 * @return DT del equipo. Se busca por su ID en el mercado
 	 */
 	public DirectorTecnico getDTEquipo () {
@@ -85,14 +86,16 @@ public class Equipo {
 	}
 	
 	/**
-	 * @param IDJugador agrega un nuevo jugador a la plantilla
+	 * Método que agrega un nuevo ID de jugador a la plantilla
+	 * @param IDJugador ID a agregar
 	 */
 	public void agregarJugador (int IDJugador) {
 		plantillaEquipo.agregarJugador(IDJugador);
 	}
 
 	/**
-	 * @param idJugador elimina un jugador de la plantilla
+	 * Método que elimina un ID de jugador de la plantilla
+	 * @param idJugador ID a eliminar
 	 */
 	public void eliminarJugador(int idJugador) {
 		plantillaEquipo.eliminarJugador(idJugador);

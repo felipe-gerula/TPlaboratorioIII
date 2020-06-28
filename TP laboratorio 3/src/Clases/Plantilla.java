@@ -365,6 +365,11 @@ public class Plantilla implements Serializable{
 		return retorno.toString();
 	}
 	
+	/**
+	 * Método que comprueba que la posición del jugador pueda ser ocupada, teniendo en cuenta la zona del campo
+	 * @param posicionJugador posición del jugador
+	 * @throws SinEspacioEnPosicionException excepción lanzada en el caso de que se genere un colapso en la posición
+	 */
 	public void comprobarPosicion (String posicionJugador) throws SinEspacioEnPosicionException{
 		if (posicionJugador.equals("PO") && !hayEspacioPortero(getCantidadPorteros())) {
 			throw new SinEspacioEnPosicionException("No hay espacio en la posición de Portero.");
@@ -383,6 +388,11 @@ public class Plantilla implements Serializable{
 		}
 	}
 
+	/**
+	 * Método que determina si hay espacio en la posición de delantero
+	 * @param cantidadDelanteros cantidad de delanteros actual (hasta 3)
+	 * @return true si hay espacio, false si no
+	 */
 	private boolean hayEspacioDelantero(int cantidadDelanteros) {
 		if (cantidadDelanteros <3) {
 			return true;
@@ -390,6 +400,11 @@ public class Plantilla implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Método que determina si hay espacio en la posición de mediocampista
+	 * @param cantidadMediocampistas cantidad de mediocampistas actual (hasta 3)
+	 * @return true si hay espacio, false si no
+	 */
 	private boolean hayEspacioMediocampista(int cantidadMediocampistas) {
 		if (cantidadMediocampistas <3) {
 			return true;
@@ -397,6 +412,11 @@ public class Plantilla implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Método que determina si hay espacio en la posición de defensor
+	 * @param cantidadDefensores cantidad de defensores actual (hasta 4)
+	 * @return true si hay espacio, false si no
+	 */
 	private boolean hayEspacioDefensor(int cantidadDefensores) {
 		if (cantidadDefensores <4) {
 			return true;
@@ -404,6 +424,11 @@ public class Plantilla implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Método que determina si hay espacio en la posición de portero
+	 * @param cantidadPorteros cantidad de portero actual (1 o 0)
+	 * @return true si hay espacio, false si no
+	 */
 	private boolean hayEspacioPortero(int cantidadPorteros) {
 		if (cantidadPorteros == 0) {
 			return true;

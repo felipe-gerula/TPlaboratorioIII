@@ -176,8 +176,7 @@ public class Simulador implements IMenu{
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Menú Usuario.");
 		System.out.println("    2. Menú Administrador.");
-		System.out.println("    3. Salir.");
-		System.out.println("");
+		System.out.println("    3. Salir.\n");
 		ingresarAOpcion();
 	}
 
@@ -219,8 +218,7 @@ public class Simulador implements IMenu{
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Crear Usuario.");
 		System.out.println("    2. Ingresar a Usuario ya existente.");
-		System.out.println("    3. Salir.");
-		System.out.println("");
+		System.out.println("    3. Salir.\n");
 		ingresarAOpcionUsuario();
 	}
 	
@@ -237,7 +235,7 @@ public class Simulador implements IMenu{
 					guardarArchivoUsuarios();
 					System.out.println("    Usuario agregado y guardado con éxito.");
 				} else {
-					System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+					System.out.print("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 					char opcionIntentar = Simulador.scan.next().charAt(0);
 					while (opcionIntentar == 's' || opcionIntentar == 'S') {
 						nuevoUsuario = new GestionUsuario(); ///Reseteamos los valores 
@@ -246,7 +244,7 @@ public class Simulador implements IMenu{
 							System.out.println("    Usuario agregado con éxito.");
 							opcionIntentar = 'n';
 						} else {
-							System.out.println("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+							System.out.print("    El nombre de usuario " + nuevoUsuario.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 							opcionIntentar = Simulador.scan.next().charAt(0);
 						}
 					}
@@ -302,8 +300,7 @@ public class Simulador implements IMenu{
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Crear Administrador.");
 		System.out.println("    2. Ingresar a Administrador ya existente.");
-		System.out.println("    3. Salir.");
-		System.out.println("");
+		System.out.println("    3. Salir.\n");
 		ingresarAOpcionAdministrador();
 	}
 	
@@ -321,7 +318,7 @@ public class Simulador implements IMenu{
 						archivoAdministradores.guardar(listadoAdministradores);
 						System.out.println("    Administrador agregado con éxito.");
 					} else {
-						System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+						System.out.print("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 						char opcionIntentar = Simulador.scan.next().charAt(0);
 						while (opcionIntentar == 's' || opcionIntentar == 'S') {
 							nuevoAdministrador = new GestionAdministrador(); ///Reseteamos los valores 
@@ -330,7 +327,7 @@ public class Simulador implements IMenu{
 								System.out.println("    Administrador agregado con éxito.");
 								opcionIntentar = 'n';
 							} else {
-								System.out.println("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
+								System.out.print("    El nombre de administrador " + nuevoAdministrador.getNombre() + " ya existe ¿Desea intentar nuevamente? (s/n): ");
 								opcionIntentar = Simulador.scan.next().charAt(0);
 							}
 						}
@@ -357,12 +354,24 @@ public class Simulador implements IMenu{
 		}
 	}
 	
+	/**
+	 * Método que determina si el usuario a enfrentar en un partido no es el logueado
+	 * @param usuario nombre del usuario logueado
+	 * @param rival nombre del usuario rival a enfrentar
+	 * @throws MismoRivalUsuarioException excepción lanzada en el caso de que los nombres coincidan
+	 */
 	public static void mismoUsuarioRival (String usuario, String rival) throws MismoRivalUsuarioException{
 		if (usuario.equals(rival)) {
 			throw new MismoRivalUsuarioException("Error de selección de rival.");
 		}
 	}
 	
+	/**
+	 * Método que determina si el usuario a enfrentar en un partido existe
+	 * @param recibido usuario a enfrentar
+	 * @param nombre nombre del usuario a enfrentar. Lo pasamos como String porque puede que el usuario == null
+	 * @throws RivalNoEncontradoException excepción lanzada en el caso de que el rival a enfrentar no exista
+	 */
 	public static void rivalNulo (GestionUsuario recibido, String nombre) throws RivalNoEncontradoException{
 		if (recibido == null) {
 			throw new RivalNoEncontradoException("Error de selección de rival.", nombre);
@@ -375,7 +384,7 @@ public class Simulador implements IMenu{
 	 */
 	public static Equipo seleccionUsuarioRival(){
 		System.out.println(listadoUsuarios.listar());
-		System.out.println("\nIngrese el nombre del Usuario que quiere enfrentar: ");
+		System.out.print("\nIngrese el nombre del Usuario que quiere enfrentar: ");
 		scan.nextLine();
 		String nombreUsuarioAEnfrentar = scan.nextLine();
 		GestionUsuario usuarioAEnfrentar = listadoUsuarios.buscarElemento(new GestionUsuario(nombreUsuarioAEnfrentar));

@@ -4,8 +4,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import Clases.Jugador;
 
+/**
+ * Clase de gestión de un JSONObject que contiene la información de un Jugador
+ */
 public class JSONJugador {
 	
+	/**
+	 * Método que crea y devuelve el JSONObject en base al Jugador recibido
+	 * @param recibido Jugador recibido
+	 * @return JSONObject con información del Jugador recibido
+	 * @throws JSONException excepción lanzada en caso de haber un error de manejo de JSON
+	 */
 	public JSONObject toJSONJugador (Jugador recibido) throws JSONException{
 		JSONObject retorno = new JSONObject();
 		retorno.put("Estado", recibido.getEstado());
