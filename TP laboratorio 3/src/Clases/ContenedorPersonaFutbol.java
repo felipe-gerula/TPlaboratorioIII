@@ -122,6 +122,7 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	 * @return muestra de elementos
 	 */
 	public String opcionesListadoJugador(boolean ingresoAdmin) {
+		Simulador.esperar();
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Ordenar por ID (menor a mayor).");
 		System.out.println("    2. Ordenar por Calificación (mayor a menor).");
@@ -130,7 +131,7 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 		System.out.println("    5. Ordenar por Precio (menor a mayor).");
 		System.out.println("    6. Ordenar por Movimientos Hábiles (menor a mayor).");
 		System.out.println("    7. Ordenar por Edad (menor a mayor).");
-		System.out.println("    8. Ordenar por Nombre y Apellido.");
+		System.out.println("    8. Ordenar por Nombre y Apellido.\n");
 		return ingresarAOpcionesListadoJugador(ingresoAdmin);
 	}
 	
@@ -140,6 +141,7 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	 * @return muestra de elementos
 	 */
 	public String ingresarAOpcionesListadoJugador(boolean ingresoAdmin) {
+		System.out.println();
 		int opcion = Simulador.ingresoOpcion(1, 8);
 		ArrayList<V> lista = listado();
 		StringBuilder retorno = new StringBuilder();
@@ -253,12 +255,13 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	 * @return muestra del listado
 	 */
 	public String opcionesListadoDT(boolean ingresoAdmin) {
+		Simulador.esperar();
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Ordenar por ID (menor a mayor).");
 		System.out.println("    2. Ordenar por Tipo.");
 		System.out.println("    3. Ordenar por Nombre y Apellido.");
 		System.out.println("    4. Ordenar por Edad (menor a mayor).");
-		System.out.println("    5. Ordenar por Precio (menor a mayor).");
+		System.out.println("    5. Ordenar por Precio (menor a mayor).\n");
 		return ingresarAOpcionesListadoDT(ingresoAdmin);
 	}
 	
@@ -269,6 +272,7 @@ public class ContenedorPersonaFutbol<V extends PersonaFutbol> {
 	 */
 	public String ingresarAOpcionesListadoDT(boolean ingresoAdmin) {
 		int opcion = Simulador.ingresoOpcion(1, 5);
+		System.out.println();
 		ArrayList<V> lista = listado();
 		StringBuilder retorno = new StringBuilder();
 		switch (opcion) {

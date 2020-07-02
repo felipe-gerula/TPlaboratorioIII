@@ -172,6 +172,7 @@ public class Simulador implements IMenu{
 	 */
 	@Override
 	public void listadoOpciones() {
+		esperar();
 		System.out.println("Bienvenido al Simulador de Mercado de FIFA 20.");
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Menú Usuario.");
@@ -200,6 +201,21 @@ public class Simulador implements IMenu{
 				break;
 		}
 	}
+	
+	/**
+	 * Método que genera una espera en la consola. Se usa en menúes
+	 */
+	public static void esperar () {
+		System.out.println();
+		for (int i=0; i<7; i++){
+	        System.out.print(" . ");
+	        try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+			}
+	    }
+		System.out.println();
+	}
 
 	/**
 	 * Método de salida del simulador
@@ -207,6 +223,7 @@ public class Simulador implements IMenu{
 	@Override
 	public void regresar() {
 		System.out.println("Gracias por usar el Simulador. Esperamos que vuelva pronto.");
+		esperar();
 		scan.close();
 	}
 	
@@ -214,6 +231,7 @@ public class Simulador implements IMenu{
 	 * Método que lista las opciones de usuario
 	 */
 	public void listadoOpcionesUsuario() {
+		esperar();
 		System.out.println("\n\nBienvenido al Menú de Usuario.");
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Crear Usuario.");
@@ -296,6 +314,7 @@ public class Simulador implements IMenu{
 	 * Método que lista las opciones de administrador
 	 */
 	public void listadoOpcionesAdministrador() {
+		esperar();
 		System.out.println("\n\nBienvenido al Menú de Administrador.");
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Crear Administrador.");

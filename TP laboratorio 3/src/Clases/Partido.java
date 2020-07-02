@@ -26,6 +26,7 @@ public class Partido {
 	 */
 	public void listadoOpcionesJugarPartido (ClubUsuario clubRecibido){
 	    int validosJugador = clubRecibido.getPlantillaClub().cantidadJugadores(false);
+	    Simulador.esperar();
 	    if (validosJugador == 11) {
 	    	if (clubRecibido.getDTClub().getEstado()) {
 	    		System.out.println("  A continuación están las opciones:");
@@ -73,6 +74,7 @@ public class Partido {
 	 * @param equipoRival club del rival que enfrentará al usuario
 	 */
 	private void jugarPartido(ClubUsuario clubRecibido, Equipo equipoRival) {
+		Simulador.esperar();
 	    if (!equipoRival.hayEspacioEnPlantilla(false)) {
 	    	if (!equipoRival.hayEspacioParaDT()) {
 	                System.out.println("\n   Todo correcto ¡A jugar!\n\n    ");
@@ -154,13 +156,7 @@ public class Partido {
 	    int y = -1; ///Goles rival
 	    int jugX=-1; ///Variable para calcular posiciones de jugadores en los arreglos
 	    System.out.println("\n\n      SIMULANDO PARTIDO    ");
-	    for (int i=0; i<10; i++){
-	        System.out.print(" . ");
-	        try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-			}
-	    }
+	    Simulador.esperar();
 	    switch (resultado){
 	        case -1:                    /// Usuario pierde
 	            while (y<=0){           /// Le asignamos a Y un random mayor a 0 y menor a 6
@@ -174,21 +170,9 @@ public class Partido {
 	                }
 	            }
 	            System.out.println("\n DERROTA. ");
-	            for (int i=0; i<5; i++){
-	    	        System.out.print(" . ");
-	    	        try {
-	    				Thread.sleep(200);
-	    			} catch (InterruptedException e) {
-	    			}
-	    	    }
+	            Simulador.esperar();
 	            System.out.println("\n        Resultado del partido: " + clubUsuario.getNombre() + " " + x + " - " + equipoRival.getNombreEquipo() + " - " + y + ".");
-	            for (int j=0; j<10; j++){
-        	        System.out.print(" . ");
-        	        try {
-        				Thread.sleep(200);
-        			} catch (InterruptedException e) {
-        			}
-        	    }
+	            Simulador.esperar();
 	            retorno += 150 + x*30 - y*20; ///150 monedas por perder, 30 por gol a favor y -20 por gol en contra. Rango de ganancias: [50,170]
 	            if (x>0){
 	                System.out.println("\n        Goles de tu equipo " + clubUsuario.getNombre() + ":\n");
@@ -199,13 +183,7 @@ public class Partido {
 	                    while (jugX<0 || jugX>10){
 	                        jugX = (int)((Math.random() * 10) + 1);
 	                    }
-	                    for (int j=0; j<5; j++){
-	            	        System.out.print(" . ");
-	            	        try {
-	            				Thread.sleep(200);
-	            			} catch (InterruptedException e) {
-	            			}
-	            	    }
+	                    Simulador.esperar();
 	                    System.out.println("\n         Gol de " + aux.get(jugX).getNombre()+ ".\n");
 	                }
 	            } else {
@@ -219,22 +197,10 @@ public class Partido {
 	                while (jugX<0 || jugX>10){
                         jugX = (int)((Math.random() * 10) + 1);
                     }
-	                for (int j=0; j<5; j++){
-	        	        System.out.print(" . ");
-	        	        try {
-	        				Thread.sleep(200);
-	        			} catch (InterruptedException e) {
-	        			}
-	        	    }
+	                Simulador.esperar();
 	                System.out.println("\n         Gol de " + aux.get(jugX).getNombre()+ ".\n");
 	            }
-	            for (int j=0; j<10; j++){
-        	        System.out.print(" . ");
-        	        try {
-        				Thread.sleep(200);
-        			} catch (InterruptedException e) {
-        			}
-        	    }
+	            Simulador.esperar();
 	            System.out.println("\n\n         Informe de monedas:");
 	            System.out.println("\n          Monedas por la derrota: $150.");
 	            System.out.println("\n          Monedas por goles a favor: $" + x*30 + ".");
@@ -248,13 +214,7 @@ public class Partido {
 	            x = y;                  /// Le asignamos a x un valor igual a Y
 	            System.out.println("\n EMPATE.  ");
 	            System.out.println("\n        Resultado del partido: " + clubUsuario.getNombre() + " " + x + " - " + equipoRival.getNombreEquipo() + " - " + y + ".");
-	            for (int j=0; j<10; j++){
-        	        System.out.print(" . ");
-        	        try {
-        				Thread.sleep(200);
-        			} catch (InterruptedException e) {
-        			}
-        	    }
+	            Simulador.esperar();
 	            retorno += 200 + x*30 - y*20; ///200 monedas por empatar, 30 por gol a favor y -20 por gol en contra. Rango de ganancias: [200,250]
 	            if (x>0){
 	            	System.out.println("\n        Goles de tu equipo " + clubUsuario.getNombre() + ":\n");
@@ -262,13 +222,7 @@ public class Partido {
             		Collections.sort(aux, new ComparacionPosicion());
 	                for (int i=0; i<x; i++){
 	                    jugX = -1;
-	                    for (int j=0; j<5; j++){
-		        	        System.out.print(" . ");
-		        	        try {
-		        				Thread.sleep(200);
-		        			} catch (InterruptedException e) {
-		        			}
-		        	    }
+	                    Simulador.esperar();
 	                    while (jugX<0 || jugX>10){
 	                        jugX = (int)((Math.random() * 10) + 1);
 	                    }
@@ -282,25 +236,13 @@ public class Partido {
 		                while (jugX<0 || jugX>10){
 	                        jugX = (int)((Math.random() * 10) + 1);
 	                    }
-		                for (int j=0; j<5; j++){
-		        	        System.out.print(" . ");
-		        	        try {
-		        				Thread.sleep(200);
-		        			} catch (InterruptedException e) {
-		        			}
-		        	    }
+		                Simulador.esperar();
 		                System.out.println("\n         Gol de " + aux.get(jugX).getNombre()+ ".\n");
 		            }
 	            } else {
 	                System.out.println("\n        Fue un partido sin goles.\n");
 	            }
-	            for (int j=0; j<10; j++){
-        	        System.out.print(" . ");
-        	        try {
-        				Thread.sleep(200);
-        			} catch (InterruptedException e) {
-        			}
-        	    }
+	            Simulador.esperar();
 	            System.out.println("\n\n         Informe de monedas:");
 	            System.out.println("\n          Monedas por el empate: $200.");
 	            System.out.println("\n          Monedas por goles a favor: $" + x*30 + ".");
@@ -320,13 +262,7 @@ public class Partido {
 	            }
 	            System.out.print("\n VICTORIA.");
 	            System.out.println("\n        Resultado del partido: " + clubUsuario.getNombre() + " " + x + " - " + equipoRival.getNombreEquipo() + " - " + y + ".");
-	            for (int j=0; j<10; j++){
-        	        System.out.print(" . ");
-        	        try {
-        				Thread.sleep(200);
-        			} catch (InterruptedException e) {
-        			}
-        	    }
+	            Simulador.esperar();
 	            retorno += 250 + x*30 - y*20; ///250 monedas por ganar, 30 por gol a favor y -20 por gol en contra. Rango de ganancias: [320,400]
 	            System.out.println("\n        Goles de tu equipo " + clubUsuario.getNombre() + ":\n");
                 aux = clubUsuario.getPlantillaClub().listado();
@@ -336,13 +272,7 @@ public class Partido {
                     while (jugX<0 || jugX>10){
                         jugX = (int)((Math.random() * 10) + 1);
                     }
-                    for (int j=0; j<5; j++){
-	        	        System.out.print(" . ");
-	        	        try {
-	        				Thread.sleep(200);
-	        			} catch (InterruptedException e) {
-	        			}
-	        	    }
+                    Simulador.esperar();
                     System.out.println("\n         Gol de " + aux.get(jugX).getNombre()+ ".\n");
                 }
 	            if (y>0){
@@ -354,25 +284,13 @@ public class Partido {
 		                while (jugX<0 || jugX>10){
 	                        jugX = (int)((Math.random() * 10) + 1);
 	                    }
-		                for (int j=0; j<5; j++){
-		        	        System.out.print(" . ");
-		        	        try {
-		        				Thread.sleep(200);
-		        			} catch (InterruptedException e) {
-		        			}
-		        	    }
+		                Simulador.esperar();
 		                System.out.println("\n         Gol de " + aux.get(jugX).getNombre()+ ".\n");
 		            }
 	            } else {
 	                System.out.println("\n        El equipo rival " + equipoRival.getNombreEquipo() + " no hizo goles.\n");
 	            }
-	            for (int j=0; j<10; j++){
-        	        System.out.print(" . ");
-        	        try {
-        				Thread.sleep(200);
-        			} catch (InterruptedException e) {
-        			}
-        	    }
+	            Simulador.esperar();
 	            System.out.println("\n\n         Informe de monedas:");
 	            System.out.println("\n          Monedas por la victoria: $250.");
 	            System.out.println("\n          Monedas por goles a favor: $" + x*30 + ".");
@@ -380,13 +298,7 @@ public class Partido {
 	            System.out.println("\n\n         Total de monedas ganadas en el partido: $" + retorno + ".");
 	            break;
 	    }
-	    for (int j=0; j<15; j++){
-	        System.out.print(" . ");
-	        try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-			}
-	    }
+	    Simulador.esperar();
 	    System.out.println("\n\n");
 	    return retorno;
 	}

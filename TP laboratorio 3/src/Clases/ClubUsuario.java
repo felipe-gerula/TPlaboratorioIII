@@ -148,7 +148,8 @@ public class ClubUsuario implements IMenu, Serializable{
 	@Override
 	public void listadoOpciones() {
 		sincronizarClub ();
-		System.out.println("\n\nBienvenido al Club " + nombreClub);
+		Simulador.esperar();
+		System.out.println("\nBienvenido al Club " + nombreClub);
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Acceder al Mercado.");
 		System.out.println("    2. Jugar Partido.");
@@ -188,6 +189,7 @@ public class ClubUsuario implements IMenu, Serializable{
 		while (it.hasNext()) {
 			jugAux = Simulador.getMercado().getListadoJugadores().buscar(it.next());
 			if (!jugAux.getEstado()) {
+				Simulador.esperar();
 				System.out.println("  El jugador " + jugAux.getNombre() + " fue dado de baja por el Administrador. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 				retorno += jugAux.getPrecio();
 				plantillaClub.eliminarJugador(jugAux.getID());
@@ -221,6 +223,7 @@ public class ClubUsuario implements IMenu, Serializable{
 			String posicionActual = jugAux.getPosicion();
 			if (posicionActual.equals("PO")) {
 				if (cantidadPorteros == 1 ) {
+					Simulador.esperar();
 					System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 					retorno += jugAux.getPrecio();
 					plantillaClub.eliminarJugador(jugAux.getID());
@@ -231,6 +234,7 @@ public class ClubUsuario implements IMenu, Serializable{
 			} else {
 				if (posicionActual.equals("DFC") || posicionActual.equals("LI") || posicionActual.equals("LD")) {
 					if (cantidadDefensores == 4 ) {
+						Simulador.esperar();
 						System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 						retorno += jugAux.getPrecio();
 						plantillaClub.eliminarJugador(jugAux.getID());
@@ -241,6 +245,7 @@ public class ClubUsuario implements IMenu, Serializable{
 				} else {
 					if (posicionActual.equals("MC") || posicionActual.equals("MI") || posicionActual.equals("MD") || posicionActual.equals("MCO")) {
 						if (cantidadMediocampistas == 3 ) {
+							Simulador.esperar();
 							System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 							retorno += jugAux.getPrecio();
 							plantillaClub.eliminarJugador(jugAux.getID());
@@ -250,6 +255,7 @@ public class ClubUsuario implements IMenu, Serializable{
 						}
 					} else {
 						if (cantidadDelanteros == 3 ) {
+							Simulador.esperar();
 							System.out.println("  El jugador " + jugAux.getNombre() + " será eliminado de su Club, ya que su nueva posición es " + posicionActual + " y hay otro jugador asignado a la posición. Se le agregaron a tu Club $" + jugAux.getPrecio() + " monedas.");
 							retorno += jugAux.getPrecio();
 							plantillaClub.eliminarJugador(jugAux.getID());
@@ -276,6 +282,7 @@ public class ClubUsuario implements IMenu, Serializable{
 		DirectorTecnico aux = Simulador.getMercado().getListadoDTs().buscar(dtClub.getID());
 		dtClub.sincronizarDatos(aux);
 		if (!aux.getEstado()) {
+			Simulador.esperar();
 			System.out.println("  El Director Técnico " + aux.getNombre() + " fue dado de baja por el Administrador. Se le agregaron a tu Club $" + aux.getPrecio() + " monedas.");
 			retorno += aux.getPrecio();
 			dtClub = new DirectorTecnico(); //Elimina los datos del DT y pone el ID = -1
@@ -304,10 +311,12 @@ public class ClubUsuario implements IMenu, Serializable{
 				listadoOpciones();
 				break;
 			case 4:
+				Simulador.esperar();
 				System.out.println(this.toString());
 				listadoOpciones();
 				break;
 			case 5:
+				Simulador.esperar();
 				verPlantilla();
 				listadoOpciones();
 				break;
@@ -322,6 +331,7 @@ public class ClubUsuario implements IMenu, Serializable{
 	 * Menú de opciones de modificación del Club
 	 */
 	private void listadoOpcionesModificacionClub () {
+		Simulador.esperar();
 		System.out.println("  A continuación están las opciones de modificación del Club:");
 		System.out.println("    1. Modificar Nombre del Club.");
 		System.out.println("    2. Modificar Estadio.");
@@ -394,7 +404,7 @@ public class ClubUsuario implements IMenu, Serializable{
 	 */
 	@Override
 	public String toString() {
-		return ("Información del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n" + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
+		return ("\nInformación del Club " + getNombre() + ": \n  Fondos: $" + getFondos() +".\n" + estadio.toString() + ".\n  Camiseta: " + camiseta + ".");
 	}
 	
 }

@@ -45,14 +45,14 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		int intentos = 3;
 		String passwordLeida;
 		Simulador.getScanner().nextLine();
-		System.out.print("Ingrese la contraseña de creación de Administrador (3 intentos restantes): ");
+		System.out.print("\nIngrese la contraseña de creación de Administrador (3 intentos restantes): ");
 		passwordLeida = Simulador.getScanner().nextLine();
 		if (passwordLeida.equals(password)) {
 			return true;
 		} else {
 			while (intentos>1) {
 				intentos--;
-				System.out.print("Contraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
+				System.out.print("\nContraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
 				passwordLeida = Simulador.getScanner().nextLine();
 				if (passwordLeida.equals(password)) {
 					return true;
@@ -92,6 +92,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * @param jugadorAModificar jugador a ser modificado
 	 */
 	public void listadoOpcionesModificacionJugador(Jugador jugadorAModificar) {
+		Simulador.esperar();
 		System.out.println(jugadorAModificar.toString());
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Modificar Nombre y Apellido.");
@@ -112,6 +113,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * @param jugadorAModificar jugador a ser modificado
 	 */
 	private void ingresarAOpcionModificacionJugador(Jugador jugadorAModificar) {
+		Simulador.esperar();
 		System.out.println("  Ingrese el número de opción deseada: ");
 		int opcion = Simulador.ingresoOpcion(1, 9);
 		switch (opcion) {
@@ -203,6 +205,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * Método que permite la baja de un jugador, cambiando su estado a false
 	 */
 	public void bajaJugadorMercado() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de baja de de Jugador.");
 		System.out.println("  Ingreso del ID del Jugador a dar de baja: ");
 		int idBuscado = Simulador.ingresoOpcion(0, Jugador.getCantidadJugadores()-1);
@@ -226,6 +229,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * Método que permite el alta de un jugador, cambiando su estado a true
 	 */
 	public void altaJugadorMercado() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de alta de Jugador.");
 		System.out.println("  Ingreso del ID del Jugador a dar de alta: ");
 		int idBuscado = Simulador.ingresoOpcion(0, Jugador.getCantidadJugadores()-1);
@@ -264,6 +268,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * Método que permite modificar un DT del mercado
 	 */
 	public void modificarDTMercado() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de modificación de Director Técnico.");
 		System.out.println("  Ingrese el ID del Director Técnico que desea modificar: ");
 		int idBuscado = Simulador.ingresoOpcion(0, DirectorTecnico.getCantidadDTs()-1);
@@ -276,6 +281,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * @param dtAModificar DT a ser modificado
 	 */
 	public void listadoOpcionesModificacionDT(DirectorTecnico dtAModificar) {
+		Simulador.esperar();
 		System.out.println(dtAModificar.toString());
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Modificar Nombre y Apellido.");
@@ -294,6 +300,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * @param dtAModificar DT a ser modificado
 	 */
 	private void ingresarAOpcionModificacionDT(DirectorTecnico dtAModificar) {
+		Simulador.esperar();
 		int opcion = Simulador.ingresoOpcion(1, 7);
 		switch (opcion) {
 			case 1: //nombre apellido
@@ -350,6 +357,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * Método que permite la baja de un DT, cambiando su estado a false
 	 */
 	public void bajaDTMercado() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de baja de de Director Técnico.");
 		System.out.println("  Ingrese el ID del DT que desea dar de baja: ");
 		int idBuscado = Simulador.ingresoOpcion(0, DirectorTecnico.getCantidadDTs()-1);
@@ -373,6 +381,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 * Método que permite el alta de un DT, cambiando su estado a true
 	 */
 	public void altaDTMercado() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de alta de de Director Técnico.");
 		System.out.println("  Ingrese el ID del DT que desea dar de alta: ");
 		int idBuscado = Simulador.ingresoOpcion(0, DirectorTecnico.getCantidadDTs()-1);
@@ -399,7 +408,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	@Override
 	public PersonaSistema crearPersona() {
 		GestionAdministrador nuevoAdministrador;
-		System.out.println("Bienvenido al menú de creación de Administrador.");
+		System.out.println("\nBienvenido al menú de creación de Administrador.");
 		System.out.print("  Ingrese el nombre de Administrador:");
 		String nombreAdministrador = Simulador.getScanner().nextLine();
 		System.out.print("  Ingrese la contraseña del Administrador " + nombreAdministrador + ": ");
@@ -415,7 +424,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	@Override
 	public PersonaSistema acceder() {
 		GestionAdministrador ingresoAdministrador;
-		System.out.println("Bienvenido al menú de ingreso a Administrador.");
+		System.out.println("\nBienvenido al menú de ingreso a Administrador.");
 		System.out.print("  Ingrese el nombre de Administrador:");
 		Simulador.getScanner().nextLine();
 		String nombreAdministrador = Simulador.getScanner().nextLine();
@@ -428,6 +437,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 */
 	@Override
 	public void listadoOpciones() {
+		Simulador.esperar();
 		System.out.println("\n\nBienvenido al Menú de Administrador, " /*+ nombreAdmin*/);
 		System.out.println("  A continuación están las opciones:");
 		System.out.println("    1. Agregar jugador al Mercado.");
@@ -449,6 +459,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	 */
 	@Override
 	public void ingresarAOpcion() {
+		Simulador.esperar();
 		int opcion;
 		opcion = Simulador.ingresoOpcion(1, 10);
 		switch (opcion) {

@@ -46,6 +46,7 @@ public class Vestimenta implements Serializable{
 	 * Método que lista y lee las opciones de vestimenta
 	 */
 	public void cambiarVestimenta() {
+		Simulador.esperar();
 		int opcion;
 		String opcionSuperior = "";
 		String opcionInferior = "";
@@ -74,6 +75,7 @@ public class Vestimenta implements Serializable{
 				opcionSuperior = "Remera color club";
 				break;
 		}
+		Simulador.esperar();
 		System.out.println("  Parte inferior:");
 		System.out.println("    1. Pantalón de vestir negro.");
 		System.out.println("    2. Pantalón de vestir azul.");

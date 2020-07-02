@@ -54,7 +54,8 @@ public class GestionUsuario extends PersonaSistema{
 	 * @return el club creado por el usuario
 	 */
 	public ClubUsuario crearClub () {
-		System.out.println("Bienvenido al menú de creación de Club.");
+		Simulador.esperar();
+		System.out.println("\nBienvenido al menú de creación de Club.");
 		System.out.print("  Ingrese el nombre del Club: ");
 		String nombreClub = Simulador.getScanner().nextLine();
 		System.out.print("  Ingrese el nombre del equipo de la Camiseta: ");
@@ -97,7 +98,7 @@ public class GestionUsuario extends PersonaSistema{
 	@Override
 	public PersonaSistema crearPersona() {
 		GestionUsuario nuevoUsuario;
-		System.out.println("Bienvenido al menú de creación de Usuario.");
+		System.out.println("\nBienvenido al menú de creación de Usuario.");
 		System.out.print("  Ingrese el nombre de Usuario: ");
 		Simulador.getScanner().nextLine();
 		String nombreUsuario = Simulador.getScanner().nextLine();
@@ -114,7 +115,7 @@ public class GestionUsuario extends PersonaSistema{
 	@Override
 	public PersonaSistema acceder() {
 		GestionUsuario ingresoUsuario;
-		System.out.println("Bienvenido al menú de ingreso a Usuario.");
+		System.out.println("\nBienvenido al menú de ingreso a Usuario.");
 		System.out.print("  Ingrese el nombre de Usuario: ");
 		Simulador.getScanner().nextLine();
 		String nombreUsuario = Simulador.getScanner().nextLine();

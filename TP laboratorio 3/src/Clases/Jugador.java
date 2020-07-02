@@ -147,6 +147,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 	 * @return nuevo jugador creado en el menú
 	 */
 	public Jugador crearJugador() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de creación de Jugador.");
 		Simulador.getScanner().nextLine();
 		System.out.print("  Ingrese el nombre y apellido del Jugador: ");
@@ -288,6 +289,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 			case 1:
 				return "PO";
 			case 2:
+				Simulador.esperar();
 				System.out.println("  Opciones de Defensor disponibles:");
 				System.out.println("    1. Defensor Central (DFC).");
 				System.out.println("    2. Lateral Izquierdo (LI).");
@@ -304,6 +306,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 				}
 				break;
 			case 3:
+				Simulador.esperar();
 				System.out.println("  Opciones de Mediocampista disponibles:");
 				System.out.println("    1. Mediocampista Central (MC).");
 				System.out.println("    2. Mediocampista Izquierdo (MI).");
@@ -323,6 +326,7 @@ public class Jugador extends PersonaFutbol /*implements Comparable*/{
 				}
 				break;
 			case 4:
+				Simulador.esperar();
 				System.out.println("  Opciones de Delantero disponibles:");
 				System.out.println("    1. Delantero Central (DC).");
 				System.out.println("    2. Extremo Izquierdo (EI).");

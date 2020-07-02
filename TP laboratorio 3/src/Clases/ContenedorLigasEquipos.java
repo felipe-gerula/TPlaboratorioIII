@@ -121,6 +121,7 @@ public class ContenedorLigasEquipos {
 	 * @return el equipo seleccionado o agregado
 	 */
 	public Equipo seleccionLigasEquipos () {
+		Simulador.esperar();
 		Set<Entry<String, HashMap<String, Equipo>>> varSet = hashMapLigasEquipos.entrySet();
 		Iterator<Entry<String, HashMap<String, Equipo>>> it = varSet.iterator();
 		ArrayList<String> nombresLigas = new ArrayList<>();
@@ -156,6 +157,7 @@ public class ContenedorLigasEquipos {
 				nombresEquipos.add(auxC.getKey());
 			}
 			Collections.sort(nombresEquipos);
+			Simulador.esperar();
 			System.out.println("  Equipos disponibles: ");
 			for (int i=0; i<nombresEquipos.size(); i++){
 				System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".\n");
@@ -190,6 +192,7 @@ public class ContenedorLigasEquipos {
 			nombresLigas.add(auxA.getKey());
 		}
 		Collections.sort(nombresLigas);
+		Simulador.esperar();
 		System.out.println("  Ligas disponibles: \n");
 		for (int i=0; i<nombresLigas.size(); i++){
 			System.out.println((i+1) + ". " + nombresLigas.get(i) + ".\n");
@@ -205,6 +208,7 @@ public class ContenedorLigasEquipos {
 			nombresEquipos.add(auxC.getKey());
 		}
 		Collections.sort(nombresEquipos);
+		Simulador.esperar();
 		System.out.println("  Equipos disponibles: ");
 		for (int i=0; i<nombresEquipos.size(); i++){
 			System.out.println((i+1) + ". " + nombresEquipos.get(i) + ".");
@@ -233,12 +237,14 @@ public class ContenedorLigasEquipos {
 		while (it.hasNext()) {
 			Entry<String, HashMap<String, Equipo>> auxA = it.next();
 			HashMap<String, Equipo> auxB = auxA.getValue();
+			Simulador.esperar();
 			retorno.append("Equipos de la Liga " + auxA.getKey() + ": \n");
 			Set<Entry<String, Equipo>> varSet2 = auxB.entrySet();
 			Iterator<Entry<String, Equipo>> it2 = varSet2.iterator();
 			while (it2.hasNext()) {
 				Equipo equipoAux = it2.next().getValue();
 				retorno.append("Datos del equipo " + equipoAux.getNombreEquipo() + ": \n\n" + equipoAux.toString());
+				Simulador.esperar();
 			}
 		}
 		return retorno.toString();

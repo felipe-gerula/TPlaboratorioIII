@@ -77,6 +77,7 @@ public class Estadio implements Serializable{
 	 * @return nuevo estadio creado por el usuario
 	 */
 	public Estadio crearEstadio() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de creación de Estadio.");
 		System.out.print("  Ingrese el nombre del Estadio:");
 		String nombreEstadio = Simulador.getScanner().nextLine();
@@ -93,6 +94,7 @@ public class Estadio implements Serializable{
 	 * Método que lista las opciones de modificación del estadio
 	 */
 	public void listadoOpcionesModificacionEstadio() {
+		Simulador.esperar();
 		System.out.println("  A continuación están las opciones de modificación del Estadio:");
 		System.out.println("    1. Modificar Nombre del Estadio.");
 		System.out.println("    2. Modificar Capacidad del Estadio.");

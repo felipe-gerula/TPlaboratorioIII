@@ -125,6 +125,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 * @return información del mercado seleccionada por el usuario o administrador
 	 */
 	public String verMercado(boolean ingresoAdmin) {
+		Simulador.esperar();
 		System.out.println("  Opciones de listado de Mercado:");
 		System.out.println("    1. Ver Jugadores disponibles en el Mercado.");
 		System.out.println("    2. Ver Directores Técnicos disponibles en el Mercado.");
@@ -138,6 +139,7 @@ public class Mercado { /// No implementamos la Interfaz IMenu porque los menúes 
 	 * @param clubRecibido club del usuario que está accediendo al mercado para hacer operaciones
 	 */
 	public void listadoOpcionesMercado(ClubUsuario clubRecibido) {
+		Simulador.esperar();
 		System.out.println("\n\nBienvenido al Mercado, " + clubRecibido.getNombre());
 		if(this.listadoJugadores.estaVacio(false) && this.listadoDTs.estaVacio(false)) {
 			System.out.println(clubRecibido.getNombre() + ", lamentamos informarte que el Mercado está vacío. Un Administrador debe cargar datos.");

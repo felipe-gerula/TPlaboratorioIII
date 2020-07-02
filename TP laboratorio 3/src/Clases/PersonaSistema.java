@@ -95,14 +95,14 @@ public abstract class PersonaSistema implements Serializable{
 	public boolean comparacionPassword() {
 		int intentos = 3;
 		String passwordLeida;
-		System.out.print("Ingrese la contraseña (3 intentos restantes): ");
+		System.out.print("\nIngrese la contraseña (3 intentos restantes): ");
 		passwordLeida = Simulador.getScanner().nextLine();
 		if (passwordLeida.equals(this.password)) {
 			return true;
 		} else {
 			while (intentos>1) {
 				intentos--;
-				System.out.print("Contraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
+				System.out.print("\nContraseña incorrecta. Ingreséla nuevamente ("+ intentos + " intentos restantes): ");
 				passwordLeida = Simulador.getScanner().nextLine();
 				if (passwordLeida.equals(this.password)) {
 					return true;

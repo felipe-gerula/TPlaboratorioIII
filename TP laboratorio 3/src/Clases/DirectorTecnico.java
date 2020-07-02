@@ -91,6 +91,7 @@ public class DirectorTecnico extends PersonaFutbol /*implements Comparable*/{
 	 * @return nuevo Director Técnico creado en el menú
 	 */
 	public DirectorTecnico crearDirectorTecnico() {
+		Simulador.esperar();
 		System.out.println("Bienvenido al menú de creación de DT.");
 		Simulador.getScanner().nextLine();
 		System.out.print("  Ingrese el nombre y apellido del DT:");
