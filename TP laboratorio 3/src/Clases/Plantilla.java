@@ -349,7 +349,7 @@ public class Plantilla implements Serializable{
 	 */
 	public String muestraEspaciosDisponibles (String posicionJugador) {
 		StringBuilder retorno = new StringBuilder();
-		retorno.append("Sin espacio en la posición de " + posicionJugador + ". Espacios disponibles:\n");
+		retorno.append("Sin espacio en la posición de " + posicionJugador + ". \nEspacios disponibles:\n");
 		if (cantidadPorteros==0) {
 			retorno.append("  Portero: 1.");
 		}
@@ -446,6 +446,7 @@ public class Plantilla implements Serializable{
 			comprobarPosicion(posicionJugador);
 		} catch (SinEspacioEnPosicionException e) {
 			System.out.println(e.getMessage());
+			System.out.println("\n" + muestraEspaciosDisponibles(posicionJugador));
 			return false;
 		}
 		return true;

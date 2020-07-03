@@ -18,30 +18,38 @@ public class ComparacionPosicion extends Comparacion<PersonaFutbol>{
 		Jugador aux2 = (Jugador)jugador2;
 		String pos1 = aux1.getPosicion();
 		String pos2 = aux2.getPosicion();
-		if (pos1.equals(pos2)) { //Si son iguales
-			return 0;
-		} else { //Son diferentes
-			if (pos1.equals("PO")) { //Si el primero es arquero, el primero es menor
-				return -1;
+		int num1 = 0;
+		int num2 = 0;
+		if (pos1.equals("PO")) {
+			num1 = 0;
+		} else {
+			if (pos1.equals("DFC") || pos1.equals("LI") || pos1.equals("LD")) {
+				num1 = 1;
 			} else {
-				if (pos2.equals("PO")) { //Si el segundo es arquero, el primero es mayor
-					return 1;
-				} else { //Ninguno es arquero
-					if (pos1.equals("DFC") || pos1.equals("LI") || pos1.equals("LD")) { //Si el primero es defensor, el primero es menor
-						return -1;
-					} else {
-						if (pos2.equals("DFC") || pos2.equals("LI") || pos2.equals("LD")) { //Si el segundo es defensor, el primero es mayor
-							return 1;
-						} else { //Ninguno es defensor
-							if (pos1.equals("MC") || pos1.equals("MI") || pos1.equals("MD") || pos1.equals("MCO")) { //Si el primero es mediocampista, el primero es menor
-								return -1;
-							} else { //Si el segundo es mediocampista, el primero es mayor
-								return 1;
-							}
-						}
+				if (pos1.equals("MC") || pos1.equals("MI") || pos1.equals("MD") || pos1.equals("MCO")) {
+					num1 = 2;
+				} else {
+					if (pos1.equals("DC") || pos1.equals("EI") || pos1.equals("ED")) {
+						num1 = 3;
 					}
 				}
 			}
 		}
+		if (pos2.equals("PO")) {
+			num2 = 0;
+		} else {
+			if (pos2.equals("DFC") || pos2.equals("LI") || pos2.equals("LD")) {
+				num2 = 1;
+			} else {
+				if (pos2.equals("MC") || pos2.equals("MI") || pos2.equals("MD") || pos2.equals("MCO")) {
+					num2 = 2;
+				} else {
+					if (pos2.equals("DC") || pos2.equals("EI") || pos2.equals("ED")) {
+						num2 = 3;
+					}
+				}
+			}
+		}
+		return num1 - num2;
 	}
 }

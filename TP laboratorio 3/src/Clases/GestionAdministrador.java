@@ -69,7 +69,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 		Jugador nuevoJugador = new Jugador();
 		nuevoJugador = nuevoJugador.crearJugador();
 		if (nuevoJugador != null) {
-			System.out.println(nuevoJugador.toString());
+			System.out.println("\n" + nuevoJugador.toString());
 			Simulador.getMercado().agregarJugador(nuevoJugador);
 			Simulador.getListadoLigasEquipos().agregarJugador(nuevoJugador);
 			Simulador.guardarArchivoJugadores();
@@ -425,7 +425,7 @@ public class GestionAdministrador extends PersonaSistema implements IMenu{
 	public PersonaSistema acceder() {
 		GestionAdministrador ingresoAdministrador;
 		System.out.println("\nBienvenido al menú de ingreso a Administrador.");
-		System.out.print("  Ingrese el nombre de Administrador:");
+		System.out.print("  Ingrese el nombre de Administrador: ");
 		Simulador.getScanner().nextLine();
 		String nombreAdministrador = Simulador.getScanner().nextLine();
 		ingresoAdministrador = new GestionAdministrador(nombreAdministrador);
