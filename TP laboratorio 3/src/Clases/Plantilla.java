@@ -380,8 +380,8 @@ public class Plantilla implements Serializable{
 				if ((posicionJugador.equals("MC") || posicionJugador.equals("MI") || posicionJugador.equals("MD") || posicionJugador.equals("MCO")) && !hayEspacioMediocampista(getCantidadMediocampistas())) {
 					throw new SinEspacioEnPosicionException("No hay espacio en la posición de Mediocampista.");
 				} else {
-					if (!hayEspacioDelantero(getCantidadDelanteros())) {
-						throw new SinEspacioEnPosicionException("No hay espacio en la posición de Portero.");
+					if ((posicionJugador.equals("DC") || posicionJugador.equals("EI") || posicionJugador.equals("ED")) && !hayEspacioDelantero(getCantidadDelanteros())) {
+						throw new SinEspacioEnPosicionException("No hay espacio en la posición de Delantero.");
 					}
 				}
 			}
